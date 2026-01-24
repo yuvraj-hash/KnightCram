@@ -1,15 +1,14 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
+import LoginModal from "@/components/auth/LoginModal";
+import SignUpModal from "@/components/auth/SignUpModal";
 
-interface NavbarProps {
-  onLoginClick: () => void;
-  onSignUpClick: () => void;
-}
-
-const Navbar = ({ onLoginClick, onSignUpClick }: NavbarProps) => {
+const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isLoginOpen, setIsLoginOpen] = useState(false);
+  const [isSignUpOpen, setIsSignUpOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -40,7 +39,7 @@ const Navbar = ({ onLoginClick, onSignUpClick }: NavbarProps) => {
               <img
                 src="/New.gif"
                 alt="KnightCram Animated Logo"
-                className="w-12 h-12 md:w-18 md:h-18 lg:w-20 lg:h-20 object-contain transition-transform duration-300 group-hover:scale-110"
+                className="w-10 h-10 md:w-14 md:h-14 lg:w-16 lg:h-16 object-contain transition-transform duration-300 group-hover:scale-110"
               />
               <span className="font-display font-bold text-xl md:text-2xl lg:text-3xl text-foreground group-hover:text-primary transition-colors">
                 KnightCram
@@ -67,14 +66,14 @@ const Navbar = ({ onLoginClick, onSignUpClick }: NavbarProps) => {
               <Button
                 variant="heroOutline"
                 size="default"
-                onClick={onLoginClick}
+                onClick={() => setIsLoginOpen(true)}
               >
                 Sign In
               </Button>
               <Button
                 variant="navPrimary"
                 size="default"
-                onClick={onSignUpClick}
+                onClick={() => setIsSignUpOpen(true)}
               >
                 Sign Up
               </Button>
@@ -115,7 +114,7 @@ const Navbar = ({ onLoginClick, onSignUpClick }: NavbarProps) => {
                   size="lg"
                   className="w-full"
                   onClick={() => {
-                    onLoginClick();
+                    setIsLoginOpen(true);
                     setIsMobileMenuOpen(false);
                   }}
                 >
@@ -126,7 +125,7 @@ const Navbar = ({ onLoginClick, onSignUpClick }: NavbarProps) => {
                   size="lg"
                   className="w-full"
                   onClick={() => {
-                    onSignUpClick();
+                    setIsSignUpOpen(true);
                     setIsMobileMenuOpen(false);
                   }}
                 >
@@ -137,6 +136,16 @@ const Navbar = ({ onLoginClick, onSignUpClick }: NavbarProps) => {
           )}
         </div>
       </nav>
+
+      <LoginModal isOpen={isLoginOpen} onOpenChange={setIsLoginOpen} />
+      <SignUpModal
+        isOpen={isSignUpOpen}
+        onOpenChange={setIsSignUpOpen}
+        onSwitchToLogin={() => {
+          setIsSignUpOpen(false);
+          setIsLoginOpen(true);
+        }}
+      />
     </>
   );
 };

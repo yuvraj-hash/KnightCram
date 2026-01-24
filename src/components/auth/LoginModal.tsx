@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Eye, EyeOff, Lock, Mail, Loader2, AlertCircle, ShieldCheck, CheckCircle2 } from "lucide-react";
+import { Eye, EyeOff, Lock, Mail, Loader2, AlertCircle, ShieldCheck, CheckCircle2, X } from "lucide-react";
 import { simulateLogin, simulateGoogleAuth } from "@/lib/authService";
 import { cn } from "@/lib/utils";
 
@@ -79,10 +79,18 @@ export default function LoginModal({ isOpen, onOpenChange, onSwitchToSignUp }: L
 
     return (
         <Dialog open={isOpen} onOpenChange={onOpenChange}>
-            <DialogContent className="sm:max-w-[380px] bg-background/80 backdrop-blur-xl border-white/10 shadow-2xl p-0 overflow-hidden gap-0">
+            <DialogContent className="sm:max-w-[380px] bg-background/80 backdrop-blur-xl border-white/10 shadow-2xl p-0 overflow-hidden gap-0 [&>button]:hidden">
 
                 {/* Header Section */}
                 <div className="p-4 relative overflow-hidden">
+                    {/* Custom Close Button */}
+                    <button
+                        onClick={() => onOpenChange(false)}
+                        className="absolute top-4 right-4 z-50 p-1.5 bg-black/5 hover:bg-black/20 text-muted-foreground hover:text-foreground rounded-full transition-colors flex items-center justify-center"
+                        aria-label="Close"
+                    >
+                        <X className="w-4 h-4" />
+                    </button>
                     {/* Abstract Background Glow */}
                     <div className="absolute -top-10 -right-10 w-40 h-40 bg-primary/20 rounded-full blur-3xl pointer-events-none" />
                     <div className="absolute -bottom-10 -left-10 w-40 h-40 bg-accent/20 rounded-full blur-3xl pointer-events-none" />

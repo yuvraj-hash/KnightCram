@@ -1,7 +1,11 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Moon } from "lucide-react";
 
-const CTASection = () => {
+interface CTASectionProps {
+  onSignUpClick: () => void;
+}
+
+const CTASection = ({ onSignUpClick }: CTASectionProps) => {
   return (
     <section className="py-20 md:py-32 relative overflow-hidden">
       {/* Background Effects */}
@@ -28,7 +32,12 @@ const CTASection = () => {
 
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <Button variant="hero" size="xl" className="w-full sm:w-auto group">
+            <Button
+              variant="hero"
+              size="xl"
+              className="w-full sm:w-auto group"
+              onClick={onSignUpClick}
+            >
               Sign Up Now
               <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
             </Button>

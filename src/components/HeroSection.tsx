@@ -1,5 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Sparkles } from "lucide-react";
+import { Wand2 } from "lucide-react";
+
 import InteractiveParticles from "@/components/ui/InteractiveParticles";
 
 interface HeroSectionProps {
@@ -29,8 +31,8 @@ const HeroSection = ({ onSignUpClick }: HeroSectionProps) => {
         <div className="max-w-4xl mx-auto text-center">
           {/* Badge */}
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-primary/30 bg-primary/5 mb-8 animate-fade-up">
-            <Sparkles className="w-4 h-4 text-primary" />
-            <span className="text-sm text-foreground/80">Student-Owned Decentralized Platform</span>
+            <Wand2 className="w-4 h-4 text-primary" />
+            <span className="text-sm text-foreground/80">Student-Owned Network</span>
           </div>
 
           {/* Main Headline */}

@@ -35,7 +35,7 @@ const Index = () => {
       <WhatWeDoSection />
       <HowItWorksSection />
       <WhatIsSection />
-      <CTASection />
+      <CTASection onSignUpClick={() => setIsSignUpOpen(true)} />
       <Footer />
 
       <LoginModal
