@@ -33,47 +33,62 @@ const Navbar = () => {
           }`}
       >
         <div className="container mx-auto px-4 md:px-6">
-          <div className="flex items-center justify-between h-16 md:h-20">
+          <div className="flex items-center justify-between h-14 md:h-16">
             {/* Logo - slightly larger with very tight spacing */}
-            <a href="/" className="flex items-center gap-0.2 md:gap-0.5 group">
+            <a 
+              href="/" 
+              className="flex items-center gap-1 md:gap-2 group focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background rounded-lg p-1"
+              aria-label="KnightCram homepage"
+            >
               <img
                 src="/New.gif"
                 alt="KnightCram Animated Logo"
-                className="w-10 h-10 md:w-14 md:h-14 lg:w-16 lg:h-16 object-contain transition-transform duration-300 group-hover:scale-110"
+                className="w-8 h-8 md:w-10 md:h-10 lg:w-12 lg:h-12 object-contain transition-all duration-300 group-hover:scale-105"
+                onError={(e) => {
+                  e.currentTarget.style.display = 'none';
+                }}
               />
-              <span className="font-display font-bold text-xl md:text-2xl lg:text-3xl text-foreground group-hover:text-primary transition-colors">
+              <span className="font-display font-bold text-xl md:text-2xl lg:text-3xl text-foreground group-hover:text-primary transition-colors duration-300">
                 KnightCram
               </span>
             </a>
 
             {/* Desktop Navigation */}
-            <div className="hidden md:flex items-center gap-4">
+            <div className="hidden md:flex items-center gap-2">
               <Button
                 variant="nav"
-                size="default"
+                size="sm"
                 onClick={() => scrollToSection("about")}
+                className="transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background"
+                aria-label="About section"
               >
                 About
               </Button>
               <Button
                 variant="nav"
-                size="default"
+                size="sm"
                 onClick={() => scrollToSection("how-it-works")}
+                className="transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background"
+                aria-label="How it works section"
               >
                 How It Works
               </Button>
-              <div className="w-px h-6 bg-border mx-2" />
+              <div className="w-px h-5 bg-border mx-1" />
               <Button
                 variant="heroOutline"
-                size="default"
+                size="sm"
                 onClick={() => setIsLoginOpen(true)}
+                className="transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background"
+                aria-label="Sign in to your account"
               >
                 Sign In
               </Button>
               <Button
                 variant="navPrimary"
-                size="default"
+                size="sm"
                 onClick={() => setIsSignUpOpen(true)}
+                className="transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background"
+                aria-label="Create new account"
               >
                 Sign Up
               </Button>
@@ -81,8 +96,10 @@ const Navbar = () => {
 
             {/* Mobile Menu Button */}
             <button
-              className="md:hidden p-2 text-foreground hover:text-primary transition-colors"
+              className="md:hidden p-2 rounded-lg text-foreground hover:text-primary transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
+              aria-expanded={isMobileMenuOpen}
             >
               {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
             </button>
@@ -90,44 +107,48 @@ const Navbar = () => {
 
           {/* Mobile Menu */}
           {isMobileMenuOpen && (
-            <div className="md:hidden py-4 border-t border-border animate-fade-up">
-              <div className="flex flex-col gap-3">
+            <div className="md:hidden py-3 border-t border-border animate-fade-up">
+              <div className="flex flex-col gap-2">
                 <Button
                   variant="nav"
-                  size="lg"
-                  className="w-full justify-start"
+                  size="sm"
+                  className="w-full justify-start transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background"
                   onClick={() => scrollToSection("about")}
+                  aria-label="About section"
                 >
                   About
                 </Button>
                 <Button
                   variant="nav"
-                  size="lg"
-                  className="w-full justify-start"
+                  size="sm"
+                  className="w-full justify-start transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background"
                   onClick={() => scrollToSection("how-it-works")}
+                  aria-label="How it works section"
                 >
                   How It Works
                 </Button>
-                <div className="h-px bg-border my-2" />
+                <div className="h-px bg-border my-1" />
                 <Button
                   variant="heroOutline"
-                  size="lg"
-                  className="w-full"
+                  size="sm"
+                  className="w-full transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background"
                   onClick={() => {
                     setIsLoginOpen(true);
                     setIsMobileMenuOpen(false);
                   }}
+                  aria-label="Sign in to your account"
                 >
                   Sign In
                 </Button>
                 <Button
                   variant="navPrimary"
-                  size="lg"
-                  className="w-full"
+                  size="sm"
+                  className="w-full transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background"
                   onClick={() => {
                     setIsSignUpOpen(true);
                     setIsMobileMenuOpen(false);
                   }}
+                  aria-label="Create new account"
                 >
                   Sign Up
                 </Button>

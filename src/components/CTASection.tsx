@@ -17,7 +17,7 @@ const CTASection = ({ onSignUpClick }: CTASectionProps) => {
         <div className="max-w-3xl mx-auto text-center">
           {/* Icon */}
           <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-primary/10 border border-primary/30 mb-8 animate-pulse-glow">
-            <Moon className="w-10 h-10 text-primary" />
+            <Moon className="w-10 h-10 text-primary stroke-[2.5px]" />
           </div>
 
           {/* Content */}

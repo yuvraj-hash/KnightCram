@@ -1,8 +1,21 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@600;700;800&family=Outfit:wght@500;600;700&family=Pinyon+Script&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* ... existing code ... */
+@layer utilities {
+
+  /* ... existing utilities ... */
+  .font-brand {
+    font-family: 'Outfit', sans-serif;
+  }
+
+  .font-script {
+    font-family: 'Pinyon Script', cursive;
+  }
+}
 
 @layer base {
   :root {
@@ -75,9 +88,15 @@
   body {
     @apply bg-background text-foreground antialiased;
     font-family: 'Inter', system-ui, sans-serif;
+    scroll-behavior: smooth;
   }
 
-  h1, h2, h3, h4, h5, h6 {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     font-family: 'Playfair Display', Georgia, serif;
   }
 }
@@ -99,7 +118,7 @@
   .border-gradient {
     border: 1px solid transparent;
     background: linear-gradient(hsl(var(--card)), hsl(var(--card))) padding-box,
-                linear-gradient(135deg, hsl(var(--primary) / 0.3), transparent 50%) border-box;
+      linear-gradient(135deg, hsl(var(--primary) / 0.3), transparent 50%) border-box;
   }
 
   .glass {
@@ -121,8 +140,15 @@
   }
 
   @keyframes float {
-    0%, 100% { transform: translateY(0px); }
-    50% { transform: translateY(-10px); }
+
+    0%,
+    100% {
+      transform: translateY(0px);
+    }
+
+    50% {
+      transform: translateY(-10px);
+    }
   }
 
   .animate-pulse-glow {
@@ -130,11 +156,57 @@
   }
 
   @keyframes pulse-glow {
-    0%, 100% { box-shadow: 0 0 20px -5px hsl(var(--primary) / 0.4); }
-    50% { box-shadow: 0 0 40px -5px hsl(var(--primary) / 0.6); }
+
+    0%,
+    100% {
+      box-shadow: 0 0 20px -5px hsl(var(--primary) / 0.4);
+    }
+
+    50% {
+      box-shadow: 0 0 40px -5px hsl(var(--primary) / 0.6);
+    }
   }
 
   .line-gradient {
     background: linear-gradient(to right, hsl(var(--primary)), transparent);
   }
+
+  .font-brand {
+    font-family: 'Outfit', sans-serif;
+  }
+
+  .font-script {
+    font-family: 'Kaufmann Bold', cursive;
+    line-height: 1.1;
+  }
+  
+  /* Performance Optimizations */
+  .will-change-transform {
+    will-change: transform;
+  }
+  
+  .will-change-opacity {
+    will-change: opacity;
+  }
+  
+  /* Smooth Transitions */
+  .transition-smooth {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  .transition-colors-smooth {
+    transition: color 0.3s cubic-bezier(0.4, 0, 0.2, 1), 
+                background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1), 
+                border-color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+}
+
+/* Kaufmann Bold Font */
+@font-face {
+  font-family: 'Kaufmann Bold';
+  src: url('https://db.onlinewebfonts.com/t/00d5a78493a201217c0c16e251147716.woff2') format('woff2'),
+    url('https://db.onlinewebfonts.com/t/00d5a78493a201217c0c16e251147716.woff') format('woff');
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
 }

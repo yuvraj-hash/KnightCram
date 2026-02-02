@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -24,6 +25,8 @@ export default function LoginModal({ isOpen, onOpenChange, onSwitchToSignUp }: L
     const [emailFocused, setEmailFocused] = useState(false);
     const [passwordFocused, setPasswordFocused] = useState(false);
 
+    const navigate = useNavigate();
+
     const handleLogin = async (e: React.FormEvent) => {
         e.preventDefault();
         setIsLoading(true);
@@ -40,6 +43,7 @@ export default function LoginModal({ isOpen, onOpenChange, onSwitchToSignUp }: L
                     setSuccess(false);
                     setEmail("");
                     setPassword("");
+                    navigate("/main");
                 }, 1500);
             } else {
                 setError(response.error || "Authentication failed");
@@ -66,6 +70,7 @@ export default function LoginModal({ isOpen, onOpenChange, onSwitchToSignUp }: L
                     setSuccess(false);
                     setEmail("");
                     setPassword("");
+                    navigate("/main");
                 }, 1500);
             } else {
                 setError(response.error || "Authentication failed");

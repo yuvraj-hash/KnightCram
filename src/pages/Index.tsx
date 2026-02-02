@@ -1,7 +1,6 @@
 import { useState } from "react";
 import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
-import ProblemSection from "@/components/ProblemSection";
 import WhatWeDoSection from "@/components/WhatWeDoSection";
 import HowItWorksSection from "@/components/HowItWorksSection";
 import WhatIsSection from "@/components/WhatIsSection";
@@ -31,7 +30,6 @@ const Index = () => {
         onSignUpClick={() => setIsSignUpOpen(true)}
       />
       <HeroSection onSignUpClick={() => setIsSignUpOpen(true)} />
-      <ProblemSection />
       <WhatWeDoSection />
       <HowItWorksSection />
       <WhatIsSection />

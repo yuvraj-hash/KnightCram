@@ -55,16 +55,14 @@ const WhatIsSection = () => {
               {whyItExists.map((item, index) => (
                 <div
                   key={item.reason}
-                  className={`flex items-center gap-4 p-4 rounded-xl transition-colors ${
-                    index === 2
-                      ? "bg-primary/10 border border-primary/30"
-                      : "bg-background border border-border hover:border-destructive/30"
-                  }`}
+                  className={`flex items-center gap-4 p-4 rounded-xl transition-colors ${index === 2
+                    ? "bg-primary/10 border border-primary/30"
+                    : "bg-background border border-border hover:border-destructive/30"
+                    }`}
                 >
                   <div
-                    className={`w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 ${
-                      index === 2 ? "bg-primary/20" : "bg-destructive/10"
-                    }`}
+                    className={`w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 ${index === 2 ? "bg-primary/20" : "bg-destructive/10"
+                      }`}
                   >
                     {index === 2 ? (
                       <Check className="w-5 h-5 text-primary" />
@@ -73,9 +71,8 @@ const WhatIsSection = () => {
                     )}
                   </div>
                   <span
-                    className={`font-medium ${
-                      index === 2 ? "text-primary" : "text-foreground"
-                    }`}
+                    className={`font-medium ${index === 2 ? "text-primary" : "text-foreground"
+                      }`}
                   >
                     {item.reason}
                   </span>

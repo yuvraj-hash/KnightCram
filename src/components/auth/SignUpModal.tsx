@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -32,6 +33,8 @@ export default function SignUpModal({ isOpen, onOpenChange, onSwitchToLogin }: S
     // Password Strength
     const [strengthScore, setStrengthScore] = useState(0);
     const [passwordFeedback, setPasswordFeedback] = useState<string[]>([]);
+
+    const navigate = useNavigate();
 
     // Real-time checks
     useEffect(() => {
@@ -91,10 +94,10 @@ export default function SignUpModal({ isOpen, onOpenChange, onSwitchToLogin }: S
                     onOpenChange(false);
                     setSuccess(false);
                     // Reset form
-                    setName("");
                     setEmail("");
                     setPassword("");
                     setConfirmPassword("");
+                    navigate("/main");
                 }, 2000);
             } else {
                 setError(response.error || "Registration failed");
@@ -119,10 +122,9 @@ export default function SignUpModal({ isOpen, onOpenChange, onSwitchToLogin }: S
                 setTimeout(() => {
                     onOpenChange(false);
                     setSuccess(false);
-                    setName("");
-                    setEmail("");
                     setPassword("");
                     setConfirmPassword("");
+                    navigate("/main");
                 }, 2000);
             } else {
                 setError(response.error || "Registration failed");

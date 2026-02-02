@@ -1,0 +1,23 @@
+
+const problems = [
+    {
+        icon: GraduationCap,
+        stage: "School",
+        problem: "Education teaches marks, not skills",
+    },
+    {
+        icon: Building2,
+        stage: "College",
+        problem: "Colleges optimize rankings, not outcomes",
+    },
+    {
+        icon: FileText,
+        stage: "Degree",
+        problem: "Degrees do not map to real jobs",
+    },
+    {
+        icon: TrendingDown,
+        stage: "Result",
+        problem: "Mass unemployment & unfulfilled potential",
+    },
+];
