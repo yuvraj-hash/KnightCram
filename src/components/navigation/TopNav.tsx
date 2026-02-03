@@ -16,7 +16,7 @@ const TopNav = ({ isMenuOpen, onMenuOpenChange }: TopNavProps) => {
             aria-label="Main navigation"
         >
             {/* Left Icons */}
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-0 md:gap-4">
                 <Button
                     variant="ghost"
                     size="icon"

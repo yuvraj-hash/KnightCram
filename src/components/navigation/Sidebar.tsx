@@ -11,11 +11,11 @@ const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
     const location = useLocation();
 
     const menuItems = [
-        { icon: User, label: "Profile", path: "/profile" },
-        { icon: Home, label: "Home", path: "/home" },
+        { icon: User, label: "Profile", path: "/profile", hideOnMobile: true },
+        { icon: Home, label: "Home", path: "/home", hideOnMobile: true },
         { icon: Briefcase, label: "Opportunities", path: "/opportunities" },
-        { icon: BookOpen, label: "Resources", path: "/resources" },
-        { icon: MessageSquare, label: "Forum", path: "/forum" },
+        { icon: BookOpen, label: "Resources", path: "/resources", hideOnMobile: true },
+        { icon: MessageSquare, label: "Forum", path: "/forum", hideOnMobile: true },
         { icon: Zap, label: "Spotlight", path: "/main" },
         { icon: Users, label: "Start a community", path: "/community/create" },
         { icon: Settings, label: "Settings", path: "/settings" },
@@ -57,7 +57,8 @@ const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
                                     }
                                 }}
                                 className={cn(
-                                    "flex items-center gap-4 px-3 py-3 mx-2 rounded-lg transition-colors duration-200 group hover:bg-secondary/50",
+                                    item.hideOnMobile ? "hidden md:flex" : "flex",
+                                    "items-center gap-4 px-3 py-3 mx-2 rounded-lg transition-colors duration-200 group hover:bg-secondary/50",
                                     isOpen ? "flex-row justify-start" : "md:flex-col md:justify-center md:gap-1 md:px-0 md:mx-1 flex-row justify-start gap-4 px-3 mx-2", // Handle mobile (always expanded view) vs desktop (toggled)
                                     isActive && "bg-secondary"
                                 )}
