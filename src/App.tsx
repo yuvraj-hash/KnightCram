@@ -7,6 +7,8 @@ import Index from "./pages/Index";
 import MainPage from "./pages/MainPage";
 import NotFound from "./pages/NotFound";
 
+import SignInPage from "./pages/SignInPage";
+
 const queryClient = new QueryClient();
 
 const App = () => (
@@ -17,6 +19,7 @@ const App = () => (
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Index />} />
+          <Route path="/signin" element={<SignInPage />} />
           <Route path="/main" element={<MainPage />} />
           <Route path="/spotlight" element={<MainPage />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
