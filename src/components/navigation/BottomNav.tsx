@@ -1,11 +1,11 @@
-import { Home, Layers, MessageSquareText, User } from "lucide-react";
+import { Home, Layers, MessageSquareText, User, PlusSquare } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const BottomNav = () => {
     const navItems = [
         { icon: Home, label: "Home", active: false, ariaLabel: "Home page" },
         { icon: Layers, label: "Materials", active: false, ariaLabel: "Study materials" },
-
+        { icon: PlusSquare, label: "Create", active: false, ariaLabel: "Create new post" },
         { icon: MessageSquareText, label: "Forum", active: false, ariaLabel: "Discussion forum" },
         { icon: User, label: "Profile", active: false, ariaLabel: "User profile" },
     ];
