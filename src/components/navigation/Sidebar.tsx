@@ -13,7 +13,7 @@ const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
     const menuItems = [
         { icon: User, label: "Profile", path: "/profile", hideOnMobile: true },
         { icon: Home, label: "Home", path: "/home", hideOnMobile: true },
-        { icon: Briefcase, label: "Opportunities", path: "/opportunities" },
+        { icon: Briefcase, label: "Opportunities", path: "/opportunities", hideOnDesktop: true },
         { icon: BookOpen, label: "Resources", path: "/resources", hideOnMobile: true },
         { icon: MessageSquare, label: "Forum", path: "/forum", hideOnMobile: true },
         { icon: Zap, label: "Spotlight", path: "/main" },
@@ -57,7 +57,7 @@ const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
                                     }
                                 }}
                                 className={cn(
-                                    item.hideOnMobile ? "hidden md:flex" : "flex",
+                                    item.hideOnMobile ? "hidden md:flex" : item.hideOnDesktop ? "flex md:hidden" : "flex",
                                     "items-center gap-4 px-3 py-3 mx-2 rounded-lg transition-colors duration-200 group hover:bg-secondary/50",
                                     isOpen ? "flex-row justify-start" : "md:flex-col md:justify-center md:gap-1 md:px-0 md:mx-1 flex-row justify-start gap-4 px-3 mx-2", // Handle mobile (always expanded view) vs desktop (toggled)
                                     isActive && "bg-secondary"
@@ -66,7 +66,7 @@ const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
                                 <item.icon
                                     className={cn(
                                         "shrink-0 transition-colors",
-                                        isOpen ? "w-5 h-5" : "md:w-6 md:h-6 w-5 h-5",
+                                        "w-5 h-5",
                                         isActive ? "text-primary" : "text-foreground group-hover:text-primary"
                                     )}
                                     strokeWidth={isActive ? 2.5 : 2}
