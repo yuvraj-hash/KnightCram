@@ -48,7 +48,7 @@ const Navbar = () => {
                   e.currentTarget.style.display = 'none';
                 }}
               />
-              <span className="font-display font-bold text-xl md:text-2xl lg:text-3xl text-foreground group-hover:text-primary transition-colors duration-300">
+              <span className="font-bubblegum font-bold text-xl md:text-2xl lg:text-3xl text-foreground group-hover:text-primary transition-colors duration-300">
                 KnightCram
               </span>
             </a>

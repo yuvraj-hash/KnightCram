@@ -4,6 +4,8 @@ import BottomNav from "@/components/navigation/BottomNav";
 import Spotlight from "@/components/feed/Spotlight";
 import Feed from "@/components/feed/Feed";
 
+import Sidebar from "@/components/navigation/Sidebar";
+
 const MainPage = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -12,9 +14,12 @@ const MainPage = () => {
             {/* Top Navigation */}
             <TopNav isMenuOpen={isMenuOpen} onMenuOpenChange={setIsMenuOpen} />
 
+            {/* Sidebar Navigation */}
+            <Sidebar isOpen={isMenuOpen} />
+
             {/* Main Content Area */}
             <main
-                className={`flex-1 w-full pt-16 pb-20 transition-all duration-300 ease-in-out ${isMenuOpen ? "md:pl-[310px]" : "md:pl-[40px]"
+                className={`flex-1 w-full pt-16 pb-20 md:pb-0 transition-all duration-300 ease-in-out ${isMenuOpen ? "md:pl-[240px]" : "md:pl-[72px]"
                     }`}
             >
                 <Spotlight />
