@@ -21,7 +21,7 @@ const TopNav = ({ isMenuOpen, onMenuOpenChange }: TopNavProps) => {
                     variant="ghost"
                     size="icon"
                     onClick={() => onMenuOpenChange(!isMenuOpen)}
-                    className="hidden md:flex hover:bg-neutral-800 rounded-full"
+                    className="flex hover:bg-neutral-800 rounded-full"
                     aria-label="Toggle menu"
                 >
                     <Menu className="w-6 h-6 text-foreground" strokeWidth={1.5} />
@@ -102,7 +102,7 @@ const TopNav = ({ isMenuOpen, onMenuOpenChange }: TopNavProps) => {
                 <Button
                     variant="ghost"
                     size="icon"
-                    className="hover:bg-primary/10 rounded-full transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background"
+                    className="hidden md:flex hover:bg-primary/10 rounded-full transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background"
                     aria-label="Opportunities"
                 >
                     <svg

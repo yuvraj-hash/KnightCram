@@ -15,7 +15,7 @@ const MainPage = () => {
             <TopNav isMenuOpen={isMenuOpen} onMenuOpenChange={setIsMenuOpen} />
 
             {/* Sidebar Navigation */}
-            <Sidebar isOpen={isMenuOpen} />
+            <Sidebar isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} />
 
             {/* Main Content Area */}
             <main
