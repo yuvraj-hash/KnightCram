@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Eye, EyeOff, Lock, Mail, User, Loader2, AlertCircle, CheckCircle2, ShieldCheck, X, ArrowRight } from "lucide-react";
+import { Eye, EyeOff, Lock, Mail, User, Loader2, AlertCircle, CheckCircle2, ShieldCheck, ArrowRight } from "lucide-react";
 import { simulateSignUp, simulateGoogleAuth } from "@/lib/authService";
 import { cn } from "@/lib/utils";
 
@@ -153,7 +153,7 @@ const Index = () => {
 
           {/* Brand Lockup */}
           <div className="flex items-center gap-4 mb-8">
-            <img src="/Logo.png" alt="KnightCram Logo" className="w-16 h-16 md:w-20 md:h-20 object-contain" />
+            <img src="/Logo.png" alt="KnightCram Logo" className="w-10 h-10 md:w-12 md:h-12 object-contain" />
             <span className="text-5xl md:text-6xl font-['Bubblegum_Sans'] text-white pt-3">KnightCram</span>
           </div>
 
@@ -177,11 +177,37 @@ const Index = () => {
             </Link>
           </div>
         </div>
+
+        <div className="absolute bottom-8 left-0 w-full text-center z-20 px-8">
+          <p className="text-xs text-zinc-500 font-medium">
+            By continuing, you agree to our{" "}
+            <Link to="/user-agreement" className="text-blue-500 underline hover:text-blue-400 transition-colors">
+              User Agreement
+            </Link>{" "}
+            and acknowledge our{" "}
+            <Link to="/policies" className="text-blue-500 underline hover:text-blue-400 transition-colors">
+              Policies
+            </Link>
+            .
+          </p>
+        </div>
       </div>
 
       {/* Right Side - Form */}
       <div className="w-full lg:w-[40%] flex flex-col items-center justify-center p-8 bg-background relative">
         <div className="w-full max-w-[360px] border-none shadow-none sm:border sm:border-white/10 sm:shadow-2xl sm:bg-background/80 sm:backdrop-blur-xl rounded-xl overflow-hidden z-10">
+
+
+          {/* Mobile Branding (Visible only on < lg screens) */}
+          <div className="flex flex-col items-center gap-4 mb-8 lg:hidden animate-fade-in-down">
+            <div className="flex items-center gap-3">
+              <img src="/Logo.png" alt="KnightCram Logo" className="w-10 h-10 object-contain" />
+              <span className="text-4xl font-['Bubblegum_Sans'] text-white pt-2">KnightCram</span>
+            </div>
+            <p className="text-sm text-zinc-400 text-center max-w-xs">
+              Illuminating what others overlook.
+            </p>
+          </div>
 
           {/* Header */}
           <div className="p-4 pb-2 relative overflow-hidden text-center">
@@ -388,6 +414,21 @@ const Index = () => {
                   Login
                 </Link>
               </div>
+            </div>
+
+            {/* Mobile Footer Text (Visible only on < lg screens) */}
+            <div className="mt-6 text-center lg:hidden pb-2">
+              <p className="text-[10px] text-zinc-500 font-medium leading-relaxed">
+                By continuing, you agree to our{" "}
+                <Link to="/user-agreement" className="text-blue-500 underline hover:text-blue-400 transition-colors">
+                  User Agreement
+                </Link>{" "}
+                and acknowledge our{" "}
+                <Link to="/policies" className="text-blue-500 underline hover:text-blue-400 transition-colors">
+                  Policies
+                </Link>
+                .
+              </p>
             </div>
           </div>
         </div>

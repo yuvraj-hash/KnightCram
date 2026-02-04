@@ -85,7 +85,7 @@ export default function SignInPage() {
                 <div className="relative z-10 p-12 text-center max-w-2xl flex flex-col items-center">
                     {/* Brand Lockup */}
                     <div className="flex items-center gap-4 mb-8">
-                        <img src="/Logo.png" alt="KnightCram Logo" className="w-16 h-16 md:w-20 md:h-20 object-contain" />
+                        <img src="/Logo.png" alt="KnightCram Logo" className="w-10 h-10 md:w-12 md:h-12 object-contain" />
                         <span className="text-5xl md:text-6xl font-['Bubblegum_Sans'] text-white pt-3">KnightCram</span>
                     </div>
 
