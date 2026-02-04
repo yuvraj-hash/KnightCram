@@ -1,5 +1,6 @@
 import { useRef, useEffect } from "react";
 import { Home, Layers, Zap, Settings, X, Plus, Gamepad2, PenTool, LayoutGrid, Menu, MessageSquare } from "lucide-react";
+import CommunityNavIcon from "@/components/icons/CommunityNavIcon";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { useLocation } from "react-router-dom";
@@ -37,7 +38,7 @@ const OffCanvasMenu = ({ isOpen, onClose, onToggle }: OffCanvasMenuProps) => {
     ];
 
     const communityItems = [
-        { icon: Plus, label: "Start a community", href: "/create-community" },
+        { icon: CommunityNavIcon, label: "Community", href: "/create-community" },
     ];
 
     const gameItems = [
@@ -69,7 +70,7 @@ const OffCanvasMenu = ({ isOpen, onClose, onToggle }: OffCanvasMenuProps) => {
                 aria-label="Main Navigation"
             >
                 {/* 1. Menu Content Panel (Width 270px) */}
-                <div className="w-[270px] bg-background border-r border-white/10 overflow-y-auto [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:bg-zinc-700 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:border-x-[1px] [&::-webkit-scrollbar-thumb]:border-y-[4px] [&::-webkit-scrollbar-thumb]:border-transparent [&::-webkit-scrollbar-thumb]:bg-clip-content hover:[&::-webkit-scrollbar-thumb]:bg-zinc-600 flex flex-col shrink-0">
+                <div className="w-[270px] bg-background border-r border-white/20 overflow-y-auto [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:bg-zinc-700 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:border-x-[1px] [&::-webkit-scrollbar-thumb]:border-y-[4px] [&::-webkit-scrollbar-thumb]:border-transparent [&::-webkit-scrollbar-thumb]:bg-clip-content hover:[&::-webkit-scrollbar-thumb]:bg-zinc-600 flex flex-col shrink-0">
                     <div className="flex flex-col py-2">
                         {/* Main Links */}
                         <div className="flex flex-col px-2 pb-2">

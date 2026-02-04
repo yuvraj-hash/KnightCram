@@ -1,4 +1,6 @@
-import { Home, User, BookOpen, MessageSquare, Zap, Settings, Users, PlusCircle, Briefcase } from "lucide-react";
+import { Home, BookOpen, MessageSquare, Zap, Settings, Briefcase } from "lucide-react";
+import CommunityNavIcon from "@/components/icons/CommunityNavIcon";
+import ProfileNavIcon from "@/components/icons/ProfileNavIcon";
 import { cn } from "@/lib/utils";
 import { useLocation, Link } from "react-router-dom";
 
@@ -11,13 +13,13 @@ const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
     const location = useLocation();
 
     const menuItems = [
-        { icon: User, label: "Profile", path: "/profile", hideOnMobile: true },
+        { icon: ProfileNavIcon, label: "Profile", path: "/profile", hideOnMobile: true },
         { icon: Home, label: "Home", path: "/home", hideOnMobile: true },
         { icon: Briefcase, label: "Opportunities", path: "/opportunities", hideOnDesktop: true },
         { icon: BookOpen, label: "Resources", path: "/resources", hideOnMobile: true },
         { icon: MessageSquare, label: "Forum", path: "/forum", hideOnMobile: true },
         { icon: Zap, label: "Spotlight", path: "/main" },
-        { icon: Users, label: "Start a community", path: "/community/create" },
+        { icon: CommunityNavIcon, label: "Community", path: "/community/create" },
         { icon: Settings, label: "Settings", path: "/settings" },
     ];
 
@@ -33,7 +35,7 @@ const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
             )}
             <aside
                 className={cn(
-                    "fixed left-0 top-14 md:top-16 bottom-0 z-40 bg-background border-r border-border transition-all duration-300 ease-in-out scrollbar-none overflow-y-auto",
+                    "fixed left-0 top-14 md:top-16 bottom-0 z-40 bg-background border-r border-white/20 transition-all duration-300 ease-in-out scrollbar-none overflow-y-auto",
                     isOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0",
                     isOpen ? "md:w-[240px]" : "md:w-[72px]",
                     "w-[240px]"
