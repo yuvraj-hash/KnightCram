@@ -718,7 +718,7 @@ const WhyMatchesSection = () => {
 const OutroSection = () => {
     return (
         <Section id="outro" className="pt-6 md:pt-10 pb-12 md:pb-20 text-center bg-gradient-to-b from-background to-primary/5">
-            <div className="max-w-5xl mx-auto space-y-12">
+            <div className="max-w-5xl mx-auto space-y-6">
                 <FadeIn className="space-y-2">
                     <h2 className="text-3xl md:text-4xl lg:text-5xl font-display font-bold text-foreground">
                         Take What Helps.
@@ -740,7 +740,7 @@ const OutroSection = () => {
                 </div>
 
                 <FadeIn delay={0.3}>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-3xl mx-auto py-8">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-3xl mx-auto py-2">
                         <motion.div
                             initial={{ opacity: 0, y: 20 }}
                             whileInView={{ opacity: 1, y: 0 }}
