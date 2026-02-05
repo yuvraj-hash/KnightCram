@@ -115,6 +115,17 @@ export default function SignInPage() {
             <div className="w-full lg:w-[40%] flex flex-col items-center justify-center p-8 bg-background relative">
                 <div className="w-full max-w-[360px] border-none shadow-none sm:border sm:border-white/10 sm:shadow-2xl sm:bg-background/80 sm:backdrop-blur-xl rounded-xl overflow-hidden z-10">
 
+                    {/* Mobile Branding (Visible only on < lg screens) */}
+                    <div className="flex flex-col items-center gap-4 mb-8 lg:hidden animate-fade-in-down pt-4">
+                        <div className="flex items-center gap-3">
+                            <img src="/Logo.png" alt="KnightCram Logo" className="w-12 h-12 object-contain" />
+                            <span className="text-4xl font-['Bubblegum_Sans'] text-white pt-2">KnightCram</span>
+                        </div>
+                        <p className="text-sm text-zinc-400 text-center max-w-xs font-medium">
+                            Where Night Owls Unite & Thrive
+                        </p>
+                    </div>
+
                     {/* Header Section */}
                     <div className="p-6 pb-2 relative overflow-hidden text-center">
 

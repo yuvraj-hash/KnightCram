@@ -199,13 +199,14 @@ const Index = () => {
 
 
           {/* Mobile Branding (Visible only on < lg screens) */}
-          <div className="flex flex-col items-center gap-4 mb-8 lg:hidden animate-fade-in-down">
+          {/* Mobile Branding (Visible only on < lg screens) */}
+          <div className="flex flex-col items-center gap-4 mb-10 lg:hidden animate-fade-in-down">
             <div className="flex items-center gap-3">
-              <img src="/Logo.png" alt="KnightCram Logo" className="w-10 h-10 object-contain" />
+              <img src="/Logo.png" alt="KnightCram Logo" className="w-12 h-12 object-contain" />
               <span className="text-4xl font-['Bubblegum_Sans'] text-white pt-2">KnightCram</span>
             </div>
-            <p className="text-sm text-zinc-400 text-center max-w-xs">
-              Illuminating what others overlook.
+            <p className="text-sm text-zinc-400 text-center max-w-xs font-medium">
+              Where Night Owls Unite & Thrive
             </p>
           </div>
 
@@ -417,7 +418,7 @@ const Index = () => {
             </div>
 
             {/* Mobile Footer Text (Visible only on < lg screens) */}
-            <div className="mt-6 text-center lg:hidden pb-2">
+            <div className="mt-8 text-center lg:hidden pb-8 px-4">
               <p className="text-[10px] text-zinc-500 font-medium leading-relaxed">
                 By continuing, you agree to our{" "}
                 <Link to="/user-agreement" className="text-blue-500 underline hover:text-blue-400 transition-colors">
