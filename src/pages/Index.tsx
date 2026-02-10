@@ -145,7 +145,7 @@ const Index = () => {
     <main className="flex min-h-screen w-full bg-background">
 
       {/* Left Side - Branding/Visuals */}
-      <div className="hidden lg:flex w-[60%] relative flex-col items-center justify-center bg-zinc-950 overflow-hidden border-r border-white/5">
+      <div className="hidden lg:flex w-[60%] h-screen sticky top-0 flex-col items-center justify-center bg-zinc-950 overflow-hidden border-r border-white/5">
         {/* Background Decoration */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-amber-500/10 rounded-full blur-[120px] pointer-events-none opacity-50" />
 

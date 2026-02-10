@@ -1,13 +1,17 @@
 import { Home, Layers, MessageSquareText, User, PlusSquare } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const BottomNav = () => {
+    const navigate = useNavigate();
+    const location = useLocation();
+
     const navItems = [
-        { icon: Home, label: "Home", active: false, ariaLabel: "Home page" },
-        { icon: Layers, label: "Materials", active: false, ariaLabel: "Study materials" },
-        { icon: PlusSquare, label: "Create", active: false, ariaLabel: "Create new post" },
-        { icon: MessageSquareText, label: "Forum", active: false, ariaLabel: "Discussion forum" },
-        { icon: User, label: "Profile", active: false, ariaLabel: "User profile" },
+        { icon: Home, label: "Home", path: "/main", active: location.pathname === "/main" || location.pathname === "/home", ariaLabel: "Home page" },
+        { icon: Layers, label: "Materials", path: "/resources", active: location.pathname === "/resources", ariaLabel: "Study materials" },
+        { icon: PlusSquare, label: "Create", path: "/community/create", active: location.pathname === "/community/create", ariaLabel: "Create new post" },
+        { icon: MessageSquareText, label: "Forum", path: "/forum", active: location.pathname === "/forum", ariaLabel: "Discussion forum" },
+        { icon: User, label: "Profile", path: "/profile", active: location.pathname.startsWith("/profile"), ariaLabel: "User profile" },
     ];
 
     return (
@@ -20,6 +24,7 @@ const BottomNav = () => {
                 <Button
                     key={item.label}
                     variant="ghost"
+                    onClick={() => navigate(item.path)}
                     className={`flex flex-col items-center justify-center gap-1 h-full w-full rounded-none hover:bg-transparent transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background text-muted-foreground hover:text-foreground`
                     }
                     aria-label={item.ariaLabel}
