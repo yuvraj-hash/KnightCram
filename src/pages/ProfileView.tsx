@@ -30,7 +30,7 @@ const ProfileView = () => {
     <main className="min-h-[calc(100vh-4rem)] bg-gradient-to-b from-background to-background/50">
       <div className="max-w-4xl mx-auto">
         {/* Profile Card Section */}
-        <div className="relative px-6 mb-6 pt-6">
+        <div className="relative px-0 md:px-6 mb-6 pt-0 md:pt-6">
           <ProfileHeader
             profile={profile}
             onSave={async (updatedData: any) => {
@@ -40,42 +40,42 @@ const ProfileView = () => {
             }}
           />
 
-          <div className="bg-white/5 backdrop-blur-xl rounded-b-2xl border-x border-b border-white/10 shadow-2xl px-6 pb-6 pt-6 -mt-4">
+          <div className="bg-white/5 backdrop-blur-xl rounded-b-none md:rounded-b-2xl border-x-0 md:border-x border-b border-white/10 shadow-2xl px-4 md:px-6 pb-6 pt-0 -mt-2">
             {/* Stats Section */}
-            <div className="grid grid-cols-3 md:grid-cols-5 gap-4 mt-8 pt-6 border-t border-white/10">
-              <div className="text-center">
-                <div className="text-2xl font-bold text-white">1.2K</div>
-                <div className="text-xs text-white/50 mt-1">Connections</div>
-              </div>
-              <div className="text-center">
-                <div className="text-2xl font-bold text-white">45</div>
+            <div className="flex overflow-x-auto md:grid md:grid-cols-5 gap-6 md:gap-4 mt-0 pt-4 border-t border-white/10 scrollbar-hide snap-x pb-2 md:pb-0">
+              <div className="text-center snap-center shrink-0 min-w-[70px]">
+                <div className="text-xl md:text-2xl font-bold text-white">45</div>
                 <div className="text-xs text-white/50 mt-1">Posts</div>
               </div>
-              <div className="text-center">
-                <div className="text-2xl font-bold text-white">3.5K</div>
+              <div className="text-center snap-center shrink-0 min-w-[70px]">
+                <div className="text-xl md:text-2xl font-bold text-white">3.5K</div>
                 <div className="text-xs text-white/50 mt-1">Followers</div>
               </div>
-              <div className="text-center">
-                <div className="text-2xl font-bold text-white">{completionPercentage}%</div>
-                <div className="text-xs text-white/50 mt-1">Complete</div>
+              <div className="text-center snap-center shrink-0 min-w-[70px]">
+                <div className="text-xl md:text-2xl font-bold text-white">520</div>
+                <div className="text-xs text-white/50 mt-1">Followings</div>
               </div>
-              <div className="text-center">
-                <div className="text-2xl font-bold text-white">27</div>
-                <div className="text-xs text-white/50 mt-1">Endorsements</div>
+              <div className="text-center snap-center shrink-0 min-w-[70px]">
+                <div className="text-xl md:text-2xl font-bold text-white">1.8K</div>
+                <div className="text-xs text-white/50 mt-1 whitespace-nowrap md:whitespace-normal">Resource Interactions</div>
+              </div>
+              <div className="text-center snap-center shrink-0 min-w-[70px]">
+                <div className="text-xl md:text-2xl font-bold text-white">85</div>
+                <div className="text-xs text-white/50 mt-1">Activity</div>
               </div>
             </div>
           </div>
         </div>
 
         {/* Main Content Grid */}
-        <div className="px-6 grid md:grid-cols-3 gap-6 pb-16">
+        <div className="px-4 md:px-6 grid md:grid-cols-3 gap-6 pb-20 md:pb-16">
           {/* Left Column - Main Content */}
           <div className="md:col-span-2 space-y-6">
             {/* Profile Strength Card */}
-            <div className="bg-white/5 backdrop-blur-xl rounded-2xl border border-white/10 p-6 shadow-xl">
+            <div className="bg-white/5 backdrop-blur-xl rounded-2xl border border-white/10 p-4 md:p-6 shadow-xl">
               <div className="flex items-center justify-between mb-4">
-                <h2 className="text-xl font-bold">Profile Strength</h2>
-                <div className="text-3xl font-bold bg-gradient-to-r from-green-400 to-blue-400 bg-clip-text text-transparent">{completionPercentage}%</div>
+                <h2 className="text-lg md:text-xl font-bold">Profile Strength</h2>
+                <div className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-green-400 to-blue-400 bg-clip-text text-transparent">{completionPercentage}%</div>
               </div>
               <div className="w-full bg-white/10 rounded-full h-2 mb-4">
                 <div
@@ -83,14 +83,14 @@ const ProfileView = () => {
                   style={{ width: `${completionPercentage}%` }}
                 ></div>
               </div>
-              <p className="text-sm text-white/60 mb-4">
+              <p className="text-xs md:text-sm text-white/60 mb-4">
                 {completionPercentage < 60
                   ? "Complete your profile to unlock campus features and increase visibility."
                   : completionPercentage < 80
                     ? "Almost there! Just a few more details needed."
                     : "Excellent! Your profile is complete and stands out."}
               </p>
-              <div className="grid grid-cols-3 gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                 <div className="flex items-center gap-2 text-sm">
                   <span className="w-5 h-5 rounded-full bg-green-500/20 flex items-center justify-center text-green-400 font-bold text-xs">✓</span>
                   <span className="text-white/70">Basic Info</span>
@@ -111,12 +111,12 @@ const ProfileView = () => {
             </div>
 
             {/* Tabs Navigation */}
-            <div className="flex gap-1 bg-white/5 backdrop-blur-xl rounded-xl border border-white/10 p-1">
+            <div className="flex gap-1 bg-white/5 backdrop-blur-xl rounded-xl border border-white/10 p-1 overflow-x-auto md:overflow-visible scrollbar-hide">
               {(["posts", "skills", "experience", "activity"] as const).map((tab) => (
                 <button
                   key={tab}
                   onClick={() => setActiveTab(tab)}
-                  className={`flex-1 px-4 py-2 rounded-lg font-medium text-sm transition ${activeTab === tab
+                  className={`flex-1 px-4 py-2 rounded-lg font-medium text-sm transition whitespace-nowrap min-w-[100px] md:min-w-0 ${activeTab === tab
                     ? "bg-blue-600 text-white shadow-lg"
                     : "text-white/60 hover:text-white/80"
                     }`}
@@ -128,8 +128,8 @@ const ProfileView = () => {
 
             {/* Content Sections */}
             {activeTab === "posts" && (
-              <div className="bg-white/5 backdrop-blur-xl rounded-2xl border border-white/10 p-6 shadow-xl text-center">
-                <div className="py-12">
+              <div className="bg-white/5 backdrop-blur-xl rounded-2xl border border-white/10 p-4 md:p-6 shadow-xl text-center">
+                <div className="py-8 md:py-12">
                   <div className="text-4xl mb-4">📝</div>
                   <h3 className="text-lg font-semibold mb-2">No posts yet</h3>
                   <p className="text-white/60 text-sm mb-4">Share your achievements, insights, and resources with the community</p>
@@ -141,13 +141,13 @@ const ProfileView = () => {
             )}
 
             {activeTab === "skills" && (
-              <div className="bg-white/5 backdrop-blur-xl rounded-2xl border border-white/10 p-6 shadow-xl">
+              <div className="bg-white/5 backdrop-blur-xl rounded-2xl border border-white/10 p-4 md:p-6 shadow-xl">
                 <h3 className="font-bold text-lg mb-4">Skills & Endorsements</h3>
-                <div className="grid grid-cols-2 gap-3">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   {["Problem Solving", "Leadership", "Communication", "Analytics"].map((skill) => (
-                    <div key={skill} className="bg-white/5 border border-white/10 rounded-lg p-3 hover:bg-white/10 transition cursor-pointer">
+                    <div key={skill} className="bg-white/5 border border-white/10 rounded-lg p-3 hover:bg-white/10 transition cursor-pointer flex justify-between items-center sm:block">
                       <div className="font-medium text-sm">{skill}</div>
-                      <div className="text-xs text-white/50 mt-1">8 endorsements</div>
+                      <div className="text-xs text-white/50 sm:mt-1">8 endorsements</div>
                     </div>
                   ))}
                 </div>
@@ -155,8 +155,8 @@ const ProfileView = () => {
             )}
 
             {activeTab === "experience" && (
-              <div className="bg-white/5 backdrop-blur-xl rounded-2xl border border-white/10 p-6 shadow-xl text-center">
-                <div className="py-12">
+              <div className="bg-white/5 backdrop-blur-xl rounded-2xl border border-white/10 p-4 md:p-6 shadow-xl text-center">
+                <div className="py-8 md:py-12">
                   <div className="text-4xl mb-4">💼</div>
                   <h3 className="text-lg font-semibold mb-2">No experience added yet</h3>
                   <p className="text-white/60 text-sm">Add your work experience and achievements</p>
@@ -165,7 +165,7 @@ const ProfileView = () => {
             )}
 
             {activeTab === "activity" && (
-              <div className="bg-white/5 backdrop-blur-xl rounded-2xl border border-white/10 p-6 shadow-xl">
+              <div className="bg-white/5 backdrop-blur-xl rounded-2xl border border-white/10 p-4 md:p-6 shadow-xl">
                 <h3 className="font-bold text-lg mb-4">Recent Activity</h3>
                 <div className="space-y-4">
                   <div className="flex gap-3 pb-4 border-b border-white/10">
@@ -197,7 +197,7 @@ const ProfileView = () => {
           {/* Right Sidebar */}
           <div className="space-y-6">
             {/* About Card */}
-            <div className="bg-white/5 backdrop-blur-xl rounded-2xl border border-white/10 p-6 shadow-xl">
+            <div className="bg-white/5 backdrop-blur-xl rounded-2xl border border-white/10 p-4 md:p-6 shadow-xl">
               <h3 className="font-bold text-lg mb-4">About</h3>
               <p className="text-sm text-white/70 leading-relaxed">
                 {profile.college
@@ -207,7 +207,7 @@ const ProfileView = () => {
             </div>
 
             {/* Joined Date Card */}
-            <div className="bg-white/5 backdrop-blur-xl rounded-2xl border border-white/10 p-6 shadow-xl">
+            <div className="bg-white/5 backdrop-blur-xl rounded-2xl border border-white/10 p-4 md:p-6 shadow-xl">
               <div className="flex items-center gap-3 text-white/70">
                 <Calendar size={18} />
                 <div className="text-sm">
@@ -218,7 +218,7 @@ const ProfileView = () => {
             </div>
 
             {/* CTA Card */}
-            <div className="bg-gradient-to-br from-blue-600 to-purple-600 rounded-2xl p-6 shadow-xl border border-white/10">
+            <div className="bg-gradient-to-br from-blue-600 to-purple-600 rounded-2xl p-4 md:p-6 shadow-xl border border-white/10">
               <h3 className="font-bold text-lg mb-2">Complete Your Profile</h3>
               <p className="text-sm text-white/80 mb-4">Increase profile visibility and unlock exclusive features</p>
               <button className="w-full px-4 py-2 rounded-full bg-white text-blue-600 font-medium hover:bg-white/90 transition">

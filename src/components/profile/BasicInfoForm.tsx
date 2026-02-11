@@ -120,11 +120,11 @@ const BasicInfoForm: React.FC<BasicInfoFormProps> = ({ profile, onSave }) => {
 
       <div className="p-6 space-y-6">
         {/* Full Name */}
-        <div className="flex items-center gap-4">
-          <label className="w-1/3 text-sm font-medium text-white text-right">
+        <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-4">
+          <label className="w-full md:w-1/3 text-sm font-medium text-white text-left md:text-right">
             Full Name
           </label>
-          <div className="w-2/3 max-w-md">
+          <div className="w-full md:w-2/3 max-w-md">
             <input
               placeholder="Rahul Sharma"
               value={name}
@@ -139,7 +139,7 @@ const BasicInfoForm: React.FC<BasicInfoFormProps> = ({ profile, onSave }) => {
                   });
                 }
               }}
-              className={`w-full px-3 py-2 text-sm rounded-lg bg-white/5 border text-white placeholder-white/50 focus:outline-none transition ${errors.name ? "border-red-500 focus:border-red-500" : "border-white/10 focus:border-blue-500"
+              className={`w-full px-3 py-3 md:py-2 text-base md:text-sm rounded-lg bg-white/5 border text-white placeholder-white/50 focus:outline-none transition ${errors.name ? "border-red-500 focus:border-red-500" : "border-white/10 focus:border-blue-500"
                 }`}
             />
             {errors.name && <p className="text-red-400 text-xs mt-1">{errors.name}</p>}
@@ -147,11 +147,11 @@ const BasicInfoForm: React.FC<BasicInfoFormProps> = ({ profile, onSave }) => {
         </div>
 
         {/* User ID / Handle */}
-        <div className="flex items-center gap-4">
-          <label className="w-1/3 text-sm font-medium text-white text-right">
+        <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-4">
+          <label className="w-full md:w-1/3 text-sm font-medium text-white text-left md:text-right">
             User ID
           </label>
-          <div className="w-2/3 max-w-md">
+          <div className="w-full md:w-2/3 max-w-md">
             <div className="relative">
               <div className="absolute left-3 top-1/2 -translate-y-1/2 text-white/50 font-medium text-sm">@</div>
               <input
@@ -168,7 +168,7 @@ const BasicInfoForm: React.FC<BasicInfoFormProps> = ({ profile, onSave }) => {
                     });
                   }
                 }}
-                className={`w-full pl-8 pr-3 py-2 text-sm rounded-lg bg-white/5 border text-white placeholder-white/50 focus:outline-none transition ${errors.handle ? "border-red-500 focus:border-red-500" : "border-white/10 focus:border-blue-500"
+                className={`w-full pl-8 pr-3 py-3 md:py-2 text-base md:text-sm rounded-lg bg-white/5 border text-white placeholder-white/50 focus:outline-none transition ${errors.handle ? "border-red-500 focus:border-red-500" : "border-white/10 focus:border-blue-500"
                   }`}
               />
             </div>
@@ -181,11 +181,11 @@ const BasicInfoForm: React.FC<BasicInfoFormProps> = ({ profile, onSave }) => {
         </div>
 
         {/* Email */}
-        <div className="flex items-center gap-4">
-          <label className="w-1/3 text-sm font-medium text-white text-right">
+        <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-4">
+          <label className="w-full md:w-1/3 text-sm font-medium text-white text-left md:text-right">
             Email Address
           </label>
-          <div className="w-2/3 max-w-md">
+          <div className="w-full md:w-2/3 max-w-md">
             <input
               placeholder="your@email.com"
               type="email"
@@ -201,7 +201,7 @@ const BasicInfoForm: React.FC<BasicInfoFormProps> = ({ profile, onSave }) => {
                   });
                 }
               }}
-              className={`w-full px-3 py-2 text-sm rounded-lg bg-white/5 border text-white placeholder-white/50 focus:outline-none transition ${errors.email ? "border-red-500 focus:border-red-500" : "border-white/10 focus:border-blue-500"
+              className={`w-full px-3 py-3 md:py-2 text-base md:text-sm rounded-lg bg-white/5 border text-white placeholder-white/50 focus:outline-none transition ${errors.email ? "border-red-500 focus:border-red-500" : "border-white/10 focus:border-blue-500"
                 }`}
             />
             {errors.email && <p className="text-red-400 text-xs mt-1">{errors.email}</p>}
@@ -209,11 +209,11 @@ const BasicInfoForm: React.FC<BasicInfoFormProps> = ({ profile, onSave }) => {
         </div>
 
         {/* Phone */}
-        <div className="flex items-center gap-4">
-          <label className="w-1/3 text-sm font-medium text-white text-right">
+        <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-4">
+          <label className="w-full md:w-1/3 text-sm font-medium text-white text-left md:text-right">
             Phone Number
           </label>
-          <div className="w-2/3 max-w-md">
+          <div className="w-full md:w-2/3 max-w-md">
             <input
               placeholder="+919876543210"
               value={phone}
@@ -228,7 +228,7 @@ const BasicInfoForm: React.FC<BasicInfoFormProps> = ({ profile, onSave }) => {
                   });
                 }
               }}
-              className={`w-full px-3 py-2 text-sm rounded-lg bg-white/5 border text-white placeholder-white/50 focus:outline-none transition ${errors.phone ? "border-red-500 focus:border-red-500" : "border-white/10 focus:border-blue-500"
+              className={`w-full px-3 py-3 md:py-2 text-base md:text-sm rounded-lg bg-white/5 border text-white placeholder-white/50 focus:outline-none transition ${errors.phone ? "border-red-500 focus:border-red-500" : "border-white/10 focus:border-blue-500"
                 }`}
             />
             {errors.phone && <p className="text-red-400 text-xs mt-1">{errors.phone}</p>}

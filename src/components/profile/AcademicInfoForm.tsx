@@ -9,14 +9,14 @@ interface AcademicInfoFormProps {
 
 // Helper for rendering horizontal form field
 const FormField = ({ label, value, field, placeholder, onFocus, onChange, className = "" }: any) => (
-  <div className={`flex items-center gap-4 ${className}`}>
-    <label className="w-1/3 text-sm font-medium text-white text-right">{label}</label>
-    <div className="w-2/3 max-w-md">
+  <div className={`flex flex-col md:flex-row md:items-center gap-2 md:gap-4 ${className}`}>
+    <label className="w-full md:w-1/3 text-sm font-medium text-white text-left md:text-right">{label}</label>
+    <div className="w-full md:w-2/3 max-w-md">
       <input
         value={value}
         onFocus={() => onFocus(field)}
         onChange={(e) => onChange(field, e.target.value)}
-        className="w-full px-3 py-2 text-sm rounded-lg bg-white/5 border border-white/10 text-white placeholder-white/50 focus:border-blue-500 focus:outline-none transition"
+        className="w-full px-3 py-3 md:py-2 text-base md:text-sm rounded-lg bg-white/5 border border-white/10 text-white placeholder-white/50 focus:border-blue-500 focus:outline-none transition"
         placeholder={placeholder}
       />
     </div>
@@ -127,14 +127,14 @@ const AcademicInfoForm: React.FC<AcademicInfoFormProps> = ({ profile, onSave }) 
           <FormField label="Course" value={academicInfo.course} field="course" placeholder="e.g., B.E. Computer Science" onFocus={setFocusedField} onChange={handleInputChange} />
           <FormField label="Stream" value={academicInfo.stream} field="stream" placeholder="e.g., Engineering" onFocus={setFocusedField} onChange={handleInputChange} />
 
-          <div className="flex items-center gap-4">
-            <label className="w-1/3 text-sm font-medium text-white text-right">Academic Year</label>
-            <div className="w-2/3 max-w-md">
+          <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-4">
+            <label className="w-full md:w-1/3 text-sm font-medium text-white text-left md:text-right">Academic Year</label>
+            <div className="w-full md:w-2/3 max-w-md">
               <input
                 value={academicInfo.academicYear}
                 onFocus={() => setFocusedField("academicYear")}
                 onChange={(e) => handleInputChange("academicYear", e.target.value)}
-                className="w-full px-3 py-2 text-sm rounded-lg bg-white/5 border border-white/10 text-white placeholder-white/50 focus:border-blue-500 focus:outline-none transition"
+                className="w-full px-3 py-3 md:py-2 text-base md:text-sm rounded-lg bg-white/5 border border-white/10 text-white placeholder-white/50 focus:border-blue-500 focus:outline-none transition"
                 placeholder="e.g., 3rd Year"
               />
               <p className="text-xs text-white/50 mt-1">Used for campus feed personalization.</p>
@@ -177,15 +177,15 @@ const AcademicInfoForm: React.FC<AcademicInfoFormProps> = ({ profile, onSave }) 
           <FormField label="Designation (Optional)" value={academicInfo.designation} field="designation" placeholder="e.g., Founder, CEO" onFocus={setFocusedField} onChange={handleInputChange} />
           <FormField label="Industry" value={academicInfo.industry} field="industry" placeholder="e.g., SaaS" onFocus={setFocusedField} onChange={handleInputChange} />
 
-          <div className="flex items-start gap-4">
-            <label className="w-1/3 text-sm font-medium text-white text-right mt-2">What you do? (About your work/business)</label>
-            <div className="w-2/3 max-w-md">
+          <div className="flex flex-col md:flex-row md:items-start gap-2 md:gap-4">
+            <label className="w-full md:w-1/3 text-sm font-medium text-white text-left md:text-right mt-0 md:mt-2">What you do? (About your work/business)</label>
+            <div className="w-full md:w-2/3 max-w-md">
               <textarea
                 value={academicInfo.businessDescription}
                 onFocus={() => setFocusedField("businessDescription")}
                 onChange={(e) => handleInputChange("businessDescription", e.target.value)}
                 rows={4}
-                className="w-full px-3 py-2 text-sm rounded-lg bg-white/5 border border-white/10 text-white placeholder-white/50 focus:border-blue-500 focus:outline-none transition resize-none"
+                className="w-full px-3 py-3 md:py-2 text-base md:text-sm rounded-lg bg-white/5 border border-white/10 text-white placeholder-white/50 focus:border-blue-500 focus:outline-none transition resize-none"
                 placeholder="Describe your business and what you do..."
               />
             </div>

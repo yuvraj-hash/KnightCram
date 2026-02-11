@@ -118,7 +118,7 @@ const ProfileOnboarding = () => {
 
             {/* Unified Save Button */}
             <div className="mt-8 p-6 rounded-2xl bg-gradient-to-r from-blue-600 to-purple-600 shadow-xl border border-white/10">
-              <div className="flex items-center justify-between gap-4">
+              <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                 <div>
                   <h4 className="font-bold text-lg">Ready to share your profile?</h4>
                   <p className="text-sm text-white/80 mt-1">Save all your changes and make it live</p>
@@ -126,7 +126,7 @@ const ProfileOnboarding = () => {
                 <button
                   onClick={handleSave}
                   disabled={isSaving || !isProfileValid()}
-                  className="flex items-center gap-2 px-8 py-3 rounded-xl bg-white text-blue-600 font-bold hover:bg-white/90 disabled:bg-white/50 disabled:cursor-not-allowed transition duration-200 whitespace-nowrap flex-shrink-0"
+                  className="w-full md:w-auto flex items-center justify-center gap-2 px-8 py-4 md:py-3 rounded-xl bg-white text-blue-600 font-bold hover:bg-white/90 disabled:bg-white/50 disabled:cursor-not-allowed transition duration-200 whitespace-nowrap flex-shrink-0"
                 >
                   <Save size={20} />
                   {isSaving ? "Saving..." : "Save Profile"}
