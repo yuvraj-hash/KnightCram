@@ -6,6 +6,7 @@ import { Eye, EyeOff, Lock, Mail, User, Loader2, AlertCircle, CheckCircle2, Shie
 import { simulateSignUp, simulateGoogleAuth } from "@/lib/authService";
 import { cn } from "@/lib/utils";
 
+
 const Index = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -16,6 +17,7 @@ const Index = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
+
 
   // Focus states for floating labels
   const [nameFocused, setNameFocused] = useState(false);
@@ -411,7 +413,7 @@ const Index = () => {
             <div className="mt-4 text-center text-sm text-muted-foreground">
               <div className="pt-3 border-t border-white/5 flex gap-1 justify-center">
                 <span>Already have an account?</span>
-                <Link to="/signin" className="text-primary hover:underline font-medium">
+                <Link to="/signin" className="text-primary hover:underline font-medium focus:outline-none">
                   Login
                 </Link>
               </div>
@@ -434,6 +436,7 @@ const Index = () => {
           </div>
         </div>
       </div>
+
     </main>
   );
 };

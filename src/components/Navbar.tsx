@@ -1,14 +1,15 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
-import LoginModal from "@/components/auth/LoginModal";
+
 import SignUpModal from "@/components/auth/SignUpModal";
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [isLoginOpen, setIsLoginOpen] = useState(false);
   const [isSignUpOpen, setIsSignUpOpen] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -35,8 +36,8 @@ const Navbar = () => {
         <div className="container mx-auto px-4 md:px-6">
           <div className="flex items-center justify-between h-14 md:h-16">
             {/* Logo - slightly larger with very tight spacing */}
-            <a 
-              href="/" 
+            <a
+              href="/"
               className="flex items-center gap-1 md:gap-2 group focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background rounded-lg p-1"
               aria-label="KnightCram homepage"
             >
@@ -77,7 +78,7 @@ const Navbar = () => {
               <Button
                 variant="heroOutline"
                 size="sm"
-                onClick={() => setIsLoginOpen(true)}
+                onClick={() => navigate("/signin")}
                 className="transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background"
                 aria-label="Sign in to your account"
               >
@@ -133,7 +134,7 @@ const Navbar = () => {
                   size="sm"
                   className="w-full transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background"
                   onClick={() => {
-                    setIsLoginOpen(true);
+                    navigate("/signin");
                     setIsMobileMenuOpen(false);
                   }}
                   aria-label="Sign in to your account"
@@ -158,13 +159,12 @@ const Navbar = () => {
         </div>
       </nav>
 
-      <LoginModal isOpen={isLoginOpen} onOpenChange={setIsLoginOpen} />
       <SignUpModal
         isOpen={isSignUpOpen}
         onOpenChange={setIsSignUpOpen}
         onSwitchToLogin={() => {
           setIsSignUpOpen(false);
-          setIsLoginOpen(true);
+          navigate("/signin");
         }}
       />
     </>

@@ -10,6 +10,7 @@ import ProfileRouter from "./pages/ProfileRouter";
 import ProfileOnboarding from "./pages/ProfileOnboarding";
 import ProfileView from "./pages/ProfileView";
 import UserProfile from "./pages/UserProfile";
+import SignInPage from "./pages/SignInPage";
 
 const queryClient = new QueryClient();
 
@@ -23,6 +24,8 @@ const App = () => (
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Index />} />
+          <Route path="/signin" element={<SignInPage />} />
+          <Route path="/login" element={<SignInPage />} />
 
           <Route element={<MainLayout />}>
             <Route path="/main" element={<MainPage />} />
