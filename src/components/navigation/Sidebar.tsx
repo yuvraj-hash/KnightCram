@@ -13,7 +13,7 @@ const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
     const location = useLocation();
 
     const menuItems = [
-        { icon: ProfileNavIcon, label: "Profile", path: "/profile", hideOnMobile: true },
+        { icon: ProfileNavIcon, label: "Profile", path: "/profile/view", hideOnMobile: true },
         { icon: Home, label: "Home", path: "/main", hideOnMobile: true },
         { icon: Briefcase, label: "Opportunities", path: "/opportunities", hideOnDesktop: true },
         { icon: BookOpen, label: "Resources", path: "/resources", hideOnMobile: true },

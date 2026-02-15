@@ -11,7 +11,7 @@ const BottomNav = () => {
         { icon: Layers, label: "Materials", path: "/resources", active: location.pathname === "/resources", ariaLabel: "Study materials" },
         { icon: PlusSquare, label: "Create", path: "/community/create", active: location.pathname === "/community/create", ariaLabel: "Create new post" },
         { icon: MessageSquareText, label: "Forum", path: "/forum", active: location.pathname === "/forum", ariaLabel: "Discussion forum" },
-        { icon: User, label: "Profile", path: "/profile", active: location.pathname.startsWith("/profile"), ariaLabel: "User profile" },
+        { icon: User, label: "Profile", path: "/profile/view", active: location.pathname.startsWith("/profile/view"), ariaLabel: "User profile" },
     ];
 
     return (

@@ -42,26 +42,26 @@ const ProfileView = () => {
 
           <div className="bg-white/5 backdrop-blur-xl rounded-b-none md:rounded-b-2xl border-x-0 md:border-x border-b border-white/10 shadow-2xl px-4 md:px-6 pb-6 pt-0 -mt-2">
             {/* Stats Section */}
-            <div className="flex overflow-x-auto md:grid md:grid-cols-5 gap-6 md:gap-4 mt-0 pt-4 border-t border-white/10 scrollbar-hide snap-x pb-2 md:pb-0">
-              <div className="text-center snap-center shrink-0 min-w-[70px]">
-                <div className="text-xl md:text-2xl font-bold text-white">45</div>
-                <div className="text-xs text-white/50 mt-1">Posts</div>
+            <div className="grid grid-cols-5 gap-2 md:gap-4 mt-0 pt-4 border-t border-white/10 pb-2 md:pb-0">
+              <div className="text-center">
+                <div className="text-lg md:text-2xl font-bold text-white">45</div>
+                <div className="text-[10px] md:text-xs text-white/50 mt-1">Posts</div>
               </div>
-              <div className="text-center snap-center shrink-0 min-w-[70px]">
-                <div className="text-xl md:text-2xl font-bold text-white">3.5K</div>
-                <div className="text-xs text-white/50 mt-1">Followers</div>
+              <div className="text-center">
+                <div className="text-lg md:text-2xl font-bold text-white">3.5K</div>
+                <div className="text-[10px] md:text-xs text-white/50 mt-1">Followers</div>
               </div>
-              <div className="text-center snap-center shrink-0 min-w-[70px]">
-                <div className="text-xl md:text-2xl font-bold text-white">520</div>
-                <div className="text-xs text-white/50 mt-1">Followings</div>
+              <div className="text-center">
+                <div className="text-lg md:text-2xl font-bold text-white">520</div>
+                <div className="text-[10px] md:text-xs text-white/50 mt-1">Followings</div>
               </div>
-              <div className="text-center snap-center shrink-0 min-w-[70px]">
-                <div className="text-xl md:text-2xl font-bold text-white">1.8K</div>
-                <div className="text-xs text-white/50 mt-1 whitespace-nowrap md:whitespace-normal">Resource Interactions</div>
+              <div className="text-center">
+                <div className="text-lg md:text-2xl font-bold text-white">1.8K</div>
+                <div className="text-[10px] md:text-xs text-white/50 mt-1 leading-tight">Rx Interactions</div>
               </div>
-              <div className="text-center snap-center shrink-0 min-w-[70px]">
-                <div className="text-xl md:text-2xl font-bold text-white">85</div>
-                <div className="text-xs text-white/50 mt-1">Activity</div>
+              <div className="text-center">
+                <div className="text-lg md:text-2xl font-bold text-white">85</div>
+                <div className="text-[10px] md:text-xs text-white/50 mt-1">Activity</div>
               </div>
             </div>
           </div>
