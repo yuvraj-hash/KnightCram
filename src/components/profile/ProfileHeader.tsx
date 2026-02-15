@@ -58,7 +58,7 @@ const ProfileHeader: React.FC<{ profile: any; onSave: (p: any) => void; saving?:
           {isOwner && (
             <button
               onClick={() => setActiveModal("cover")}
-              className="absolute top-4 right-4 p-2 rounded-full bg-black/30 hover:bg-black/50 text-white backdrop-blur-md transition-all"
+              className="absolute bottom-2 md:bottom-4 right-4 p-2 rounded-full bg-black/30 hover:bg-black/50 text-white backdrop-blur-md transition-all"
               title="Update Cover Photo"
             >
               <Camera size={16} />
