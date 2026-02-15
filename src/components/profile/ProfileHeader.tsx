@@ -61,7 +61,7 @@ const ProfileHeader: React.FC<{ profile: any; onSave: (p: any) => void; saving?:
               className="absolute top-4 right-4 p-2 rounded-full bg-black/30 hover:bg-black/50 text-white backdrop-blur-md transition-all"
               title="Update Cover Photo"
             >
-              <Edit2 size={16} />
+              <Camera size={16} />
             </button>
           )}
         </div>

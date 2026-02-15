@@ -123,14 +123,22 @@ const ProfileOnboarding = () => {
                   <h4 className="font-bold text-lg">Ready to share your profile?</h4>
                   <p className="text-sm text-white/80 mt-1">Save all your changes and make it live</p>
                 </div>
-                <button
-                  onClick={handleSave}
-                  disabled={isSaving || !isProfileValid()}
-                  className="w-full md:w-auto flex items-center justify-center gap-2 px-8 py-4 md:py-3 rounded-xl bg-white text-blue-600 font-bold hover:bg-white/90 disabled:bg-white/50 disabled:cursor-not-allowed transition duration-200 whitespace-nowrap flex-shrink-0"
-                >
-                  <Save size={20} />
-                  {isSaving ? "Saving..." : "Save Profile"}
-                </button>
+                <div className="w-full md:w-auto flex flex-col md:flex-row gap-3 md:gap-4 md:items-center">
+                  <button
+                    onClick={() => nav("/profile/view")}
+                    className="w-full md:w-auto order-2 md:order-1 flex items-center justify-center gap-2 px-8 py-3 rounded-xl bg-white/10 text-white font-bold hover:bg-white/20 transition duration-200 whitespace-nowrap border border-white/20"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    onClick={handleSave}
+                    disabled={isSaving || !isProfileValid()}
+                    className="w-full md:w-auto order-1 md:order-2 flex items-center justify-center gap-2 px-8 py-3 rounded-xl bg-white text-blue-600 font-bold hover:bg-white/90 disabled:bg-white/50 disabled:cursor-not-allowed transition duration-200 whitespace-nowrap shadow-lg md:shadow-none"
+                  >
+                    <Save size={20} />
+                    {isSaving ? "Saving..." : "Save Profile"}
+                  </button>
+                </div>
               </div>
             </div>
           </div>

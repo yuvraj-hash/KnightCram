@@ -2,10 +2,13 @@ import { useEffect, useState } from "react";
 import { getProfile, saveProfile } from "@/lib/profileService";
 import { MessageCircle, UserPlus, Share2, MoreHorizontal, MapPin, Link as LinkIcon, Calendar, Building2, Plus, Edit2, ArrowRight } from "lucide-react";
 import ProfileHeader from "@/components/profile/ProfileHeader";
+import ProfileSettingsIcon from "@/components/icons/ProfileSettingsIcon";
+import { useNavigate } from "react-router-dom";
 
 const ProfileView = () => {
   const [profile, setProfile] = useState<any>(null);
   const [activeTab, setActiveTab] = useState<"posts" | "skills" | "experience">("posts");
+  const navigate = useNavigate();
 
   useEffect(() => {
     (async () => {
@@ -27,7 +30,16 @@ const ProfileView = () => {
   const completionPercentage = profile.completionPercentage || 0;
 
   return (
-    <main className="min-h-[calc(100vh-4rem)] bg-gradient-to-b from-background to-background/50">
+    <main className="min-h-[calc(100vh-4rem)] bg-gradient-to-b from-background to-background/50 relative">
+      <button
+        onClick={() => navigate("/profile/onboarding")}
+        className="fixed top-16 md:top-20 right-3 md:right-4 z-40 p-2.5 rounded-full bg-black/20 backdrop-blur-md border border-white/10 text-white hover:bg-white/10 transition-all shadow-xl group"
+        aria-label="Profile Settings"
+        title="Profile Settings"
+      >
+        <ProfileSettingsIcon strokeWidth={2} className="w-5 h-5 md:w-6 md:h-6 group-hover:rotate-12 transition-transform duration-500" />
+      </button>
+
       <div className="max-w-4xl mx-auto">
         {/* Profile Card Section */}
         <div className="relative px-0 md:px-6 mb-6 pt-0 md:pt-6">
@@ -57,7 +69,7 @@ const ProfileView = () => {
               </div>
               <div className="text-center">
                 <div className="text-lg md:text-2xl font-bold text-white">1.8K</div>
-                <div className="text-[10px] md:text-xs text-white/50 mt-1 leading-tight">Rx Interactions</div>
+                <div className="text-[10px] md:text-xs text-white/50 mt-1 leading-tight">Interplay</div>
               </div>
               <div className="text-center">
                 <div className="text-lg md:text-2xl font-bold text-white">85</div>
