@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { localStorageService } from "@/lib/localStorageService";
 import { profileValidation } from "@/lib/validationService";
 import { toast } from "sonner";
-import { Mail, Phone, AtSign, User, CheckCircle, AlertCircle } from "lucide-react";
+import { Mail, Phone, AtSign, User, CheckCircle, AlertCircle, MapPin, Users } from "lucide-react";
 
 interface BasicInfoFormProps {
   profile: any;
@@ -14,6 +14,9 @@ const BasicInfoForm: React.FC<BasicInfoFormProps> = ({ profile, onSave }) => {
   const [handle, setHandle] = useState(profile.handle || "");
   const [email, setEmail] = useState(profile.email || "");
   const [phone, setPhone] = useState(profile.phone || "");
+  const [gender, setGender] = useState(profile.gender || "");
+  const [location, setLocation] = useState(profile.location || "");
+
   const [avail, setAvail] = useState<string | null>(null);
   const [errors, setErrors] = useState<Record<string, string>>({});
 
@@ -24,6 +27,8 @@ const BasicInfoForm: React.FC<BasicInfoFormProps> = ({ profile, onSave }) => {
     setHandle(profile.handle || "");
     setEmail(profile.email || "");
     setPhone(profile.phone || "");
+    setGender(profile.gender || "");
+    setLocation(profile.location || "");
   }, [profile]);
 
   useEffect(() => {
@@ -74,6 +79,8 @@ const BasicInfoForm: React.FC<BasicInfoFormProps> = ({ profile, onSave }) => {
       handle,
       email,
       phone,
+      gender,
+      location,
     };
 
     try {
@@ -97,6 +104,8 @@ const BasicInfoForm: React.FC<BasicInfoFormProps> = ({ profile, onSave }) => {
     setHandle(profile.handle || "");
     setEmail(profile.email || "");
     setPhone(profile.phone || "");
+    setGender(profile.gender || "");
+    setLocation(profile.location || "");
     setErrors({});
     setFocusedField(null); // Hide buttons after reset
     toast.info("Changes discarded");
@@ -119,41 +128,36 @@ const BasicInfoForm: React.FC<BasicInfoFormProps> = ({ profile, onSave }) => {
       </div>
 
       <div className="p-6 space-y-6">
-        {/* Full Name */}
-        <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-4">
-          <label className="w-full md:w-1/3 text-sm font-medium text-white text-left md:text-right">
-            Full Name
-          </label>
-          <div className="w-full md:w-2/3 max-w-md">
-            <input
-              placeholder="Rahul Sharma"
-              value={name}
-              onFocus={() => setFocusedField("name")}
-              onChange={(e) => {
-                setName(e.target.value);
-                if (errors.name) {
-                  setErrors((prev) => {
-                    const newErr = { ...prev };
-                    delete newErr.name;
-                    return newErr;
-                  });
-                }
-              }}
-              className={`w-full px-3 py-3 md:py-2 text-base md:text-sm rounded-lg bg-white/5 border text-white placeholder-white/50 focus:outline-none transition ${errors.name ? "border-red-500 focus:border-red-500" : "border-white/10 focus:border-blue-500"
-                }`}
-            />
+        {/* Full Name & User ID */}
+        <div className="flex flex-col md:flex-row gap-6">
+          <div className="w-full">
+            <label className="text-sm font-medium text-white block mb-2">Full Name</label>
+            <div className="relative">
+              <User className="absolute left-3 top-1/2 -translate-y-1/2 text-white/50" size={16} />
+              <input
+                placeholder="Rahul Sharma"
+                value={name}
+                onFocus={() => setFocusedField("name")}
+                onChange={(e) => {
+                  setName(e.target.value);
+                  if (errors.name) {
+                    setErrors((prev) => {
+                      const newErr = { ...prev };
+                      delete newErr.name;
+                      return newErr;
+                    });
+                  }
+                }}
+                className={`w-full pl-10 pr-3 py-2 text-sm rounded-lg bg-white/5 border text-white placeholder-white/50 focus:outline-none transition ${errors.name ? "border-red-500 focus:border-red-500" : "border-white/10 focus:border-blue-500"}`}
+              />
+            </div>
             {errors.name && <p className="text-red-400 text-xs mt-1">{errors.name}</p>}
           </div>
-        </div>
 
-        {/* User ID / Handle */}
-        <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-4">
-          <label className="w-full md:w-1/3 text-sm font-medium text-white text-left md:text-right">
-            User ID
-          </label>
-          <div className="w-full md:w-2/3 max-w-md">
+          <div className="w-full">
+            <label className="text-sm font-medium text-white block mb-2">User ID</label>
             <div className="relative">
-              <div className="absolute left-3 top-1/2 -translate-y-1/2 text-white/50 font-medium text-sm">@</div>
+              <AtSign className="absolute left-3 top-1/2 -translate-y-1/2 text-white/50" size={16} />
               <input
                 placeholder="rahul_07"
                 value={handle}
@@ -168,8 +172,7 @@ const BasicInfoForm: React.FC<BasicInfoFormProps> = ({ profile, onSave }) => {
                     });
                   }
                 }}
-                className={`w-full pl-8 pr-3 py-3 md:py-2 text-base md:text-sm rounded-lg bg-white/5 border text-white placeholder-white/50 focus:outline-none transition ${errors.handle ? "border-red-500 focus:border-red-500" : "border-white/10 focus:border-blue-500"
-                  }`}
+                className={`w-full pl-10 pr-3 py-2 text-sm rounded-lg bg-white/5 border text-white placeholder-white/50 focus:outline-none transition ${errors.handle ? "border-red-500 focus:border-red-500" : "border-white/10 focus:border-blue-500"}`}
               />
             </div>
             {errors.handle && <p className="text-red-400 text-xs mt-1">{errors.handle}</p>}
@@ -180,62 +183,96 @@ const BasicInfoForm: React.FC<BasicInfoFormProps> = ({ profile, onSave }) => {
           </div>
         </div>
 
-        {/* Email */}
-        <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-4">
-          <label className="w-full md:w-1/3 text-sm font-medium text-white text-left md:text-right">
-            Email Address
-          </label>
-          <div className="w-full md:w-2/3 max-w-md">
-            <input
-              placeholder="your@email.com"
-              type="email"
-              value={email}
-              onFocus={() => setFocusedField("email")}
-              onChange={(e) => {
-                setEmail(e.target.value);
-                if (errors.email) {
-                  setErrors((prev) => {
-                    const newErr = { ...prev };
-                    delete newErr.email;
-                    return newErr;
-                  });
-                }
-              }}
-              className={`w-full px-3 py-3 md:py-2 text-base md:text-sm rounded-lg bg-white/5 border text-white placeholder-white/50 focus:outline-none transition ${errors.email ? "border-red-500 focus:border-red-500" : "border-white/10 focus:border-blue-500"
-                }`}
-            />
+        {/* Email & Phone */}
+        <div className="flex flex-col md:flex-row gap-6">
+          <div className="w-full">
+            <label className="text-sm font-medium text-white block mb-2">Email Address</label>
+            <div className="relative">
+              <Mail className="absolute left-3 top-1/2 -translate-y-1/2 text-white/50" size={16} />
+              <input
+                placeholder="your@email.com"
+                type="email"
+                value={email}
+                onFocus={() => setFocusedField("email")}
+                onChange={(e) => {
+                  setEmail(e.target.value);
+                  if (errors.email) {
+                    setErrors((prev) => {
+                      const newErr = { ...prev };
+                      delete newErr.email;
+                      return newErr;
+                    });
+                  }
+                }}
+                className={`w-full pl-10 pr-3 py-2 text-sm rounded-lg bg-white/5 border text-white placeholder-white/50 focus:outline-none transition ${errors.email ? "border-red-500 focus:border-red-500" : "border-white/10 focus:border-blue-500"}`}
+              />
+            </div>
             {errors.email && <p className="text-red-400 text-xs mt-1">{errors.email}</p>}
           </div>
-        </div>
 
-        {/* Phone */}
-        <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-4">
-          <label className="w-full md:w-1/3 text-sm font-medium text-white text-left md:text-right">
-            Phone Number
-          </label>
-          <div className="w-full md:w-2/3 max-w-md">
-            <input
-              placeholder="+919876543210"
-              value={phone}
-              onFocus={() => setFocusedField("phone")}
-              onChange={(e) => {
-                setPhone(e.target.value);
-                if (errors.phone) {
-                  setErrors((prev) => {
-                    const newErr = { ...prev };
-                    delete newErr.phone;
-                    return newErr;
-                  });
-                }
-              }}
-              className={`w-full px-3 py-3 md:py-2 text-base md:text-sm rounded-lg bg-white/5 border text-white placeholder-white/50 focus:outline-none transition ${errors.phone ? "border-red-500 focus:border-red-500" : "border-white/10 focus:border-blue-500"
-                }`}
-            />
+          <div className="w-full">
+            <label className="text-sm font-medium text-white block mb-2">Phone Number</label>
+            <div className="relative">
+              <Phone className="absolute left-3 top-1/2 -translate-y-1/2 text-white/50" size={16} />
+              <input
+                placeholder="+919876543210"
+                value={phone}
+                onFocus={() => setFocusedField("phone")}
+                onChange={(e) => {
+                  setPhone(e.target.value);
+                  if (errors.phone) {
+                    setErrors((prev) => {
+                      const newErr = { ...prev };
+                      delete newErr.phone;
+                      return newErr;
+                    });
+                  }
+                }}
+                className={`w-full pl-10 pr-3 py-2 text-sm rounded-lg bg-white/5 border text-white placeholder-white/50 focus:outline-none transition ${errors.phone ? "border-red-500 focus:border-red-500" : "border-white/10 focus:border-blue-500"}`}
+              />
+            </div>
             {errors.phone && <p className="text-red-400 text-xs mt-1">{errors.phone}</p>}
           </div>
         </div>
 
-        {/* Action Buttons - Only show if any field is focused or text entered */}
+        {/* Gender & Location */}
+        <div className="flex flex-col md:flex-row gap-6">
+          <div className="w-full">
+            <label className="text-sm font-medium text-white block mb-2">Gender</label>
+            <div className="relative">
+              <Users className="absolute left-3 top-1/2 -translate-y-1/2 text-white/50" size={16} />
+              <select
+                value={gender}
+                onFocus={() => setFocusedField("gender")}
+                onChange={(e) => setGender(e.target.value)}
+                className="w-full pl-10 pr-3 py-2 text-sm rounded-lg bg-white/5 border border-white/10 text-white placeholder-white/50 focus:outline-none focus:border-blue-500 transition appearance-none"
+              >
+                <option value="" className="bg-gray-900 text-gray-400">Select Gender</option>
+                <option value="Male" className="bg-gray-900">Male</option>
+                <option value="Female" className="bg-gray-900">Female</option>
+                <option value="Non-binary" className="bg-gray-900">Non-binary</option>
+                <option value="Prefer not to say" className="bg-gray-900">Prefer not to say</option>
+                <option value="Custom" className="bg-gray-900">Custom</option>
+              </select>
+            </div>
+          </div>
+
+          <div className="w-full">
+            <label className="text-sm font-medium text-white block mb-2">Location</label>
+            <div className="relative">
+              <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 text-white/50" size={16} />
+              <input
+                placeholder="City, Country"
+                value={location}
+                onFocus={() => setFocusedField("location")}
+                onChange={(e) => setLocation(e.target.value)}
+                className="w-full pl-10 pr-3 py-2 text-sm rounded-lg bg-white/5 border border-white/10 text-white placeholder-white/50 focus:outline-none focus:border-blue-500 transition"
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* Action Buttons */}
         {focusedField && (
           <div className="flex justify-end gap-2 pt-4 border-t border-white/10">
             <button

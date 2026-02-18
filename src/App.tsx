@@ -11,6 +11,8 @@ import ProfileOnboarding from "./pages/ProfileOnboarding";
 import ProfileView from "./pages/ProfileView";
 import UserProfile from "./pages/UserProfile";
 import SignInPage from "./pages/SignInPage";
+import Settings from "./pages/Settings";
+
 
 const queryClient = new QueryClient();
 
@@ -34,6 +36,7 @@ const App = () => (
             <Route path="/profile/view" element={<ProfileView />} />
             <Route path="/user-profile" element={<UserProfile />} />
             <Route path="/spotlight" element={<MainPage />} />
+            <Route path="/settings" element={<Settings />} />
           </Route>
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
