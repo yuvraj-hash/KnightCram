@@ -140,17 +140,22 @@ const ProfileView = () => {
                   Edit Profile
                 </button>
               </div>
-              {/* Bio / Headline */}
+              {/* Bio / Headline tagline */}
               {profile.bio && (
                 <p className="text-sm font-medium text-blue-300 mb-2 italic">"{profile.bio}"</p>
               )}
-              <p className="text-sm text-white/80 leading-relaxed whitespace-pre-wrap">
-                {profile.college
-                  ? `${profile.college} student passionate about learning and growth.`
-                  : profile.company
-                    ? `${profile.designation || "Professional"} at ${profile.company}.`
-                    : "Write a short bio to introduce yourself to the community."}
-              </p>
+              {/* About — long description */}
+              {profile.about ? (
+                <p className="text-sm text-white/80 leading-relaxed whitespace-pre-wrap">{profile.about}</p>
+              ) : (
+                <p className="text-sm text-white/50 leading-relaxed italic">
+                  {profile.college
+                    ? `${profile.college} student passionate about learning and growth.`
+                    : profile.company
+                      ? `${profile.designation || "Professional"} at ${profile.company}.`
+                      : "Add an \"About\" section in Settings › Profile to tell your story."}
+                </p>
+              )}
             </div>
 
             {/* Tabs */}

@@ -50,7 +50,6 @@ import RoleSelector from "@/components/profile/RoleSelector";
 import BasicInfoForm from "@/components/profile/BasicInfoForm";
 import AcademicInfoForm from "@/components/profile/AcademicInfoForm";
 import VerificationUploader from "@/components/profile/VerificationUploader";
-import ProfileStrengthMeter from "@/components/profile/ProfileStrengthMeter";
 
 // --- Types ---
 
@@ -160,9 +159,6 @@ export default function Settings() {
                         <p className="text-green-300 text-sm">All changes saved successfully!</p>
                     </div>
                 )}
-
-                {/* Profile Strength — compact bar at top */}
-                <ProfileStrengthMeter profile={profile} />
 
                 {/* Forms — full width, no inner grid splitting */}
                 <div className="space-y-6">

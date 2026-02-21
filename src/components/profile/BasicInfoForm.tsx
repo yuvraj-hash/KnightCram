@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { localStorageService } from "@/lib/localStorageService";
 import { profileValidation } from "@/lib/validationService";
 import { toast } from "sonner";
-import { Mail, Phone, AtSign, User, CheckCircle, AlertCircle, MapPin, Users, AlignLeft } from "lucide-react";
+import { Mail, Phone, AtSign, User, CheckCircle, AlertCircle, MapPin, Users, AlignLeft, BookOpen } from "lucide-react";
 
 interface BasicInfoFormProps {
   profile: any;
@@ -19,6 +19,7 @@ const BasicInfoForm: React.FC<BasicInfoFormProps> = ({ profile, onSave, middleAc
   const [gender, setGender] = useState(profile.gender || "");
   const [location, setLocation] = useState(profile.location || "");
   const [bio, setBio] = useState(profile.bio || "");
+  const [about, setAbout] = useState(profile.about || "");
 
   const [avail, setAvail] = useState<string | null>(null);
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -33,6 +34,7 @@ const BasicInfoForm: React.FC<BasicInfoFormProps> = ({ profile, onSave, middleAc
     setGender(profile.gender || "");
     setLocation(profile.location || "");
     setBio(profile.bio || "");
+    setAbout(profile.about || "");
   }, [profile]);
 
   useEffect(() => {
@@ -86,6 +88,7 @@ const BasicInfoForm: React.FC<BasicInfoFormProps> = ({ profile, onSave, middleAc
       gender,
       location,
       bio,
+      about,
     };
 
     try {
@@ -112,6 +115,7 @@ const BasicInfoForm: React.FC<BasicInfoFormProps> = ({ profile, onSave, middleAc
     setGender(profile.gender || "");
     setLocation(profile.location || "");
     setBio(profile.bio || "");
+    setAbout(profile.about || "");
     setErrors({});
     setFocusedField(null);
     toast.info("Changes discarded");
@@ -299,6 +303,35 @@ const BasicInfoForm: React.FC<BasicInfoFormProps> = ({ profile, onSave, middleAc
           <div className={`flex justify-end mt-1 text-xs ${bio.length >= 120 ? "text-red-400" : bio.length >= 100 ? "text-yellow-400" : "text-white/30"
             }`}>
             {bio.length}/120
+          </div>
+        </div>
+
+        {/* About */}
+        <div className="w-full">
+          <label className="text-sm font-medium text-white block mb-2">
+            About
+            <span className="text-white/40 font-normal ml-2 text-xs">(tell your story — shown on profile)</span>
+          </label>
+          <div className="relative">
+            <BookOpen className="absolute left-3 top-3 text-white/50" size={16} />
+            <textarea
+              placeholder="Share a bit about yourself — your background, interests, what you're working on..."
+              value={about}
+              maxLength={300}
+              rows={4}
+              onFocus={() => setFocusedField("about")}
+              onChange={(e) => {
+                // Hard-enforce maxLength in case browser doesn't on paste
+                if (e.target.value.length <= 300) setAbout(e.target.value);
+              }}
+              className="w-full pl-10 pr-3 py-2 text-sm rounded-lg bg-white/5 border border-white/10 text-white placeholder-white/40 focus:outline-none focus:border-blue-500 transition resize-none"
+            />
+          </div>
+          <div className={`flex justify-between mt-1 text-xs`}>
+            <span className="text-white/25">Plain text only</span>
+            <span className={about.length >= 300 ? "text-red-400" : about.length >= 250 ? "text-yellow-400" : "text-white/30"}>
+              {about.length}/300
+            </span>
           </div>
         </div>
 

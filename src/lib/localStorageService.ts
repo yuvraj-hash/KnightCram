@@ -10,6 +10,7 @@ export interface UserProfile {
   email?: string;
   phone?: string;
   bio?: string;        // Bio / Headline (new)
+  about?: string;      // About / Long description (new)
   gender?: string;
   location?: string;
 

@@ -7,6 +7,7 @@ export interface Profile {
   email?: string;
   phone?: string;
   bio?: string;          // Bio / Headline
+  about?: string;        // About / Long description
   gender?: string;
   location?: string;
   roles?: string[];
@@ -50,6 +51,7 @@ const defaultProfile: Profile = {
   email: "",
   phone: "",
   bio: "",
+  about: "",
   gender: "",
   location: "",
   roles: [],
