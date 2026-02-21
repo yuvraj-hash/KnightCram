@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { Edit2, Check, X, Building2, GraduationCap, Camera, Plus, MapPin } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import ImageUploadModal from "./ImageUploadModal";
+import ProfileSettingsIcon from "@/components/icons/ProfileSettingsIcon";
 
 const ProfileHeader: React.FC<{ profile: any; onSave: (p: any) => void; saving?: boolean }> = ({ profile, onSave, saving }) => {
+  const navigate = useNavigate();
   const [editing, setEditing] = useState(false);
   const [name, setName] = useState(profile.name || "");
   const [handle, setHandle] = useState(profile.handle || "");
@@ -140,7 +143,8 @@ const ProfileHeader: React.FC<{ profile: any; onSave: (p: any) => void; saving?:
                       />
                     </div>
                   </div>
-                  <div className="flex gap-3 mt-6">
+                  <div className="flex flex-wrap gap-3 mt-6">
+                    {/* Save */}
                     <button
                       onClick={save}
                       disabled={saving}
@@ -149,6 +153,22 @@ const ProfileHeader: React.FC<{ profile: any; onSave: (p: any) => void; saving?:
                       <Check size={18} />
                       {saving ? "Saving..." : "Save"}
                     </button>
+
+                    {/* Profile Settings — between Save and Cancel */}
+                    <button
+                      onClick={() => navigate("/settings", { state: { section: "profile" } })}
+                      aria-label="Profile Settings"
+                      title="Go to Profile Settings"
+                      className="flex items-center gap-2 px-6 py-2 rounded-lg bg-white/10 hover:bg-white/20 text-white font-medium border border-white/20 transition"
+                    >
+                      <ProfileSettingsIcon
+                        strokeWidth={2}
+                        className="w-4 h-4"
+                      />
+                      Profile Settings
+                    </button>
+
+                    {/* Cancel */}
                     <button
                       onClick={reset}
                       className="flex items-center gap-2 px-6 py-2 rounded-lg bg-white/10 hover:bg-white/20 text-white font-medium border border-white/20 transition"

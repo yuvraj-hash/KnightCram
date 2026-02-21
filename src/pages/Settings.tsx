@@ -1,6 +1,6 @@
 
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import {
     User,
     Shield,
@@ -60,7 +60,18 @@ type Section = "main" | "account" | "profile" | "privacy" | "activity" | "notifi
 
 export default function Settings() {
     const navigate = useNavigate();
+    const location = useLocation();
     const [activeSection, setActiveSection] = useState<Section>("account");
+
+    // Jump directly to a section if navigation state was provided (e.g. from ProfileHeader)
+    useEffect(() => {
+        const incoming = (location.state as any)?.section as Section | undefined;
+        if (incoming) {
+            setActiveSection(incoming);
+            // Clear state so a back-navigation doesn't re-trigger
+            window.history.replaceState({}, "");
+        }
+    }, []);
 
     const handleSectionClick = (section: Section) => {
         setActiveSection(section);

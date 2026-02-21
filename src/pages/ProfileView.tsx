@@ -300,7 +300,7 @@ const ProfileView = () => {
                 alwaysShowActions
                 middleAction={
                   <button
-                    onClick={() => { handleModalClose(); navigate("/settings"); }}
+                    onClick={() => { handleModalClose(); navigate("/settings", { state: { section: "profile" } }); }}
                     aria-label="Profile Settings"
                     title="Go to Profile Settings"
                     className="flex items-center gap-1.5 px-3 py-1.5 text-sm rounded-md bg-white/5 hover:bg-white/10 border border-white/15 text-white/60 hover:text-white font-medium transition duration-200 group"
