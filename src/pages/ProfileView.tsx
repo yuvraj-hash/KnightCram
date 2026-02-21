@@ -2,10 +2,12 @@ import { useCallback, useEffect, useState } from "react";
 import { getProfile, saveProfile } from "@/lib/profileService";
 import { localStorageService } from "@/lib/localStorageService";
 import {
-  Calendar, Building2,
+  MessageCircle, UserPlus, Share2, MoreHorizontal,
+  MapPin, Link as LinkIcon, Calendar, Building2,
   Plus, Edit2, ArrowRight, X, Pencil
 } from "lucide-react";
 import ProfileHeader from "@/components/profile/ProfileHeader";
+import ProfileSettingsIcon from "@/components/icons/ProfileSettingsIcon";
 import BasicInfoForm from "@/components/profile/BasicInfoForm";
 import { useNavigate } from "react-router-dom";
 
@@ -50,6 +52,7 @@ const ProfileView = () => {
 
   return (
     <main className="min-h-[calc(100vh-4rem)] bg-gradient-to-b from-background to-background/50 relative">
+
 
 
       <div className="max-w-4xl mx-auto">
@@ -289,11 +292,26 @@ const ProfileView = () => {
               </button>
             </div>
 
-            {/* BasicInfoForm embedded — no outer save bar needed */}
+            {/* BasicInfoForm — with always-visible actions and the Profile Settings icon injected between Reset and Save */}
             <div className="p-6">
               <BasicInfoForm
                 profile={profile}
                 onSave={handleBasicInfoSave}
+                alwaysShowActions
+                middleAction={
+                  <button
+                    onClick={() => { handleModalClose(); navigate("/settings"); }}
+                    aria-label="Profile Settings"
+                    title="Go to Profile Settings"
+                    className="flex items-center gap-1.5 px-3 py-1.5 text-sm rounded-md bg-white/5 hover:bg-white/10 border border-white/15 text-white/60 hover:text-white font-medium transition duration-200 group"
+                  >
+                    <ProfileSettingsIcon
+                      strokeWidth={2}
+                      className="w-4 h-4 group-hover:rotate-12 transition-transform duration-500"
+                    />
+                    <span>Settings</span>
+                  </button>
+                }
               />
             </div>
           </div>

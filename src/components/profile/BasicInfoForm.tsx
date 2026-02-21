@@ -7,9 +7,11 @@ import { Mail, Phone, AtSign, User, CheckCircle, AlertCircle, MapPin, Users, Ali
 interface BasicInfoFormProps {
   profile: any;
   onSave?: (p: any) => void;
+  middleAction?: React.ReactNode;   // injected between Reset and Save buttons
+  alwaysShowActions?: boolean;      // keeps action row visible without needing focus
 }
 
-const BasicInfoForm: React.FC<BasicInfoFormProps> = ({ profile, onSave }) => {
+const BasicInfoForm: React.FC<BasicInfoFormProps> = ({ profile, onSave, middleAction, alwaysShowActions }) => {
   const [name, setName] = useState(profile.name || "");
   const [handle, setHandle] = useState(profile.handle || "");
   const [email, setEmail] = useState(profile.email || "");
@@ -301,14 +303,18 @@ const BasicInfoForm: React.FC<BasicInfoFormProps> = ({ profile, onSave }) => {
         </div>
 
         {/* Action Buttons */}
-        {focusedField && (
-          <div className="flex justify-end gap-2 pt-4 border-t border-white/10">
+        {(focusedField || alwaysShowActions) && (
+          <div className="flex items-center justify-end gap-2 pt-4 border-t border-white/10">
             <button
               onClick={handleReset}
               className="px-4 py-1.5 text-sm rounded-md bg-white/10 hover:bg-white/20 border border-white/20 text-white font-medium transition duration-200"
             >
               Reset
             </button>
+
+            {/* Injected middle action (e.g. Profile Settings icon) */}
+            {middleAction}
+
             <button
               onClick={handleSave}
               disabled={!isValid}
