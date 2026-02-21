@@ -2,12 +2,10 @@ import { useCallback, useEffect, useState } from "react";
 import { getProfile, saveProfile } from "@/lib/profileService";
 import { localStorageService } from "@/lib/localStorageService";
 import {
-  MessageCircle, UserPlus, Share2, MoreHorizontal,
-  MapPin, Link as LinkIcon, Calendar, Building2,
+  Calendar, Building2,
   Plus, Edit2, ArrowRight, X, Pencil
 } from "lucide-react";
 import ProfileHeader from "@/components/profile/ProfileHeader";
-import ProfileSettingsIcon from "@/components/icons/ProfileSettingsIcon";
 import BasicInfoForm from "@/components/profile/BasicInfoForm";
 import { useNavigate } from "react-router-dom";
 
@@ -53,15 +51,6 @@ const ProfileView = () => {
   return (
     <main className="min-h-[calc(100vh-4rem)] bg-gradient-to-b from-background to-background/50 relative">
 
-      {/* ─── Profile Settings icon → goes to Settings page (Profile section) ─── */}
-      <button
-        onClick={() => navigate("/settings")}
-        className="fixed top-16 md:top-20 right-3 md:right-4 z-40 p-2.5 rounded-full bg-black/20 backdrop-blur-md border border-white/10 text-white hover:bg-white/10 transition-all shadow-xl group"
-        aria-label="Profile Settings"
-        title="Profile Settings"
-      >
-        <ProfileSettingsIcon strokeWidth={2} className="w-5 h-5 md:w-6 md:h-6 group-hover:rotate-12 transition-transform duration-500" />
-      </button>
 
       <div className="max-w-4xl mx-auto">
         {/* Profile Card Section */}
