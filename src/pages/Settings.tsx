@@ -548,200 +548,200 @@ export default function Settings() {
     // Let's refine the render logic:
 
     return (
-        <div className="max-w-6xl mx-auto px-4 md:px-8 py-6 md:py-10 text-white min-h-screen pb-28">
+        <div className="text-white min-h-screen pb-28">
 
-            {/* Page Title */}
-            <div className="mb-8">
-                {/* Back to previous page — all screen sizes */}
-                <button
-                    onClick={() => navigate(-1)}
-                    className="flex items-center gap-2 text-white/40 hover:text-white transition-colors duration-200 mb-4 group"
-                >
-                    <ArrowLeft size={16} className="group-hover:-translate-x-0.5 transition-transform duration-200" />
-                    <span className="text-sm font-medium">Back</span>
-                </button>
+            {/* ── Sticky Page Header ── */}
+            <header className="sticky top-16 z-20 bg-[#0a0a0f]/95 backdrop-blur-lg border-b border-white/[0.08] shadow-[0_1px_24px_rgba(0,0,0,0.4)]">
+                <div className="max-w-6xl mx-auto px-4 md:px-8 h-14 md:h-16 flex items-center gap-2.5">
 
-                <div className="flex items-center gap-3">
-                    {/* Mobile: back to section list when inside a section */}
-                    {activeSection !== "main" && (
-                        <Button
-                            variant="ghost"
-                            size="icon"
-                            onClick={() => setActiveSection("main")}
-                            className="md:hidden -ml-1"
-                        >
-                            <ArrowLeft size={22} />
-                        </Button>
-                    )}
-                    <h1 className="text-2xl md:text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-white/60">
+                    {/* Arrow — mobile inside-section: back to list | otherwise: back to previous page */}
+                    <button
+                        onClick={() =>
+                            activeSection !== "main"
+                                ? setActiveSection("main")
+                                : navigate(-1)
+                        }
+                        aria-label="Go back"
+                        className="flex items-center justify-center w-8 h-8 rounded-lg hover:bg-white/10 text-white/50 hover:text-white transition-all duration-200 flex-shrink-0 group"
+                    >
+                        <ArrowLeft size={18} className="group-hover:-translate-x-0.5 transition-transform duration-200" />
+                    </button>
+
+                    {/* Title — mobile: active section name | desktop: always "Settings" */}
+                    <h1 className="text-xl md:text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-white/70 leading-none">
                         <span className="md:hidden">
-                            {activeSection === "main" ? "Settings" :
-                                activeSection === "account" ? "Account" :
-                                    activeSection === "profile" ? "Profile" :
-                                        activeSection === "privacy" ? "Privacy" :
-                                            activeSection === "activity" ? "Your Activity" :
-                                                activeSection === "notifications" ? "Notifications" : "Settings"}
+                            {activeSection === "main" ? "Settings"
+                                : activeSection === "account" ? "Account"
+                                    : activeSection === "profile" ? "Profile"
+                                        : activeSection === "privacy" ? "Privacy"
+                                            : activeSection === "activity" ? "Your Activity"
+                                                : activeSection === "notifications" ? "Notifications"
+                                                    : "Settings"}
                         </span>
                         <span className="hidden md:inline">Settings</span>
                     </h1>
                 </div>
-            </div>
+            </header>
 
-            {/* Two-column layout */}
-            <div className="flex flex-col md:flex-row gap-6 lg:gap-10 items-start">
+            {/* ── Page Content ── */}
+            <div className="max-w-6xl mx-auto px-4 md:px-8 py-6 md:py-8">
 
-                {/* ── Sidebar Nav ── */}
-                <aside className={`
+                {/* Two-column layout */}
+                <div className="flex flex-col md:flex-row gap-6 lg:gap-10 items-start">
+
+                    {/* ── Sidebar Nav ── */}
+                    <aside className={`
                     w-full md:w-[240px] lg:w-[260px] flex-shrink-0
-                    md:sticky md:top-8
+                    md:sticky md:top-[8.5rem]
                     ${activeSection === "main" ? "block" : "hidden md:block"}
                 `}>
-                    <p className="hidden md:block text-[11px] font-semibold uppercase tracking-widest text-white/25 px-1 pb-3">
-                        Menu
-                    </p>
+                        <p className="hidden md:block text-[11px] font-semibold uppercase tracking-widest text-white/25 px-1 pb-3">
+                            Menu
+                        </p>
 
-                    <nav className="space-y-1.5">
-                        {/* Account */}
-                        <button
-                            onClick={() => handleSectionClick("account")}
-                            className={`w-full text-left p-3.5 rounded-xl border cursor-pointer transition-all duration-200 flex items-center gap-3
+                        <nav className="space-y-1.5">
+                            {/* Account */}
+                            <button
+                                onClick={() => handleSectionClick("account")}
+                                className={`w-full text-left p-3.5 rounded-xl border cursor-pointer transition-all duration-200 flex items-center gap-3
                                 ${activeSection === "account"
-                                    ? "bg-blue-500/15 border-blue-500/40"
-                                    : "bg-white/[0.04] border-white/[0.08] hover:bg-white/[0.08] hover:border-white/[0.15]"}
+                                        ? "bg-blue-500/15 border-blue-500/40"
+                                        : "bg-white/[0.04] border-white/[0.08] hover:bg-white/[0.08] hover:border-white/[0.15]"}
                             `}
-                        >
-                            <div className={`p-2 rounded-lg flex-shrink-0 ${activeSection === "account" ? "bg-blue-500 text-white" : "bg-blue-500/20 text-blue-400"}`}>
-                                <User size={17} />
-                            </div>
-                            <div className="flex-1 min-w-0">
-                                <p className={`font-semibold text-sm ${activeSection === "account" ? "text-blue-300" : "text-white"}`}>Account</p>
-                                <p className="text-[11px] text-white/40 truncate">Manage details & danger zone</p>
-                            </div>
-                            {activeSection === "account" && <div className="w-1.5 h-1.5 rounded-full bg-blue-400 flex-shrink-0" />}
-                        </button>
+                            >
+                                <div className={`p-2 rounded-lg flex-shrink-0 ${activeSection === "account" ? "bg-blue-500 text-white" : "bg-blue-500/20 text-blue-400"}`}>
+                                    <User size={17} />
+                                </div>
+                                <div className="flex-1 min-w-0">
+                                    <p className={`font-semibold text-sm ${activeSection === "account" ? "text-blue-300" : "text-white"}`}>Account</p>
+                                    <p className="text-[11px] text-white/40 truncate">Manage details & danger zone</p>
+                                </div>
+                                {activeSection === "account" && <div className="w-1.5 h-1.5 rounded-full bg-blue-400 flex-shrink-0" />}
+                            </button>
 
-                        {/* Profile */}
-                        <button
-                            onClick={() => handleSectionClick("profile")}
-                            className={`w-full text-left p-3.5 rounded-xl border cursor-pointer transition-all duration-200 flex items-center gap-3
+                            {/* Profile */}
+                            <button
+                                onClick={() => handleSectionClick("profile")}
+                                className={`w-full text-left p-3.5 rounded-xl border cursor-pointer transition-all duration-200 flex items-center gap-3
                                 ${activeSection === "profile"
-                                    ? "bg-purple-500/15 border-purple-500/40"
-                                    : "bg-white/[0.04] border-white/[0.08] hover:bg-white/[0.08] hover:border-white/[0.15]"}
+                                        ? "bg-purple-500/15 border-purple-500/40"
+                                        : "bg-white/[0.04] border-white/[0.08] hover:bg-white/[0.08] hover:border-white/[0.15]"}
                             `}
-                        >
-                            <div className={`p-2 rounded-lg flex-shrink-0 ${activeSection === "profile" ? "bg-purple-500 text-white" : "bg-purple-500/20 text-purple-400"}`}>
-                                <Users size={17} />
-                            </div>
-                            <div className="flex-1 min-w-0">
-                                <p className={`font-semibold text-sm ${activeSection === "profile" ? "text-purple-300" : "text-white"}`}>Profile</p>
-                                <p className="text-[11px] text-white/40 truncate">Edit your public info</p>
-                            </div>
-                            {activeSection === "profile" && <div className="w-1.5 h-1.5 rounded-full bg-purple-400 flex-shrink-0" />}
-                        </button>
+                            >
+                                <div className={`p-2 rounded-lg flex-shrink-0 ${activeSection === "profile" ? "bg-purple-500 text-white" : "bg-purple-500/20 text-purple-400"}`}>
+                                    <Users size={17} />
+                                </div>
+                                <div className="flex-1 min-w-0">
+                                    <p className={`font-semibold text-sm ${activeSection === "profile" ? "text-purple-300" : "text-white"}`}>Profile</p>
+                                    <p className="text-[11px] text-white/40 truncate">Edit your public info</p>
+                                </div>
+                                {activeSection === "profile" && <div className="w-1.5 h-1.5 rounded-full bg-purple-400 flex-shrink-0" />}
+                            </button>
 
-                        {/* Privacy */}
-                        <button
-                            onClick={() => handleSectionClick("privacy")}
-                            className={`w-full text-left p-3.5 rounded-xl border cursor-pointer transition-all duration-200 flex items-center gap-3
+                            {/* Privacy */}
+                            <button
+                                onClick={() => handleSectionClick("privacy")}
+                                className={`w-full text-left p-3.5 rounded-xl border cursor-pointer transition-all duration-200 flex items-center gap-3
                                 ${activeSection === "privacy"
-                                    ? "bg-green-500/15 border-green-500/40"
-                                    : "bg-white/[0.04] border-white/[0.08] hover:bg-white/[0.08] hover:border-white/[0.15]"}
+                                        ? "bg-green-500/15 border-green-500/40"
+                                        : "bg-white/[0.04] border-white/[0.08] hover:bg-white/[0.08] hover:border-white/[0.15]"}
                             `}
-                        >
-                            <div className={`p-2 rounded-lg flex-shrink-0 ${activeSection === "privacy" ? "bg-green-500 text-white" : "bg-green-500/20 text-green-400"}`}>
-                                <Shield size={17} />
-                            </div>
-                            <div className="flex-1 min-w-0">
-                                <p className={`font-semibold text-sm ${activeSection === "privacy" ? "text-green-300" : "text-white"}`}>Privacy</p>
-                                <p className="text-[11px] text-white/40 truncate">Security & visibility</p>
-                            </div>
-                            {activeSection === "privacy" && <div className="w-1.5 h-1.5 rounded-full bg-green-400 flex-shrink-0" />}
-                        </button>
+                            >
+                                <div className={`p-2 rounded-lg flex-shrink-0 ${activeSection === "privacy" ? "bg-green-500 text-white" : "bg-green-500/20 text-green-400"}`}>
+                                    <Shield size={17} />
+                                </div>
+                                <div className="flex-1 min-w-0">
+                                    <p className={`font-semibold text-sm ${activeSection === "privacy" ? "text-green-300" : "text-white"}`}>Privacy</p>
+                                    <p className="text-[11px] text-white/40 truncate">Security & visibility</p>
+                                </div>
+                                {activeSection === "privacy" && <div className="w-1.5 h-1.5 rounded-full bg-green-400 flex-shrink-0" />}
+                            </button>
 
-                        {/* Activity */}
-                        <button
-                            onClick={() => handleSectionClick("activity")}
-                            className={`w-full text-left p-3.5 rounded-xl border cursor-pointer transition-all duration-200 flex items-center gap-3
+                            {/* Activity */}
+                            <button
+                                onClick={() => handleSectionClick("activity")}
+                                className={`w-full text-left p-3.5 rounded-xl border cursor-pointer transition-all duration-200 flex items-center gap-3
                                 ${activeSection === "activity"
-                                    ? "bg-orange-500/15 border-orange-500/40"
-                                    : "bg-white/[0.04] border-white/[0.08] hover:bg-white/[0.08] hover:border-white/[0.15]"}
+                                        ? "bg-orange-500/15 border-orange-500/40"
+                                        : "bg-white/[0.04] border-white/[0.08] hover:bg-white/[0.08] hover:border-white/[0.15]"}
                             `}
-                        >
-                            <div className={`p-2 rounded-lg flex-shrink-0 ${activeSection === "activity" ? "bg-orange-500 text-white" : "bg-orange-500/20 text-orange-400"}`}>
-                                <Activity size={17} />
-                            </div>
-                            <div className="flex-1 min-w-0">
-                                <p className={`font-semibold text-sm ${activeSection === "activity" ? "text-orange-300" : "text-white"}`}>Your Activity</p>
-                                <p className="text-[11px] text-white/40 truncate">Analytics & history</p>
-                            </div>
-                            {activeSection === "activity" && <div className="w-1.5 h-1.5 rounded-full bg-orange-400 flex-shrink-0" />}
-                        </button>
+                            >
+                                <div className={`p-2 rounded-lg flex-shrink-0 ${activeSection === "activity" ? "bg-orange-500 text-white" : "bg-orange-500/20 text-orange-400"}`}>
+                                    <Activity size={17} />
+                                </div>
+                                <div className="flex-1 min-w-0">
+                                    <p className={`font-semibold text-sm ${activeSection === "activity" ? "text-orange-300" : "text-white"}`}>Your Activity</p>
+                                    <p className="text-[11px] text-white/40 truncate">Analytics & history</p>
+                                </div>
+                                {activeSection === "activity" && <div className="w-1.5 h-1.5 rounded-full bg-orange-400 flex-shrink-0" />}
+                            </button>
 
-                        {/* Notifications */}
-                        <button
-                            onClick={() => handleSectionClick("notifications")}
-                            className={`w-full text-left p-3.5 rounded-xl border cursor-pointer transition-all duration-200 flex items-center gap-3
+                            {/* Notifications */}
+                            <button
+                                onClick={() => handleSectionClick("notifications")}
+                                className={`w-full text-left p-3.5 rounded-xl border cursor-pointer transition-all duration-200 flex items-center gap-3
                                 ${activeSection === "notifications"
-                                    ? "bg-pink-500/15 border-pink-500/40"
-                                    : "bg-white/[0.04] border-white/[0.08] hover:bg-white/[0.08] hover:border-white/[0.15]"}
+                                        ? "bg-pink-500/15 border-pink-500/40"
+                                        : "bg-white/[0.04] border-white/[0.08] hover:bg-white/[0.08] hover:border-white/[0.15]"}
                             `}
-                        >
-                            <div className={`p-2 rounded-lg flex-shrink-0 ${activeSection === "notifications" ? "bg-pink-500 text-white" : "bg-pink-500/20 text-pink-400"}`}>
-                                <Bell size={17} />
-                            </div>
-                            <div className="flex-1 min-w-0">
-                                <p className={`font-semibold text-sm ${activeSection === "notifications" ? "text-pink-300" : "text-white"}`}>Notifications</p>
-                                <p className="text-[11px] text-white/40 truncate">Alert preferences</p>
-                            </div>
-                            {activeSection === "notifications" && <div className="w-1.5 h-1.5 rounded-full bg-pink-400 flex-shrink-0" />}
-                        </button>
-                    </nav>
-                </aside>
+                            >
+                                <div className={`p-2 rounded-lg flex-shrink-0 ${activeSection === "notifications" ? "bg-pink-500 text-white" : "bg-pink-500/20 text-pink-400"}`}>
+                                    <Bell size={17} />
+                                </div>
+                                <div className="flex-1 min-w-0">
+                                    <p className={`font-semibold text-sm ${activeSection === "notifications" ? "text-pink-300" : "text-white"}`}>Notifications</p>
+                                    <p className="text-[11px] text-white/40 truncate">Alert preferences</p>
+                                </div>
+                                {activeSection === "notifications" && <div className="w-1.5 h-1.5 rounded-full bg-pink-400 flex-shrink-0" />}
+                            </button>
+                        </nav>
+                    </aside>
 
-                {/* ── Content Panel ── */}
-                <main className={`
+                    {/* ── Content Panel ── */}
+                    <main className={`
                     flex-1 min-w-0 w-full
                     ${activeSection === "main" ? "hidden md:block" : "block"}
                 `}>
-                    {/* Desktop: Section heading inside the content area */}
-                    <div className="hidden md:flex items-center gap-3 mb-6 pb-5 border-b border-white/10">
-                        <div className={`p-2.5 rounded-xl
+                        {/* Desktop: Section heading inside the content area */}
+                        <div className="hidden md:flex items-center gap-3 mb-6 pb-5 border-b border-white/10">
+                            <div className={`p-2.5 rounded-xl
                             ${(activeSection === "account" || activeSection === "main") ? "bg-blue-500/20 text-blue-400" : ""}
                             ${activeSection === "profile" ? "bg-purple-500/20 text-purple-400" : ""}
                             ${activeSection === "privacy" ? "bg-green-500/20 text-green-400" : ""}
                             ${activeSection === "activity" ? "bg-orange-500/20 text-orange-400" : ""}
                             ${activeSection === "notifications" ? "bg-pink-500/20 text-pink-400" : ""}
                         `}>
-                            {(activeSection === "account" || activeSection === "main") && <User size={20} />}
-                            {activeSection === "profile" && <Users size={20} />}
-                            {activeSection === "privacy" && <Shield size={20} />}
-                            {activeSection === "activity" && <Activity size={20} />}
-                            {activeSection === "notifications" && <Bell size={20} />}
+                                {(activeSection === "account" || activeSection === "main") && <User size={20} />}
+                                {activeSection === "profile" && <Users size={20} />}
+                                {activeSection === "privacy" && <Shield size={20} />}
+                                {activeSection === "activity" && <Activity size={20} />}
+                                {activeSection === "notifications" && <Bell size={20} />}
+                            </div>
+                            <div>
+                                <h2 className="text-lg font-bold leading-tight">
+                                    {(activeSection === "account" || activeSection === "main") && "Account Settings"}
+                                    {activeSection === "profile" && "Edit Profile"}
+                                    {activeSection === "privacy" && "Privacy & Security"}
+                                    {activeSection === "activity" && "Your Activity"}
+                                    {activeSection === "notifications" && "Notifications"}
+                                </h2>
+                                <p className="text-xs text-white/40 mt-0.5">
+                                    {(activeSection === "account" || activeSection === "main") && "Manage your account details and preferences"}
+                                    {activeSection === "profile" && "Update your role, info, and verification documents"}
+                                    {activeSection === "privacy" && "Control your security and visibility settings"}
+                                    {activeSection === "activity" && "Review your usage analytics and history"}
+                                    {activeSection === "notifications" && "Manage how and when you receive alerts"}
+                                </p>
+                            </div>
                         </div>
-                        <div>
-                            <h2 className="text-lg font-bold leading-tight">
-                                {(activeSection === "account" || activeSection === "main") && "Account Settings"}
-                                {activeSection === "profile" && "Edit Profile"}
-                                {activeSection === "privacy" && "Privacy & Security"}
-                                {activeSection === "activity" && "Your Activity"}
-                                {activeSection === "notifications" && "Notifications"}
-                            </h2>
-                            <p className="text-xs text-white/40 mt-0.5">
-                                {(activeSection === "account" || activeSection === "main") && "Manage your account details and preferences"}
-                                {activeSection === "profile" && "Update your role, info, and verification documents"}
-                                {activeSection === "privacy" && "Control your security and visibility settings"}
-                                {activeSection === "activity" && "Review your usage analytics and history"}
-                                {activeSection === "notifications" && "Manage how and when you receive alerts"}
-                            </p>
-                        </div>
-                    </div>
 
-                    {(activeSection === "main" || activeSection === "account") && <AccountSettings />}
-                    {activeSection === "profile" && <ProfileSection />}
-                    {activeSection === "privacy" && <PrivacySettings />}
-                    {activeSection === "activity" && <ActivitySettings />}
-                    {activeSection === "notifications" && <NotificationSettings />}
-                </main>
+                        {(activeSection === "main" || activeSection === "account") && <AccountSettings />}
+                        {activeSection === "profile" && <ProfileSection />}
+                        {activeSection === "privacy" && <PrivacySettings />}
+                        {activeSection === "activity" && <ActivitySettings />}
+                        {activeSection === "notifications" && <NotificationSettings />}
+                    </main>
+                </div>
             </div>
         </div>
     );
