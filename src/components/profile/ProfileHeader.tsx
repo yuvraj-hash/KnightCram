@@ -53,7 +53,7 @@ const ProfileHeader: React.FC<{ profile: any; onSave: (p: any) => void; saving?:
       <section className="relative group">
         {/* Cover Gradient or Image */}
         <div
-          className="h-32 md:h-48 rounded-t-2xl bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 shadow-lg relative overflow-hidden group/cover bg-cover bg-center"
+          className="h-44 md:h-64 rounded-t-2xl bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 shadow-lg relative overflow-hidden group/cover bg-cover bg-center"
           style={profile.coverImage ? { backgroundImage: `url(${profile.coverImage})` } : undefined}
         >
           <div className="absolute inset-0 bg-black/10 transition-opacity duration-300 group-hover/cover:bg-black/20"></div>
@@ -61,7 +61,7 @@ const ProfileHeader: React.FC<{ profile: any; onSave: (p: any) => void; saving?:
           {isOwner && (
             <button
               onClick={() => setActiveModal("cover")}
-              className="absolute bottom-2 right-2 md:bottom-4 md:right-4 z-20 p-2 rounded-full bg-black/30 hover:bg-black/50 text-white backdrop-blur-md transition-all"
+              className="absolute bottom-3 right-3 md:bottom-5 md:right-5 z-20 p-2 md:p-2.5 rounded-full bg-black/30 hover:bg-black/50 text-white backdrop-blur-md transition-all"
               title="Update Cover Photo"
             >
               <Camera size={16} />
@@ -73,8 +73,8 @@ const ProfileHeader: React.FC<{ profile: any; onSave: (p: any) => void; saving?:
         <div className="bg-white/5 backdrop-blur-xl rounded-b-2xl border border-white/10 px-4 md:px-8 pb-4 shadow-xl relative">
           <div className="flex flex-col md:flex-row gap-4 md:gap-6 items-start">
             {/* Avatar - Overlapping Cover */}
-            <div className="relative -mt-16 md:-mt-20 mb-2 md:mb-0 group/avatar flex-shrink-0">
-              <div className="w-32 h-32 md:w-40 md:h-40 rounded-full bg-gradient-to-br from-blue-400 to-purple-600 flex items-center justify-center text-4xl md:text-5xl font-bold text-white shadow-2xl ring-4 ring-background overflow-hidden relative z-10 bg-cover bg-center">
+            <div className="relative -mt-[4.5rem] md:-mt-[6.5rem] mb-2 md:mb-0 group/avatar flex-shrink-0">
+              <div className="w-36 h-36 md:w-52 md:h-52 rounded-full bg-gradient-to-br from-blue-400 to-purple-600 flex items-center justify-center text-4xl md:text-6xl font-bold text-white shadow-2xl ring-4 ring-background overflow-hidden relative z-10 bg-cover bg-center">
                 {profile.image ? (
                   <img src={profile.image} alt={name} className="w-full h-full object-cover" />
                 ) : (
@@ -86,7 +86,7 @@ const ProfileHeader: React.FC<{ profile: any; onSave: (p: any) => void; saving?:
               {isOwner && (
                 <button
                   onClick={() => setActiveModal("profile")}
-                  className="absolute bottom-1 right-1 md:bottom-2 md:right-2 z-20 p-2 rounded-full bg-zinc-800 hover:bg-zinc-700 border border-white/10 text-white shadow-xl transition-all ring-4 ring-[#0a0a0a]"
+                  className="absolute bottom-1 right-1 md:bottom-2.5 md:right-2.5 z-20 p-2 md:p-2.5 rounded-full bg-zinc-800 hover:bg-zinc-700 border border-white/10 text-white shadow-xl transition-all ring-4 ring-[#0a0a0a]"
                   title="Update Profile Photo"
                 >
                   <Plus size={18} />
