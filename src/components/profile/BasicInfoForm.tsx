@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { localStorageService } from "@/lib/localStorageService";
 import { profileValidation } from "@/lib/validationService";
 import { toast } from "sonner";
-import { Mail, Phone, AtSign, User, CheckCircle, AlertCircle, MapPin, Users } from "lucide-react";
+import { Mail, Phone, AtSign, User, CheckCircle, AlertCircle, MapPin, Users, AlignLeft } from "lucide-react";
 
 interface BasicInfoFormProps {
   profile: any;
@@ -16,6 +16,7 @@ const BasicInfoForm: React.FC<BasicInfoFormProps> = ({ profile, onSave }) => {
   const [phone, setPhone] = useState(profile.phone || "");
   const [gender, setGender] = useState(profile.gender || "");
   const [location, setLocation] = useState(profile.location || "");
+  const [bio, setBio] = useState(profile.bio || "");
 
   const [avail, setAvail] = useState<string | null>(null);
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -29,6 +30,7 @@ const BasicInfoForm: React.FC<BasicInfoFormProps> = ({ profile, onSave }) => {
     setPhone(profile.phone || "");
     setGender(profile.gender || "");
     setLocation(profile.location || "");
+    setBio(profile.bio || "");
   }, [profile]);
 
   useEffect(() => {
@@ -81,6 +83,7 @@ const BasicInfoForm: React.FC<BasicInfoFormProps> = ({ profile, onSave }) => {
       phone,
       gender,
       location,
+      bio,
     };
 
     try {
@@ -106,8 +109,9 @@ const BasicInfoForm: React.FC<BasicInfoFormProps> = ({ profile, onSave }) => {
     setPhone(profile.phone || "");
     setGender(profile.gender || "");
     setLocation(profile.location || "");
+    setBio(profile.bio || "");
     setErrors({});
-    setFocusedField(null); // Hide buttons after reset
+    setFocusedField(null);
     toast.info("Changes discarded");
   };
 
@@ -269,6 +273,30 @@ const BasicInfoForm: React.FC<BasicInfoFormProps> = ({ profile, onSave }) => {
                 className="w-full pl-10 pr-3 py-2 text-sm rounded-lg bg-white/5 border border-white/10 text-white placeholder-white/50 focus:outline-none focus:border-blue-500 transition"
               />
             </div>
+          </div>
+        </div>
+
+        {/* Bio / Headline */}
+        <div className="w-full">
+          <label className="text-sm font-medium text-white block mb-2">
+            Bio / Headline
+            <span className="text-white/40 font-normal ml-2 text-xs">(short professional tagline)</span>
+          </label>
+          <div className="relative">
+            <AlignLeft className="absolute left-3 top-3 text-white/50" size={16} />
+            <textarea
+              placeholder="e.g. Computer Science Student | Open to Work"
+              value={bio}
+              maxLength={120}
+              rows={2}
+              onFocus={() => setFocusedField("bio")}
+              onChange={(e) => setBio(e.target.value)}
+              className="w-full pl-10 pr-3 py-2 text-sm rounded-lg bg-white/5 border border-white/10 text-white placeholder-white/40 focus:outline-none focus:border-blue-500 transition resize-none"
+            />
+          </div>
+          <div className={`flex justify-end mt-1 text-xs ${bio.length >= 120 ? "text-red-400" : bio.length >= 100 ? "text-yellow-400" : "text-white/30"
+            }`}>
+            {bio.length}/120
           </div>
         </div>
 

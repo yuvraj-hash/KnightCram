@@ -9,6 +9,9 @@ export interface UserProfile {
   handle?: string;
   email?: string;
   phone?: string;
+  bio?: string;        // Bio / Headline (new)
+  gender?: string;
+  location?: string;
 
   // Role Selection
   roles?: string[];
@@ -116,10 +119,11 @@ export const localStorageService = {
       verification: 0,
     };
 
-    // Basic Info Check (4 fields)
+    // Basic Info Check (name + handle + email + phone = 20pts, bio = 5pt bonus)
     const basicInfoFields = [profile.name, profile.handle, profile.email, profile.phone];
     const basicInfoComplete = basicInfoFields.filter((f) => f && f.trim()).length;
-    sections.basicInfo = (basicInfoComplete / 4) * 25; // 25%
+    const bioBonus = profile.bio && profile.bio.trim() ? 5 : 0;
+    sections.basicInfo = Math.min(25, (basicInfoComplete / 4) * 20 + bioBonus); // 25%
 
     // Role Info Check
     sections.roleInfo = profile.roles && profile.roles.length > 0 ? 25 : 0; // 25%

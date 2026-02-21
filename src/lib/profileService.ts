@@ -6,11 +6,14 @@ export interface Profile {
   handle?: string;
   email?: string;
   phone?: string;
+  bio?: string;          // Bio / Headline
+  gender?: string;
+  location?: string;
   roles?: string[];
   completionPercentage?: number;
   verificationStatus?: VerificationStatus;
   proofs?: Array<{ id: string; type: string; status: VerificationStatus }>;
-  
+
   // Academic Fields
   class?: string;
   stream?: string;
@@ -20,20 +23,20 @@ export interface Profile {
   state?: string;
   academicYear?: string;
   yearOfPassing?: string;
-  
+
   // Professional Fields
   company?: string;
   designation?: string;
   industry?: string;
   workHistory?: Array<{ id: string; company: string; position: string; startDate: string; endDate: string; description: string }>;
-  
+
   // Business Owner Fields
   businessName?: string;
   businessDescription?: string;
-  
+
   // Profile Picture
   profilePicture?: string;
-  
+
   // Verification fields
   phoneVerified?: boolean;
   emailVerified?: boolean;
@@ -46,11 +49,14 @@ const defaultProfile: Profile = {
   handle: "",
   email: "",
   phone: "",
+  bio: "",
+  gender: "",
+  location: "",
   roles: [],
   completionPercentage: 0,
   verificationStatus: "none",
   proofs: [],
-  
+
   // Academic Fields
   class: "",
   stream: "",
@@ -60,20 +66,20 @@ const defaultProfile: Profile = {
   state: "",
   academicYear: "",
   yearOfPassing: "",
-  
+
   // Professional Fields
   company: "",
   designation: "",
   industry: "",
   workHistory: [],
-  
+
   // Business Owner Fields
   businessName: "",
   businessDescription: "",
-  
+
   // Profile Picture
   profilePicture: "",
-  
+
   // Verification fields
   phoneVerified: false,
   emailVerified: false,
