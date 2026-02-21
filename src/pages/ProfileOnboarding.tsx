@@ -6,7 +6,7 @@ import BasicInfoForm from "@/components/profile/BasicInfoForm";
 import AcademicInfoForm from "@/components/profile/AcademicInfoForm";
 import VerificationUploader from "@/components/profile/VerificationUploader";
 import ProfileStrengthMeter from "@/components/profile/ProfileStrengthMeter";
-import { CheckCircle2, Save } from "lucide-react";
+import { CheckCircle2, Save, ArrowLeft } from "lucide-react";
 import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
 
@@ -86,8 +86,15 @@ const ProfileOnboarding = () => {
   return (
     <main className="min-h-[calc(100vh-4rem)] bg-gradient-to-b from-background to-background/50 py-8">
       <div className="max-w-6xl mx-auto px-4">
-        {/* Header */}
+        {/* Header with back button */}
         <div className="mb-8">
+          <button
+            onClick={() => nav(-1)}
+            className="flex items-center gap-2 text-white/50 hover:text-white transition-colors duration-200 mb-4 group"
+          >
+            <ArrowLeft size={18} className="group-hover:-translate-x-0.5 transition-transform duration-200" />
+            <span className="text-sm font-medium">Back</span>
+          </button>
           <h1 className="text-4xl font-bold mb-2">Complete Your Profile</h1>
           <p className="text-lg text-white/60">Build your professional presence on KnightCram</p>
         </div>

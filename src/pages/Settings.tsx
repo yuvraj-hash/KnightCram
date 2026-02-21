@@ -540,29 +540,40 @@ export default function Settings() {
         <div className="max-w-6xl mx-auto px-4 md:px-8 py-6 md:py-10 text-white min-h-screen pb-28">
 
             {/* Page Title */}
-            <div className="mb-8 flex items-center gap-3">
-                {/* Mobile Back Button */}
-                {activeSection !== "main" && (
-                    <Button
-                        variant="ghost"
-                        size="icon"
-                        onClick={() => setActiveSection("main")}
-                        className="md:hidden -ml-1"
-                    >
-                        <ArrowLeft size={22} />
-                    </Button>
-                )}
-                <h1 className="text-2xl md:text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-white/60">
-                    {/* Mobile: show active section name; Desktop: always "Settings" */}
-                    <span className="md:hidden">
-                        {activeSection === "main" ? "Settings" :
-                            activeSection === "account" ? "Account" :
-                                activeSection === "privacy" ? "Privacy" :
-                                    activeSection === "activity" ? "Your Activity" :
-                                        activeSection === "notifications" ? "Notifications" : "Settings"}
-                    </span>
-                    <span className="hidden md:inline">Settings</span>
-                </h1>
+            <div className="mb-8">
+                {/* Back to previous page — all screen sizes */}
+                <button
+                    onClick={() => navigate(-1)}
+                    className="flex items-center gap-2 text-white/40 hover:text-white transition-colors duration-200 mb-4 group"
+                >
+                    <ArrowLeft size={16} className="group-hover:-translate-x-0.5 transition-transform duration-200" />
+                    <span className="text-sm font-medium">Back</span>
+                </button>
+
+                <div className="flex items-center gap-3">
+                    {/* Mobile: back to section list when inside a section */}
+                    {activeSection !== "main" && (
+                        <Button
+                            variant="ghost"
+                            size="icon"
+                            onClick={() => setActiveSection("main")}
+                            className="md:hidden -ml-1"
+                        >
+                            <ArrowLeft size={22} />
+                        </Button>
+                    )}
+                    <h1 className="text-2xl md:text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-white/60">
+                        <span className="md:hidden">
+                            {activeSection === "main" ? "Settings" :
+                                activeSection === "account" ? "Account" :
+                                    activeSection === "profile" ? "Profile" :
+                                        activeSection === "privacy" ? "Privacy" :
+                                            activeSection === "activity" ? "Your Activity" :
+                                                activeSection === "notifications" ? "Notifications" : "Settings"}
+                        </span>
+                        <span className="hidden md:inline">Settings</span>
+                    </h1>
+                </div>
             </div>
 
             {/* Two-column layout */}
