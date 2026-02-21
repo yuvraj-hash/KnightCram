@@ -73,7 +73,8 @@ const VerificationUploader: React.FC<{ profile: any; onUpload: (data?: any) => v
     if (role === "University Student") return "College ID Card, Admission Letter, Marksheet";
     if (role === "Alumni" || role === "Opportunity Seeker") return "Admission letter, College Id Card, Marksheet or Degree Certificate";
     if (role === "Working Professional") return "Current Offer Letter, ID Card, Payslips";
-    if (role === "Business Owner / Indie Hacker" || role === "Founder / Start-up Owner") return "Client Payment Proof or Other Proof of work";
+    if (role === "Business Owner / Indie Professional" || role === "Founder / Start-up Owner") return "Client Payment Proof or Other Proof of work";
+    if (role === "Indie Hacker / Freelancer") return "Client Invoice, Upwork/Fiverr Profile Screenshot, or Other Proof of Freelance Work";
     return "ID Proof";
   };
 

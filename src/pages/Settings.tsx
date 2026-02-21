@@ -1,5 +1,5 @@
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
     User,
@@ -18,7 +18,9 @@ import {
     Trash2,
     Hash,
     Moon,
-    Users
+    Users,
+    Save,
+    CheckCircle2
 } from "lucide-react";
 import { Switch } from "@/components/ui/switch";
 import { Button } from "@/components/ui/button";
@@ -43,40 +45,29 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
 import { Separator } from "@/components/ui/separator";
+import { localStorageService } from "@/lib/localStorageService";
+import RoleSelector from "@/components/profile/RoleSelector";
+import BasicInfoForm from "@/components/profile/BasicInfoForm";
+import AcademicInfoForm from "@/components/profile/AcademicInfoForm";
+import VerificationUploader from "@/components/profile/VerificationUploader";
+import ProfileStrengthMeter from "@/components/profile/ProfileStrengthMeter";
 
 // --- Types ---
 
-type Section = "main" | "account" | "privacy" | "activity" | "notifications";
+type Section = "main" | "account" | "profile" | "privacy" | "activity" | "notifications";
 
 // --- Mock Data & State Management ---
 
 export default function Settings() {
     const navigate = useNavigate();
     const [activeSection, setActiveSection] = useState<Section>("account");
-    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-
-    // Initial check for mobile view to default to "main" if actually mobile (handled by media query logic mostly, but state helps)
-    // Actually, distinct handling: Mobile: List -> Detail. Desktop: Split Pane.
-    // For Desktop split pane, we always have a selection. For Mobile, we start at list.
-    // Let's use a "mobileSection" state vs "desktopSection" state? No, same state.
-    // If window width < md: activeSection "main" means list view. "account" means detail view.
-    // If window width >= md: user sees both. "main" is not a valid selection for the right pane, so we default to "account".
-
-    // Simpler approach:
-    // Mobile: if activeSection is null/main, show list. if valid section, show detail.
-    // Desktop: Always show list (sidebar). Show content of activeSection (default to account if main).
 
     const handleSectionClick = (section: Section) => {
         setActiveSection(section);
-        // On mobile, this will switch view. On desktop, just updates right pane.
     };
 
     const handleBack = () => {
         setActiveSection("main");
-    };
-
-    const navigateToProfileSettings = () => {
-        navigate("/profile/onboarding");
     };
 
     // Helper for auto-save feedback
@@ -105,6 +96,105 @@ export default function Settings() {
     const [events, setEvents] = useState(true);
 
     // --- Sub-components (Sections) ---
+
+    // ── Inline Profile Section ──
+    const ProfileSection = () => {
+        const [profile, setProfile] = useState<any>({});
+        const [isSaving, setIsSaving] = useState(false);
+        const [saveSuccess, setSaveSuccess] = useState(false);
+
+        useEffect(() => {
+            const saved = localStorageService.getProfile();
+            setProfile((prev: any) => ({ ...prev, ...saved }));
+        }, []);
+
+        const isProfileValid = () =>
+            profile.roles?.length > 0 &&
+            profile.name?.trim() &&
+            profile.handle?.trim() &&
+            profile.email?.trim() &&
+            profile.phone?.trim();
+
+        const handleFormSave = (updatedData: any) => {
+            const merged = { ...profile, ...updatedData };
+            localStorageService.updateProfile(merged);
+            localStorageService.updateCompletion();
+            setProfile(merged);
+        };
+
+        const handleSave = async () => {
+            if (!isProfileValid()) {
+                toast.error("Please complete Role & Basic Info before saving.");
+                return;
+            }
+            setIsSaving(true);
+            try {
+                await new Promise((r) => setTimeout(r, 500));
+                setSaveSuccess(true);
+                setTimeout(() => setSaveSuccess(false), 3000);
+                toast.success("Profile saved successfully!");
+                setTimeout(() => navigate("/profile/view"), 1000);
+            } catch {
+                toast.error("An error occurred while saving.");
+            } finally {
+                setIsSaving(false);
+            }
+        };
+
+        return (
+            <div className="space-y-6 animate-in fade-in slide-in-from-right-4 duration-300">
+                {saveSuccess && (
+                    <div className="p-4 rounded-lg bg-green-500/10 border border-green-500/20 flex items-center gap-3">
+                        <CheckCircle2 className="text-green-400 flex-shrink-0" size={18} />
+                        <p className="text-green-300 text-sm">All changes saved successfully!</p>
+                    </div>
+                )}
+
+                {/* Profile Strength — compact bar at top */}
+                <ProfileStrengthMeter profile={profile} />
+
+                {/* Forms — full width, no inner grid splitting */}
+                <div className="space-y-6">
+                    <RoleSelector
+                        roles={profile.roles || []}
+                        onChange={(roles: string[]) => handleFormSave({ roles })}
+                    />
+                    <BasicInfoForm profile={profile} onSave={handleFormSave} />
+                    <AcademicInfoForm profile={profile} onSave={handleFormSave} />
+                    <VerificationUploader
+                        profile={profile}
+                        onUpload={(data) => handleFormSave(data || { verificationStatus: "submitted" })}
+                    />
+
+                    {/* Save bar */}
+                    <div className="p-5 rounded-2xl bg-gradient-to-r from-blue-600 to-purple-600 border border-white/10 shadow-xl">
+                        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                            <div>
+                                <p className="font-bold">Ready to share your profile?</p>
+                                <p className="text-sm text-white/70 mt-0.5">Save all changes and make it live</p>
+                            </div>
+                            <div className="flex gap-3 flex-shrink-0">
+                                <button
+                                    onClick={() => navigate("/profile/view")}
+                                    className="px-5 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 border border-white/20 text-sm font-semibold transition"
+                                >
+                                    Cancel
+                                </button>
+                                <button
+                                    onClick={handleSave}
+                                    disabled={isSaving || !isProfileValid()}
+                                    className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-white text-blue-600 font-bold text-sm hover:bg-white/90 disabled:opacity-50 disabled:cursor-not-allowed transition shadow-lg"
+                                >
+                                    <Save size={16} />
+                                    {isSaving ? "Saving..." : "Save Profile"}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        );
+    };
 
     const AccountSettings = () => {
         const [isReportDialogOpen, setIsReportDialogOpen] = useState(false);
@@ -447,147 +537,185 @@ export default function Settings() {
     // Let's refine the render logic:
 
     return (
-        <div className="max-w-7xl mx-auto p-4 md:p-8 text-white min-h-screen pb-24">
-            {/* Header */}
-            <div className="mb-6 flex items-center gap-3">
-                {/* Mobile Back Button - only show if NOT main section */}
+        <div className="max-w-6xl mx-auto px-4 md:px-8 py-6 md:py-10 text-white min-h-screen pb-28">
+
+            {/* Page Title */}
+            <div className="mb-8 flex items-center gap-3">
+                {/* Mobile Back Button */}
                 {activeSection !== "main" && (
                     <Button
                         variant="ghost"
                         size="icon"
                         onClick={() => setActiveSection("main")}
-                        className="md:hidden"
+                        className="md:hidden -ml-1"
                     >
-                        <ArrowLeft size={24} />
+                        <ArrowLeft size={22} />
                     </Button>
                 )}
-                <h1 className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-white/60">
-                    {activeSection === "main" ? "Settings" :
-                        (window.innerWidth >= 768) ? "Settings" : // On desktop always show "Settings" title or maybe the specific one? Title "Settings" is safer for overall page.
-                            activeSection === "account" ? "Account Settings" :
-                                activeSection === "privacy" ? "Privacy Settings" :
+                <h1 className="text-2xl md:text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-white/60">
+                    {/* Mobile: show active section name; Desktop: always "Settings" */}
+                    <span className="md:hidden">
+                        {activeSection === "main" ? "Settings" :
+                            activeSection === "account" ? "Account" :
+                                activeSection === "privacy" ? "Privacy" :
                                     activeSection === "activity" ? "Your Activity" :
                                         activeSection === "notifications" ? "Notifications" : "Settings"}
+                    </span>
+                    <span className="hidden md:inline">Settings</span>
                 </h1>
             </div>
 
-            <div className="flex flex-col md:flex-row gap-8">
-                {/* Navigation Sidebar (List) */}
-                {/* Mobile: Show only if activeSection == 'main' */}
-                {/* Desktop: Always show */}
+            {/* Two-column layout */}
+            <div className="flex flex-col md:flex-row gap-6 lg:gap-10 items-start">
+
+                {/* ── Sidebar Nav ── */}
                 <aside className={`
-                    w-full md:w-1/4 space-y-4
+                    w-full md:w-[240px] lg:w-[260px] flex-shrink-0
+                    md:sticky md:top-8
                     ${activeSection === "main" ? "block" : "hidden md:block"}
                 `}>
-                    {/* Account */}
-                    <div
-                        onClick={() => handleSectionClick("account")}
-                        className={`group p-4 rounded-xl border cursor-pointer transition-all duration-300 flex items-center justify-between
-                            ${activeSection === "account" ? "bg-blue-500/20 border-blue-500/50" : "bg-white/5 border-white/10 hover:bg-white/10"}
-                        `}
-                    >
-                        <div className="flex items-center gap-3">
-                            <div className={`p-2 rounded-lg ${activeSection === "account" ? "bg-blue-500 text-white" : "bg-blue-500/20 text-blue-400"}`}>
-                                <User size={20} />
-                            </div>
-                            <div>
-                                <h3 className="font-semibold">Account</h3>
-                                <p className="text-xs text-white/50 md:hidden lg:block lg:text-[10px] xl:text-xs">Manage details</p>
-                            </div>
-                        </div>
-                        <ChevronRight className={`text-white/30 transition-transform ${activeSection === "account" ? "rotate-90 md:rotate-0 text-blue-400" : ""}`} size={16} />
-                    </div>
+                    <p className="hidden md:block text-[11px] font-semibold uppercase tracking-widest text-white/25 px-1 pb-3">
+                        Menu
+                    </p>
 
-                    {/* Profile Link */}
-                    <div
-                        onClick={navigateToProfileSettings}
-                        className="group p-4 bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl cursor-pointer transition-all duration-300 flex items-center justify-between"
-                    >
-                        <div className="flex items-center gap-3">
-                            <div className="p-2 bg-purple-500/20 text-purple-400 rounded-lg">
-                                <Users size={20} />
+                    <nav className="space-y-1.5">
+                        {/* Account */}
+                        <button
+                            onClick={() => handleSectionClick("account")}
+                            className={`w-full text-left p-3.5 rounded-xl border cursor-pointer transition-all duration-200 flex items-center gap-3
+                                ${activeSection === "account"
+                                    ? "bg-blue-500/15 border-blue-500/40"
+                                    : "bg-white/[0.04] border-white/[0.08] hover:bg-white/[0.08] hover:border-white/[0.15]"}
+                            `}
+                        >
+                            <div className={`p-2 rounded-lg flex-shrink-0 ${activeSection === "account" ? "bg-blue-500 text-white" : "bg-blue-500/20 text-blue-400"}`}>
+                                <User size={17} />
                             </div>
-                            <div>
-                                <h3 className="font-semibold">Profile</h3>
-                                <p className="text-xs text-white/50 md:hidden lg:block lg:text-[10px] xl:text-xs">Edit public info</p>
+                            <div className="flex-1 min-w-0">
+                                <p className={`font-semibold text-sm ${activeSection === "account" ? "text-blue-300" : "text-white"}`}>Account</p>
+                                <p className="text-[11px] text-white/40 truncate">Manage details & danger zone</p>
                             </div>
-                        </div>
-                        <ChevronRight className="text-white/30" size={16} />
-                    </div>
+                            {activeSection === "account" && <div className="w-1.5 h-1.5 rounded-full bg-blue-400 flex-shrink-0" />}
+                        </button>
 
-                    {/* Privacy */}
-                    <div
-                        onClick={() => handleSectionClick("privacy")}
-                        className={`group p-4 rounded-xl border cursor-pointer transition-all duration-300 flex items-center justify-between
-                            ${activeSection === "privacy" ? "bg-green-500/20 border-green-500/50" : "bg-white/5 border-white/10 hover:bg-white/10"}
-                        `}
-                    >
-                        <div className="flex items-center gap-3">
-                            <div className={`p-2 rounded-lg ${activeSection === "privacy" ? "bg-green-500 text-white" : "bg-green-500/20 text-green-400"}`}>
-                                <Shield size={20} />
+                        {/* Profile */}
+                        <button
+                            onClick={() => handleSectionClick("profile")}
+                            className={`w-full text-left p-3.5 rounded-xl border cursor-pointer transition-all duration-200 flex items-center gap-3
+                                ${activeSection === "profile"
+                                    ? "bg-purple-500/15 border-purple-500/40"
+                                    : "bg-white/[0.04] border-white/[0.08] hover:bg-white/[0.08] hover:border-white/[0.15]"}
+                            `}
+                        >
+                            <div className={`p-2 rounded-lg flex-shrink-0 ${activeSection === "profile" ? "bg-purple-500 text-white" : "bg-purple-500/20 text-purple-400"}`}>
+                                <Users size={17} />
                             </div>
-                            <div>
-                                <h3 className="font-semibold">Privacy</h3>
-                                <p className="text-xs text-white/50 md:hidden lg:block lg:text-[10px] xl:text-xs">Security & Visibility</p>
+                            <div className="flex-1 min-w-0">
+                                <p className={`font-semibold text-sm ${activeSection === "profile" ? "text-purple-300" : "text-white"}`}>Profile</p>
+                                <p className="text-[11px] text-white/40 truncate">Edit your public info</p>
                             </div>
-                        </div>
-                        <ChevronRight className={`text-white/30 transition-transform ${activeSection === "privacy" ? "rotate-90 md:rotate-0 text-green-400" : ""}`} size={16} />
-                    </div>
+                            {activeSection === "profile" && <div className="w-1.5 h-1.5 rounded-full bg-purple-400 flex-shrink-0" />}
+                        </button>
 
-                    {/* Activity */}
-                    <div
-                        onClick={() => handleSectionClick("activity")}
-                        className={`group p-4 rounded-xl border cursor-pointer transition-all duration-300 flex items-center justify-between
-                            ${activeSection === "activity" ? "bg-orange-500/20 border-orange-500/50" : "bg-white/5 border-white/10 hover:bg-white/10"}
-                        `}
-                    >
-                        <div className="flex items-center gap-3">
-                            <div className={`p-2 rounded-lg ${activeSection === "activity" ? "bg-orange-500 text-white" : "bg-orange-500/20 text-orange-400"}`}>
-                                <Activity size={20} />
+                        {/* Privacy */}
+                        <button
+                            onClick={() => handleSectionClick("privacy")}
+                            className={`w-full text-left p-3.5 rounded-xl border cursor-pointer transition-all duration-200 flex items-center gap-3
+                                ${activeSection === "privacy"
+                                    ? "bg-green-500/15 border-green-500/40"
+                                    : "bg-white/[0.04] border-white/[0.08] hover:bg-white/[0.08] hover:border-white/[0.15]"}
+                            `}
+                        >
+                            <div className={`p-2 rounded-lg flex-shrink-0 ${activeSection === "privacy" ? "bg-green-500 text-white" : "bg-green-500/20 text-green-400"}`}>
+                                <Shield size={17} />
                             </div>
-                            <div>
-                                <h3 className="font-semibold">Your Activity</h3>
-                                <p className="text-xs text-white/50 md:hidden lg:block lg:text-[10px] xl:text-xs">Analytics & History</p>
+                            <div className="flex-1 min-w-0">
+                                <p className={`font-semibold text-sm ${activeSection === "privacy" ? "text-green-300" : "text-white"}`}>Privacy</p>
+                                <p className="text-[11px] text-white/40 truncate">Security & visibility</p>
                             </div>
-                        </div>
-                        <ChevronRight className={`text-white/30 transition-transform ${activeSection === "activity" ? "rotate-90 md:rotate-0 text-orange-400" : ""}`} size={16} />
-                    </div>
+                            {activeSection === "privacy" && <div className="w-1.5 h-1.5 rounded-full bg-green-400 flex-shrink-0" />}
+                        </button>
 
-                    {/* Notifications */}
-                    <div
-                        onClick={() => handleSectionClick("notifications")}
-                        className={`group p-4 rounded-xl border cursor-pointer transition-all duration-300 flex items-center justify-between
-                            ${activeSection === "notifications" ? "bg-pink-500/20 border-pink-500/50" : "bg-white/5 border-white/10 hover:bg-white/10"}
-                        `}
-                    >
-                        <div className="flex items-center gap-3">
-                            <div className={`p-2 rounded-lg ${activeSection === "notifications" ? "bg-pink-500 text-white" : "bg-pink-500/20 text-pink-400"}`}>
-                                <Bell size={20} />
+                        {/* Activity */}
+                        <button
+                            onClick={() => handleSectionClick("activity")}
+                            className={`w-full text-left p-3.5 rounded-xl border cursor-pointer transition-all duration-200 flex items-center gap-3
+                                ${activeSection === "activity"
+                                    ? "bg-orange-500/15 border-orange-500/40"
+                                    : "bg-white/[0.04] border-white/[0.08] hover:bg-white/[0.08] hover:border-white/[0.15]"}
+                            `}
+                        >
+                            <div className={`p-2 rounded-lg flex-shrink-0 ${activeSection === "activity" ? "bg-orange-500 text-white" : "bg-orange-500/20 text-orange-400"}`}>
+                                <Activity size={17} />
                             </div>
-                            <div>
-                                <h3 className="font-semibold">Notifications</h3>
-                                <p className="text-xs text-white/50 md:hidden lg:block lg:text-[10px] xl:text-xs">Alert preferences</p>
+                            <div className="flex-1 min-w-0">
+                                <p className={`font-semibold text-sm ${activeSection === "activity" ? "text-orange-300" : "text-white"}`}>Your Activity</p>
+                                <p className="text-[11px] text-white/40 truncate">Analytics & history</p>
                             </div>
-                        </div>
-                        <ChevronRight className={`text-white/30 transition-transform ${activeSection === "notifications" ? "rotate-90 md:rotate-0 text-pink-400" : ""}`} size={16} />
-                    </div>
+                            {activeSection === "activity" && <div className="w-1.5 h-1.5 rounded-full bg-orange-400 flex-shrink-0" />}
+                        </button>
+
+                        {/* Notifications */}
+                        <button
+                            onClick={() => handleSectionClick("notifications")}
+                            className={`w-full text-left p-3.5 rounded-xl border cursor-pointer transition-all duration-200 flex items-center gap-3
+                                ${activeSection === "notifications"
+                                    ? "bg-pink-500/15 border-pink-500/40"
+                                    : "bg-white/[0.04] border-white/[0.08] hover:bg-white/[0.08] hover:border-white/[0.15]"}
+                            `}
+                        >
+                            <div className={`p-2 rounded-lg flex-shrink-0 ${activeSection === "notifications" ? "bg-pink-500 text-white" : "bg-pink-500/20 text-pink-400"}`}>
+                                <Bell size={17} />
+                            </div>
+                            <div className="flex-1 min-w-0">
+                                <p className={`font-semibold text-sm ${activeSection === "notifications" ? "text-pink-300" : "text-white"}`}>Notifications</p>
+                                <p className="text-[11px] text-white/40 truncate">Alert preferences</p>
+                            </div>
+                            {activeSection === "notifications" && <div className="w-1.5 h-1.5 rounded-full bg-pink-400 flex-shrink-0" />}
+                        </button>
+                    </nav>
                 </aside>
 
-                {/* Main Content Area */}
-                {/* Mobile: Show only if activeSection != 'main' */}
-                {/* Desktop: Always show (defaults to account if activeSection is 'main' - handled by default render) */}
-
+                {/* ── Content Panel ── */}
                 <main className={`
-                    flex-1 bg-white/5 border border-white/10 rounded-2xl p-6 min-h-[500px]
+                    flex-1 min-w-0 w-full
                     ${activeSection === "main" ? "hidden md:block" : "block"}
                 `}>
-                    {/* On Desktop, if 'main' is active, we might want to default to Account or show a placeholder. 
-                        Let's handle the default state visually. 
-                        In the state initialization, we set "account" as default, but for mobile logic we need "main" distinct.
-                        Correction: If I initialize to "main", Desktop shows empty right pane? 
-                        Let's change initialization or render logic.
-                    */}
+                    {/* Desktop: Section heading inside the content area */}
+                    <div className="hidden md:flex items-center gap-3 mb-6 pb-5 border-b border-white/10">
+                        <div className={`p-2.5 rounded-xl
+                            ${(activeSection === "account" || activeSection === "main") ? "bg-blue-500/20 text-blue-400" : ""}
+                            ${activeSection === "profile" ? "bg-purple-500/20 text-purple-400" : ""}
+                            ${activeSection === "privacy" ? "bg-green-500/20 text-green-400" : ""}
+                            ${activeSection === "activity" ? "bg-orange-500/20 text-orange-400" : ""}
+                            ${activeSection === "notifications" ? "bg-pink-500/20 text-pink-400" : ""}
+                        `}>
+                            {(activeSection === "account" || activeSection === "main") && <User size={20} />}
+                            {activeSection === "profile" && <Users size={20} />}
+                            {activeSection === "privacy" && <Shield size={20} />}
+                            {activeSection === "activity" && <Activity size={20} />}
+                            {activeSection === "notifications" && <Bell size={20} />}
+                        </div>
+                        <div>
+                            <h2 className="text-lg font-bold leading-tight">
+                                {(activeSection === "account" || activeSection === "main") && "Account Settings"}
+                                {activeSection === "profile" && "Edit Profile"}
+                                {activeSection === "privacy" && "Privacy & Security"}
+                                {activeSection === "activity" && "Your Activity"}
+                                {activeSection === "notifications" && "Notifications"}
+                            </h2>
+                            <p className="text-xs text-white/40 mt-0.5">
+                                {(activeSection === "account" || activeSection === "main") && "Manage your account details and preferences"}
+                                {activeSection === "profile" && "Update your role, info, and verification documents"}
+                                {activeSection === "privacy" && "Control your security and visibility settings"}
+                                {activeSection === "activity" && "Review your usage analytics and history"}
+                                {activeSection === "notifications" && "Manage how and when you receive alerts"}
+                            </p>
+                        </div>
+                    </div>
+
                     {(activeSection === "main" || activeSection === "account") && <AccountSettings />}
+                    {activeSection === "profile" && <ProfileSection />}
                     {activeSection === "privacy" && <PrivacySettings />}
                     {activeSection === "activity" && <ActivitySettings />}
                     {activeSection === "notifications" && <NotificationSettings />}

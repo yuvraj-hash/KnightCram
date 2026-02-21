@@ -1,12 +1,13 @@
 import React from "react";
-import { Check, BookOpen, GraduationCap, Award, Briefcase, Rocket } from "lucide-react";
+import { Check, BookOpen, GraduationCap, Award, Briefcase, Rocket, Laptop } from "lucide-react";
 
 const ROLES = [
   { name: "Pre University Student", icon: BookOpen, color: "blue" },
   { name: "University Student", icon: GraduationCap, color: "purple" },
   { name: "Alumni / Opportunity Seeker", icon: Award, color: "indigo" },
   { name: "Working Professional", icon: Briefcase, color: "cyan" },
-  { name: "Business Owner / Indie Hacker", icon: Rocket, color: "pink" },
+  { name: "Business Owner / Indie Professional", icon: Rocket, color: "pink" },
+  { name: "Indie Hacker / Freelancer", icon: Laptop, color: "orange" },
 ];
 
 const RoleSelector: React.FC<{ roles: string[]; onChange: (r: string[]) => void }> = ({ roles, onChange }) => {

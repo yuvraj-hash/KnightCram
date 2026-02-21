@@ -169,8 +169,8 @@ const AcademicInfoForm: React.FC<AcademicInfoFormProps> = ({ profile, onSave }) 
       );
     }
 
-    // Business Owner / Indie Hacker
-    if (role === "Business Owner / Indie Hacker") {
+    // Business Owner / Indie Professional
+    if (role === "Business Owner / Indie Professional") {
       return (
         <div className="space-y-4">
           <FormField label="Company/Organization Name (Optional)" value={academicInfo.businessName} field="businessName" placeholder="e.g., My Startup" onFocus={setFocusedField} onChange={handleInputChange} />
@@ -194,6 +194,30 @@ const AcademicInfoForm: React.FC<AcademicInfoFormProps> = ({ profile, onSave }) 
       );
     }
 
+    // Indie Hacker / Freelancer
+    if (role === "Indie Hacker / Freelancer") {
+      return (
+        <div className="space-y-4">
+          <FormField label="Current Client / Project (Optional)" value={academicInfo.company} field="company" placeholder="e.g., Client name or project" onFocus={setFocusedField} onChange={handleInputChange} />
+          <FormField label="Primary Skills" value={academicInfo.industry} field="industry" placeholder="e.g., Web Dev, UI/UX, Copywriting" onFocus={setFocusedField} onChange={handleInputChange} />
+
+          <div className="flex flex-col md:flex-row md:items-start gap-2 md:gap-4">
+            <label className="w-full md:w-1/3 text-sm font-medium text-white text-left md:text-right mt-0 md:mt-2">What you do? (Work / side projects)</label>
+            <div className="w-full md:w-2/3 max-w-md">
+              <textarea
+                value={academicInfo.businessDescription}
+                onFocus={() => setFocusedField("businessDescription")}
+                onChange={(e) => handleInputChange("businessDescription", e.target.value)}
+                rows={4}
+                className="w-full px-3 py-3 md:py-2 text-base md:text-sm rounded-lg bg-white/5 border border-white/10 text-white placeholder-white/50 focus:border-blue-500 focus:outline-none transition resize-none"
+                placeholder="Describe your freelance work, side-projects, or what you're building..."
+              />
+            </div>
+          </div>
+        </div>
+      );
+    }
+
     return null;
   };
 
@@ -202,7 +226,8 @@ const AcademicInfoForm: React.FC<AcademicInfoFormProps> = ({ profile, onSave }) 
     const role = profile.roles[0];
     if (
       role === "Working Professional" ||
-      role === "Business Owner / Indie Hacker"
+      role === "Business Owner / Indie Professional" ||
+      role === "Indie Hacker / Freelancer"
     ) {
       return <Briefcase size={20} />;
     }

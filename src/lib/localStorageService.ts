@@ -137,8 +137,11 @@ export const localStorageService = {
       } else if (role === "Working Professional") {
         const fields = [profile.company, profile.designation];
         academicComplete = fields.filter((f) => f && f.trim()).length > 0 ? 25 : 0;
-      } else if (role === "Business Owner / Indie Hacker" || role === "Founder / Start-up Owner") {
+      } else if (role === "Business Owner / Indie Professional" || role === "Founder / Start-up Owner") {
         const fields = [profile.businessName];
+        academicComplete = fields.filter((f) => f && f.trim()).length > 0 ? 25 : 0;
+      } else if (role === "Indie Hacker / Freelancer") {
+        const fields = [profile.company, profile.industry];
         academicComplete = fields.filter((f) => f && f.trim()).length > 0 ? 25 : 0;
       }
     }
