@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useCreate } from "@/context/CreateContext";
 import { Search, Briefcase, PlusSquare, Menu, X, Bell } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -9,6 +10,7 @@ interface TopNavProps {
 }
 
 const TopNav = ({ isMenuOpen, onMenuOpenChange }: TopNavProps) => {
+    const { openCreate } = useCreate();
     return (
         <nav
             className="fixed top-0 left-0 right-0 z-50 bg-background/90 backdrop-blur-xl border-b border-white/30 h-14 md:h-16 flex items-center justify-between px-3 md:px-4 transition-all duration-300"
@@ -66,6 +68,7 @@ const TopNav = ({ isMenuOpen, onMenuOpenChange }: TopNavProps) => {
                 <Button
                     variant="ghost"
                     size="sm"
+                    onClick={openCreate}
                     className="hidden md:flex items-center gap-2 hover:bg-primary/10 rounded-full transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background px-3"
                     aria-label="Create new post"
                 >

@@ -1,4 +1,4 @@
-import { Home, Layers, MessageSquareText, User, PlusSquare } from "lucide-react";
+import { Home, Layers, MessageSquareText, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useLocation, useNavigate } from "react-router-dom";
 
@@ -9,7 +9,6 @@ const BottomNav = () => {
     const navItems = [
         { icon: Home, label: "Home", path: "/main", active: location.pathname === "/main" || location.pathname === "/home", ariaLabel: "Home page" },
         { icon: Layers, label: "Materials", path: "/resources", active: location.pathname === "/resources", ariaLabel: "Study materials" },
-        { icon: PlusSquare, label: "Create", path: "/community/create", active: location.pathname === "/community/create", ariaLabel: "Create new post" },
         { icon: MessageSquareText, label: "Forum", path: "/forum", active: location.pathname === "/forum", ariaLabel: "Discussion forum" },
         { icon: User, label: "Profile", path: "/profile/view", active: location.pathname.startsWith("/profile/view"), ariaLabel: "User profile" },
     ];
