@@ -1,7 +1,5 @@
 import { useState } from "react";
 import { Outlet } from "react-router-dom";
-import { Plus } from "lucide-react";
-import { motion } from "framer-motion";
 import TopNav from "@/components/navigation/TopNav";
 import BottomNav from "@/components/navigation/BottomNav";
 import Sidebar from "@/components/navigation/Sidebar";
@@ -30,17 +28,6 @@ const MainLayout = () => {
 
             {/* Bottom Navigation */}
             <BottomNav />
-
-            {/* Mobile Floating Action Button */}
-            <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.9 }}
-                onClick={openCreate}
-                className="md:hidden fixed bottom-20 right-4 z-40 w-14 h-14 rounded-full bg-primary text-primary-foreground shadow-lg shadow-primary/30 flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background"
-                aria-label="Create Post or Resource"
-            >
-                <Plus className="w-6 h-6 stroke-[3px]" />
-            </motion.button>
 
             {/* Create Modal — globally available across all routes */}
             <CreateModal />
