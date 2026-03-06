@@ -79,7 +79,9 @@ type Section = "main" | "account" | "profile" | "privacy" | "activity" | "notifi
 export default function Settings() {
     const navigate = useNavigate();
     const location = useLocation();
-    const [activeSection, setActiveSection] = useState<Section>("account");
+    const [activeSection, setActiveSection] = useState<Section>(() =>
+        typeof window !== "undefined" && window.innerWidth < 768 ? "main" : "account"
+    );
 
     // Jump directly to a section if navigation state was provided (e.g. from ProfileHeader)
     useEffect(() => {
@@ -89,7 +91,17 @@ export default function Settings() {
             // Clear state so a back-navigation doesn't re-trigger
             window.history.replaceState({}, "");
         }
-    }, []);
+    }, [location]);
+
+    useEffect(() => {
+        const handleResize = () => {
+            if (window.innerWidth >= 768 && activeSection === "main") {
+                setActiveSection("account");
+            }
+        };
+        window.addEventListener("resize", handleResize);
+        return () => window.removeEventListener("resize", handleResize);
+    }, [activeSection]);
 
     const handleSectionClick = (section: Section) => {
         setActiveSection(section);
@@ -739,11 +751,13 @@ export default function Settings() {
 
                     {/* Arrow — mobile inside-section: back to list | otherwise: back to previous page */}
                     <button
-                        onClick={() =>
-                            activeSection !== "main"
-                                ? setActiveSection("main")
-                                : navigate(-1)
-                        }
+                        onClick={() => {
+                            if (window.innerWidth < 768 && activeSection !== "main") {
+                                setActiveSection("main");
+                            } else {
+                                navigate(-1);
+                            }
+                        }}
                         aria-label="Go back"
                         className="flex items-center justify-center w-8 h-8 rounded-lg hover:bg-white/10 text-white/50 hover:text-white transition-all duration-200 flex-shrink-0 group"
                     >
