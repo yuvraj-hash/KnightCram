@@ -13,6 +13,7 @@ import UserProfile from "./pages/UserProfile";
 import SignInPage from "./pages/SignInPage";
 import Settings from "./pages/Settings";
 import SupportPage from "./pages/SupportPage";
+import Forum from "./pages/Forum";
 
 const queryClient = new QueryClient();
 
@@ -38,6 +39,7 @@ const App = () => (
               <Route path="/profile/view" element={<ProfileView />} />
               <Route path="/user-profile" element={<UserProfile />} />
               <Route path="/spotlight" element={<MainPage />} />
+              <Route path="/forum" element={<Forum />} />
               <Route path="/settings" element={<Settings />} />
               <Route path="/support/:topic" element={<SupportPage />} />
             </Route>
