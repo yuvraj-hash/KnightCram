@@ -1,9 +1,21 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useCreate } from "@/context/CreateContext";
-import { Search, Briefcase, PlusSquare, Menu, X, Bell, Zap } from "lucide-react";
+import { Search, Briefcase, PlusSquare, Menu, X, Bell, Zap, LogOut } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import {
+    AlertDialog,
+    AlertDialogAction,
+    AlertDialogCancel,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
+    AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 
 interface TopNavProps {
     isMenuOpen: boolean;
@@ -122,6 +134,47 @@ const TopNav = ({ isMenuOpen, onMenuOpenChange }: TopNavProps) => {
                 >
                     <Bell className="w-8 h-8 text-foreground" strokeWidth={2.5} />
                 </Button>
+
+                <AlertDialog>
+                    <Tooltip>
+                        <TooltipTrigger asChild>
+                            <AlertDialogTrigger asChild>
+                                <Button
+                                    variant="ghost"
+                                    size="icon"
+                                    className="hover:bg-red-500/10 rounded-full transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 focus:ring-offset-background group"
+                                    aria-label="Log Out"
+                                >
+                                    <LogOut className="w-[30px] h-[30px] text-foreground group-hover:text-red-500 transition-colors" strokeWidth={2.5} />
+                                </Button>
+                            </AlertDialogTrigger>
+                        </TooltipTrigger>
+                        <TooltipContent side="bottom" className="hidden md:block">
+                            <p>Log Out</p>
+                        </TooltipContent>
+                    </Tooltip>
+                    <AlertDialogContent className="bg-background border border-white/10 sm:max-w-[425px]">
+                        <AlertDialogHeader>
+                            <AlertDialogTitle>Are you sure you want to log out?</AlertDialogTitle>
+                            <AlertDialogDescription>
+                                This will end your current session and require you to sign in again.
+                            </AlertDialogDescription>
+                        </AlertDialogHeader>
+                        <AlertDialogFooter>
+                            <AlertDialogCancel className="bg-white/5 hover:bg-white/10 border-white/10 font-medium">Cancel</AlertDialogCancel>
+                            <AlertDialogAction
+                                onClick={() => {
+                                    localStorage.clear();
+                                    sessionStorage.clear();
+                                    navigate("/login");
+                                }}
+                                className="bg-red-600 hover:bg-red-700 text-white font-medium"
+                            >
+                                Log Out
+                            </AlertDialogAction>
+                        </AlertDialogFooter>
+                    </AlertDialogContent>
+                </AlertDialog>
             </div>
         </nav>
     );
