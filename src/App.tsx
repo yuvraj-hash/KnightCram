@@ -11,6 +11,7 @@ import ProfileOnboarding from "./pages/ProfileOnboarding";
 import ProfileView from "./pages/ProfileView";
 import UserProfile from "./pages/UserProfile";
 import OpportunitiesPage from "./pages/OpportunitiesPage";
+import ResourcesPage from "./pages/ResourcesPage";
 import SignInPage from "./pages/SignInPage";
 import Settings from "./pages/Settings";
 import CommunityPage from "./pages/CommunityPage";
@@ -38,6 +39,7 @@ const App = () => (
               <Route path="/main" element={<MainPage />} />
               <Route path="/profile" element={<ProfileRouter />} />
               <Route path="/opportunities" element={<OpportunitiesPage />} />
+              <Route path="/resources" element={<ResourcesPage />} />
               <Route path="/profile/onboarding" element={<ProfileOnboarding />} />
               <Route path="/profile/view" element={<ProfileView />} />
               <Route path="/user-profile" element={<UserProfile />} />
