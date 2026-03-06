@@ -1,6 +1,6 @@
 
 import React, { useEffect, useState } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, useSearchParams } from "react-router-dom";
 import {
     User,
     Shield,
@@ -79,36 +79,51 @@ type Section = "main" | "account" | "profile" | "privacy" | "activity" | "notifi
 export default function Settings() {
     const navigate = useNavigate();
     const location = useLocation();
-    const [activeSection, setActiveSection] = useState<Section>(() =>
-        typeof window !== "undefined" && window.innerWidth < 768 ? "main" : "account"
-    );
+    const [searchParams, setSearchParams] = useSearchParams();
+
+    const activeSectionFromUrl = searchParams.get("section") as Section | null;
+
+    const [activeSection, setActiveSection] = useState<Section>(() => {
+        if (activeSectionFromUrl) return activeSectionFromUrl;
+        return typeof window !== "undefined" && window.innerWidth < 768 ? "main" : "account";
+    });
+
+    // Keep activeSection in sync with URL changes (for browser back/forward buttons)
+    useEffect(() => {
+        if (activeSectionFromUrl) {
+            setActiveSection(activeSectionFromUrl);
+        } else {
+            setActiveSection(typeof window !== "undefined" && window.innerWidth < 768 ? "main" : "account");
+        }
+    }, [activeSectionFromUrl]);
 
     // Jump directly to a section if navigation state was provided (e.g. from ProfileHeader)
     useEffect(() => {
         const incoming = (location.state as any)?.section as Section | undefined;
         if (incoming) {
-            setActiveSection(incoming);
+            setSearchParams({ section: incoming }, { replace: true });
             // Clear state so a back-navigation doesn't re-trigger
             window.history.replaceState({}, "");
         }
-    }, [location]);
+    }, [location, setSearchParams]);
 
     useEffect(() => {
         const handleResize = () => {
             if (window.innerWidth >= 768 && activeSection === "main") {
-                setActiveSection("account");
+                setSearchParams({ section: "account" }, { replace: true });
             }
         };
         window.addEventListener("resize", handleResize);
         return () => window.removeEventListener("resize", handleResize);
-    }, [activeSection]);
+    }, [activeSection, setSearchParams]);
 
     const handleSectionClick = (section: Section) => {
-        setActiveSection(section);
+        // This pushes a new state to navigation history, enabling the back button
+        setSearchParams({ section });
     };
 
     const handleBack = () => {
-        setActiveSection("main");
+        navigate(-1);
     };
 
     // Helper for auto-save feedback
@@ -753,7 +768,14 @@ export default function Settings() {
                     <button
                         onClick={() => {
                             if (window.innerWidth < 768 && activeSection !== "main") {
-                                setActiveSection("main");
+                                // Pop history. If they arrived from main list, it goes back there.
+                                // If they arrived by a direct link, we still want to simulate navigating back to main list
+                                // Instead of navigating blindly out of app, if we don't have a history length, we can go to /settings
+                                if (window.history.length <= 2) {
+                                    navigate("/settings");
+                                } else {
+                                    navigate(-1);
+                                }
                             } else {
                                 navigate(-1);
                             }
