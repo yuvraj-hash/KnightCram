@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useCreate } from "@/context/CreateContext";
 import { Search, Briefcase, PlusSquare, Menu, X, Bell, Zap } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -11,6 +12,7 @@ interface TopNavProps {
 
 const TopNav = ({ isMenuOpen, onMenuOpenChange }: TopNavProps) => {
     const { openCreate } = useCreate();
+    const navigate = useNavigate();
     return (
         <nav
             className="fixed top-0 left-0 right-0 z-50 bg-background/90 backdrop-blur-xl border-b border-white/30 h-14 md:h-16 flex items-center justify-between px-3 md:px-4 transition-all duration-300"
@@ -105,6 +107,7 @@ const TopNav = ({ isMenuOpen, onMenuOpenChange }: TopNavProps) => {
                 <Button
                     variant="ghost"
                     size="icon"
+                    onClick={() => navigate("/spotlight")}
                     className="hidden md:flex hover:bg-primary/10 rounded-full transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background"
                     aria-label="Spotlight"
                 >

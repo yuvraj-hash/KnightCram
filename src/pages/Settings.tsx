@@ -580,106 +580,106 @@ export default function Settings() {
     );
 
     const NotificationSettings = () => (
-        <div className="space-y-6 animate-in fade-in slide-in-from-right-4 duration-300">
-            <div className="bg-white/5 border border-white/10 rounded-xl overflow-hidden">
-                <div className="p-4 border-b border-white/10 bg-white/[0.02]">
-                    <h3 className="text-lg font-semibold">Push Notifications</h3>
+        <div className="space-y-4 animate-in fade-in slide-in-from-right-4 duration-300">
+            <div className="bg-white/5 border border-white/10 rounded-xl overflow-hidden shadow-sm">
+                <div className="px-5 py-4 border-b border-white/10 bg-white/[0.02]">
+                    <h3 className="text-lg font-bold">Push Notifications</h3>
                 </div>
 
-                <div className="flex items-center justify-between p-4 border-b border-white/10 hover:bg-white/5 transition select-none group">
-                    <div className="flex items-start gap-4">
-                        <div className="mt-0.5 p-2 bg-blue-500/10 rounded-lg group-hover:bg-blue-500/20 transition-colors">
-                            <MessageSquare size={20} className="text-blue-400" />
+                <div className="flex items-center justify-between px-5 py-3 border-b border-white/10 hover:bg-white/5 transition select-none group">
+                    <div className="flex items-start gap-3">
+                        <div className="mt-0.5 p-1.5 bg-blue-500/10 rounded-lg group-hover:bg-blue-500/20 transition-colors">
+                            <MessageSquare size={18} className="text-blue-400" />
                         </div>
                         <div>
-                            <p className="font-medium text-[15px]">Messages Only</p>
-                            <p className="text-[13px] text-white/50 group-hover:text-white/70 transition-colors">Only notify me for direct messages</p>
+                            <p className="font-medium text-sm">Messages Only</p>
+                            <p className="text-xs text-white/50 group-hover:text-white/70 transition-colors">Only notify me for direct messages</p>
                         </div>
                     </div>
                     <Switch checked={messagesOnly} onCheckedChange={(v) => handleToggle(setMessagesOnly, v)} />
                 </div>
 
-                <div className="flex items-center justify-between p-4 border-b border-white/10 hover:bg-white/5 transition select-none group">
-                    <div className="flex items-start gap-4">
-                        <div className="mt-0.5 p-2 bg-purple-500/10 rounded-lg group-hover:bg-purple-500/20 transition-colors">
-                            <Moon size={20} className="text-purple-400" />
+                <div className="flex items-center justify-between px-5 py-3 border-b border-white/10 hover:bg-white/5 transition select-none group">
+                    <div className="flex items-start gap-3">
+                        <div className="mt-0.5 p-1.5 bg-purple-500/10 rounded-lg group-hover:bg-purple-500/20 transition-colors">
+                            <Moon size={18} className="text-purple-400" />
                         </div>
                         <div>
-                            <p className="font-medium text-[15px]">Sleep Mode</p>
-                            <p className="text-[13px] text-white/50 group-hover:text-white/70 transition-colors">Automatically pause notifications at night</p>
+                            <p className="font-medium text-sm">Sleep Mode</p>
+                            <p className="text-xs text-white/50 group-hover:text-white/70 transition-colors">Automatically pause notifications at night</p>
                         </div>
                     </div>
                     <Switch checked={sleepMode} onCheckedChange={(v) => handleToggle(setSleepMode, v)} />
                 </div>
 
                 {sleepMode && (
-                    <div className="px-4 pb-4 border-b border-white/10 bg-white/[0.01]">
-                        <div className="flex gap-4 ml-14">
+                    <div className="px-5 pb-4 pt-1 border-b border-white/10 bg-white/[0.01]">
+                        <div className="flex gap-4 ml-12">
                             <div className="w-1/2">
                                 <Label className="text-xs text-white/60 mb-1.5 block">Start Time</Label>
-                                <Input type="time" className="bg-white/5 border-white/10 h-9" />
+                                <Input type="time" className="bg-white/5 border-white/10 h-8 text-sm" />
                             </div>
                             <div className="w-1/2">
                                 <Label className="text-xs text-white/60 mb-1.5 block">End Time</Label>
-                                <Input type="time" className="bg-white/5 border-white/10 h-9" />
+                                <Input type="time" className="bg-white/5 border-white/10 h-8 text-sm" />
                             </div>
                         </div>
                     </div>
                 )}
 
-                <div className="flex items-center justify-between p-4 hover:bg-white/5 transition select-none group">
-                    <div className="flex items-start gap-4">
-                        <div className="mt-0.5 p-2 bg-green-500/10 rounded-lg group-hover:bg-green-500/20 transition-colors">
-                            <Calendar size={20} className="text-green-400" />
+                <div className="flex items-center justify-between px-5 py-3 border-b border-white/10 hover:bg-white/5 transition select-none group">
+                    <div className="flex items-start gap-3">
+                        <div className="mt-0.5 p-1.5 bg-green-500/10 rounded-lg group-hover:bg-green-500/20 transition-colors">
+                            <Calendar size={18} className="text-green-400" />
                         </div>
                         <div>
-                            <p className="font-medium text-[15px]">Events</p>
-                            <p className="text-[13px] text-white/50 group-hover:text-white/70 transition-colors">Reminders & RSVP updates</p>
+                            <p className="font-medium text-sm">Events</p>
+                            <p className="text-xs text-white/50 group-hover:text-white/70 transition-colors">Reminders & RSVP updates</p>
                         </div>
                     </div>
                     <Switch checked={events} onCheckedChange={(v) => handleToggle(setEvents, v)} />
                 </div>
             </div>
 
-            <div className="bg-white/5 border border-white/10 rounded-xl overflow-hidden">
-                <div className="p-4 border-b border-white/10 bg-white/[0.02]">
-                    <h3 className="text-lg font-semibold">Email Notifications</h3>
+            <div className="bg-white/5 border border-white/10 rounded-xl overflow-hidden shadow-sm">
+                <div className="px-5 py-4 border-b border-white/10 bg-white/[0.02]">
+                    <h3 className="text-lg font-bold">Email Notifications</h3>
                 </div>
 
-                <div className="flex items-center justify-between p-4 border-b border-white/10 hover:bg-white/5 transition select-none group">
-                    <div className="flex items-start gap-4">
-                        <div className="mt-0.5 p-2 bg-white/5 rounded-lg group-hover:bg-white/10 transition-colors">
-                            <Mail size={20} className="text-white/70 group-hover:text-white transition-colors" />
+                <div className="flex items-center justify-between px-5 py-3 border-b border-white/10 hover:bg-white/5 transition select-none group">
+                    <div className="flex items-start gap-3">
+                        <div className="mt-0.5 p-1.5 bg-white/5 rounded-lg group-hover:bg-white/10 transition-colors">
+                            <Mail size={18} className="text-white/70 group-hover:text-white transition-colors" />
                         </div>
                         <div>
-                            <p className="font-medium text-[15px]">Feedback & Surveys</p>
-                            <p className="text-[13px] text-white/50 group-hover:text-white/70 transition-colors">Help us improve the platform</p>
+                            <p className="font-medium text-sm">Feedback & Surveys</p>
+                            <p className="text-xs text-white/50 group-hover:text-white/70 transition-colors">Help us improve the platform</p>
                         </div>
                     </div>
                     <Switch checked={emailFeedback} onCheckedChange={(v) => handleToggle(setEmailFeedback, v)} />
                 </div>
 
-                <div className="flex items-center justify-between p-4 border-b border-white/10 hover:bg-white/5 transition select-none group">
-                    <div className="flex items-start gap-4">
-                        <div className="mt-0.5 p-2 bg-white/5 rounded-lg group-hover:bg-white/10 transition-colors">
-                            <RefreshCw size={20} className="text-white/70 group-hover:text-white transition-colors" />
+                <div className="flex items-center justify-between px-5 py-3 border-b border-white/10 hover:bg-white/5 transition select-none group">
+                    <div className="flex items-start gap-3">
+                        <div className="mt-0.5 p-1.5 bg-white/5 rounded-lg group-hover:bg-white/10 transition-colors">
+                            <RefreshCw size={18} className="text-white/70 group-hover:text-white transition-colors" />
                         </div>
                         <div>
-                            <p className="font-medium text-[15px]">Product Updates</p>
-                            <p className="text-[13px] text-white/50 group-hover:text-white/70 transition-colors">New features and major changes</p>
+                            <p className="font-medium text-sm">Product Updates</p>
+                            <p className="text-xs text-white/50 group-hover:text-white/70 transition-colors">New features and major changes</p>
                         </div>
                     </div>
                     <Switch checked={emailProduct} onCheckedChange={(v) => handleToggle(setEmailProduct, v)} />
                 </div>
 
-                <div className="flex items-center justify-between p-4 hover:bg-white/5 transition select-none group">
-                    <div className="flex items-start gap-4">
-                        <div className="mt-0.5 p-2 bg-white/5 rounded-lg group-hover:bg-white/10 transition-colors">
-                            <Radio size={20} className="text-white/70 group-hover:text-white transition-colors" />
+                <div className="flex items-center justify-between px-5 py-3 hover:bg-white/5 transition select-none group">
+                    <div className="flex items-start gap-3">
+                        <div className="mt-0.5 p-1.5 bg-white/5 rounded-lg group-hover:bg-white/10 transition-colors">
+                            <Radio size={18} className="text-white/70 group-hover:text-white transition-colors" />
                         </div>
                         <div>
-                            <p className="font-medium text-[15px]">News & Tips</p>
-                            <p className="text-[13px] text-white/50 group-hover:text-white/70 transition-colors">Weekly digests and community news</p>
+                            <p className="font-medium text-sm">News & Tips</p>
+                            <p className="text-xs text-white/50 group-hover:text-white/70 transition-colors">Weekly digests and community news</p>
                         </div>
                     </div>
                     <Switch checked={emailNews} onCheckedChange={(v) => handleToggle(setEmailNews, v)} />
