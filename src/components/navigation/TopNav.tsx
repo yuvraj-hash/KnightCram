@@ -92,8 +92,9 @@ const TopNav = ({ isMenuOpen, onMenuOpenChange }: TopNavProps) => {
                 <Button
                     variant="ghost"
                     size="icon"
+                    onClick={() => navigate("/forum")}
                     className="hover:bg-primary/10 rounded-full transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background"
-                    aria-label="Messages"
+                    aria-label="Forum"
                 >
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
