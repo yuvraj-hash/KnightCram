@@ -19,7 +19,7 @@ const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
         { icon: BookOpen, label: "Resources", path: "/resources", hideOnMobile: true, mdOrder: "md:order-4" },
         { icon: MessageSquare, label: "Forum", path: "/forum", hideOnMobile: true, mdOrder: "md:order-5" },
         { icon: Zap, label: "Spotlight", path: "/main", hideOnDesktop: true, mdOrder: "md:order-3" },
-        { icon: CommunityNavIcon, label: "Community", path: "/community/create", mdOrder: "md:order-7" },
+        { icon: CommunityNavIcon, label: "Community", path: "/community", mdOrder: "md:order-7" },
         { icon: Settings, label: "Settings", path: "/settings", mdOrder: "md:order-8" },
     ];
 

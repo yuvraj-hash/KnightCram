@@ -12,6 +12,7 @@ import ProfileView from "./pages/ProfileView";
 import UserProfile from "./pages/UserProfile";
 import SignInPage from "./pages/SignInPage";
 import Settings from "./pages/Settings";
+import CommunityPage from "./pages/CommunityPage";
 import SupportPage from "./pages/SupportPage";
 import Forum from "./pages/Forum";
 
@@ -40,6 +41,7 @@ const App = () => (
               <Route path="/user-profile" element={<UserProfile />} />
               <Route path="/spotlight" element={<MainPage />} />
               <Route path="/forum" element={<Forum />} />
+              <Route path="/community" element={<CommunityPage />} />
               <Route path="/settings" element={<Settings />} />
               <Route path="/support/:topic" element={<SupportPage />} />
             </Route>

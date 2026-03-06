@@ -38,7 +38,7 @@ const OffCanvasMenu = ({ isOpen, onClose, onToggle }: OffCanvasMenuProps) => {
     ];
 
     const communityItems = [
-        { icon: CommunityNavIcon, label: "Community", href: "/create-community" },
+        { icon: CommunityNavIcon, label: "Community", href: "/community" },
     ];
 
     const gameItems = [
