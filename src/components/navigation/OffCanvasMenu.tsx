@@ -1,5 +1,5 @@
 import { useRef, useEffect } from "react";
-import { Home, Layers, Zap, Settings, X, Plus, Gamepad2, PenTool, LayoutGrid, Menu, MessageSquare } from "lucide-react";
+import { Home, Layers, Zap, Settings, X, Plus, Gamepad2, PenTool, LayoutGrid, Menu, MessageSquare, Briefcase } from "lucide-react";
 import CommunityNavIcon from "@/components/icons/CommunityNavIcon";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -32,6 +32,7 @@ const OffCanvasMenu = ({ isOpen, onClose, onToggle }: OffCanvasMenuProps) => {
     const menuItems = [
         { icon: Home, label: "Home", href: "/home" },
         { icon: Layers, label: "Resources", href: "/resources" },
+        { icon: Briefcase, label: "Opportunities", href: "/opportunities" },
         { icon: MessageSquare, label: "Forum", href: "/forum" },
         { icon: Zap, label: "Spotlight", href: "/spotlight" },
         { icon: Settings, label: "Settings", href: "/settings" },
