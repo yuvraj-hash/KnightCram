@@ -10,12 +10,14 @@ import ProfileHeader from "@/components/profile/ProfileHeader";
 import ProfileSettingsIcon from "@/components/icons/ProfileSettingsIcon";
 import BasicInfoForm from "@/components/profile/BasicInfoForm";
 import { useNavigate } from "react-router-dom";
+import { useCreate } from "@/context/CreateContext";
 
 const ProfileView = () => {
   const [profile, setProfile] = useState<any>(null);
   const [activeTab, setActiveTab] = useState<"posts" | "skills" | "experience">("posts");
   const [editOpen, setEditOpen] = useState(false);
   const navigate = useNavigate();
+  const { openCreate } = useCreate();
 
   const loadProfile = useCallback(async () => {
     const p = await getProfile();
@@ -179,7 +181,12 @@ const ProfileView = () => {
                   <div className="text-4xl mb-4">📝</div>
                   <h3 className="text-lg font-semibold mb-2">No posts yet</h3>
                   <p className="text-white/60 text-sm mb-4">Share your achievements, insights, and resources with the community</p>
-                  <button className="px-6 py-2 rounded-full bg-blue-600 hover:bg-blue-700 text-white font-medium transition">Create Post</button>
+                  <button
+                    onClick={openCreate}
+                    className="px-6 py-2 rounded-full bg-blue-600 hover:bg-blue-700 text-white font-medium transition"
+                  >
+                    Create Post
+                  </button>
                 </div>
               </div>
             )}
