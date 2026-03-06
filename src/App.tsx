@@ -12,7 +12,7 @@ import ProfileView from "./pages/ProfileView";
 import UserProfile from "./pages/UserProfile";
 import SignInPage from "./pages/SignInPage";
 import Settings from "./pages/Settings";
-
+import SupportPage from "./pages/SupportPage";
 
 const queryClient = new QueryClient();
 
@@ -39,6 +39,7 @@ const App = () => (
               <Route path="/user-profile" element={<UserProfile />} />
               <Route path="/spotlight" element={<MainPage />} />
               <Route path="/settings" element={<Settings />} />
+              <Route path="/support/:topic" element={<SupportPage />} />
             </Route>
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />

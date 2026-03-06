@@ -20,7 +20,26 @@ import {
     Moon,
     Users,
     Save,
-    CheckCircle2
+    CheckCircle2,
+    LifeBuoy,
+    Book,
+    HelpCircle,
+    Radio,
+    RefreshCw,
+    ShieldAlert,
+    FileText,
+    LogOut,
+    Lock,
+    Smartphone,
+    History,
+    UserX,
+    Eye,
+    EyeOff,
+    Globe,
+    Calendar,
+    Mail,
+    Flag,
+    Paperclip
 } from "lucide-react";
 import { Switch } from "@/components/ui/switch";
 import { Button } from "@/components/ui/button";
@@ -53,7 +72,7 @@ import VerificationUploader from "@/components/profile/VerificationUploader";
 
 // --- Types ---
 
-type Section = "main" | "account" | "profile" | "privacy" | "activity" | "notifications";
+type Section = "main" | "account" | "profile" | "privacy" | "activity" | "notifications" | "support";
 
 // --- Mock Data & State Management ---
 
@@ -102,7 +121,6 @@ export default function Settings() {
     const [emailFeedback, setEmailFeedback] = useState(true);
     const [emailProduct, setEmailProduct] = useState(true);
     const [emailNews, setEmailNews] = useState(true);
-    const [onlineStatus, setOnlineStatus] = useState(true);
     const [events, setEvents] = useState(true);
 
     // --- Sub-components (Sections) ---
@@ -204,9 +222,9 @@ export default function Settings() {
     };
 
     const AccountSettings = () => {
-        const [isReportDialogOpen, setIsReportDialogOpen] = useState(false);
         const [isDeactivateDialogOpen, setIsDeactivateDialogOpen] = useState(false);
         const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
+        const [isReportDialogOpen, setIsReportDialogOpen] = useState(false);
 
         const handleDeactivate = () => {
             setAccountStatus("deactivated");
@@ -225,61 +243,65 @@ export default function Settings() {
             setTimeout(() => navigate("/login"), 1500);
         };
 
+        const handleLogout = () => {
+            toast.success("Successfully logged out");
+            setTimeout(() => navigate("/login"), 1000);
+        };
+
         const handleReportSubmit = (e: React.FormEvent) => {
             e.preventDefault();
             setIsReportDialogOpen(false);
-            toast.success("Issue reported successfully.");
+            toast.success("Your issue has been submitted successfully.");
         };
 
         return (
             <div className="space-y-6 animate-in fade-in slide-in-from-right-4 duration-300">
-                <div className="bg-white/5 border border-white/10 rounded-xl p-4 space-y-4">
-                    <h3 className="text-lg font-semibold mb-2">Privacy & Visibility</h3>
-                    <div className="flex items-center justify-between">
-                        <div>
-                            <p className="font-medium">Private Account</p>
-                            <p className="text-sm text-white/50">Only followers can see your posts</p>
-                        </div>
-                        <Switch checked={isPrivate} onCheckedChange={(v) => handleToggle(setIsPrivate, v)} />
+                <div className="bg-white/5 border border-white/10 rounded-xl overflow-hidden">
+                    <div className="p-4 border-b border-white/10 bg-white/[0.02]">
+                        <h3 className="text-lg font-semibold">Support & Feedback</h3>
                     </div>
-                </div>
 
-                <div className="bg-white/5 border border-white/10 rounded-xl p-4 space-y-4">
-                    <h3 className="text-lg font-semibold mb-2">Support</h3>
                     <Dialog open={isReportDialogOpen} onOpenChange={setIsReportDialogOpen}>
                         <DialogTrigger asChild>
-                            <div className="flex items-center justify-between cursor-pointer hover:bg-white/5 p-2 -mx-2 rounded-lg transition">
-                                <span className="font-medium">Report an Issue</span>
-                                <ChevronRight className="text-white/50" />
+                            <div className="flex items-center justify-between p-4 hover:bg-white/5 cursor-pointer transition select-none group">
+                                <div className="flex items-start gap-4">
+                                    <div className="mt-0.5 p-2 bg-white/5 rounded-lg group-hover:bg-white/10 transition-colors">
+                                        <Flag size={20} className="text-white/70 group-hover:text-white transition-colors" />
+                                    </div>
+                                    <div>
+                                        <p className="font-medium text-[15px]">Report an Issue</p>
+                                        <p className="text-[13px] text-white/50 group-hover:text-white/70 transition-colors">Let us know if something is broken</p>
+                                    </div>
+                                </div>
+                                <ChevronRight size={18} className="text-white/30 group-hover:text-white/70 transition-colors" />
                             </div>
                         </DialogTrigger>
                         <DialogContent>
                             <DialogHeader>
                                 <DialogTitle>Report an Issue</DialogTitle>
                                 <DialogDescription>
-                                    Describe the issue you are facing. We'll look into it.
+                                    Describe the issue you're facing. Attach any relevant files if necessary.
                                 </DialogDescription>
                             </DialogHeader>
                             <form onSubmit={handleReportSubmit} className="space-y-4 mt-2">
                                 <div className="space-y-2">
-                                    <Label>Issue Type</Label>
-                                    <Select>
-                                        <SelectTrigger>
-                                            <SelectValue placeholder="Select issue type" />
-                                        </SelectTrigger>
-                                        <SelectContent>
-                                            <SelectItem value="bug">Bug / Error</SelectItem>
-                                            <SelectItem value="abuse">Abuse / Harassment</SelectItem>
-                                            <SelectItem value="feature">Feature Request</SelectItem>
-                                            <SelectItem value="other">Other</SelectItem>
-                                        </SelectContent>
-                                    </Select>
+                                    <Label>Description</Label>
+                                    <Textarea placeholder="Please describe what happened..." required />
                                 </div>
                                 <div className="space-y-2">
-                                    <Label>Description</Label>
-                                    <Textarea placeholder="Please describe what happened..." />
+                                    <Label>Attachments (Optional)</Label>
+                                    <div className="flex items-center justify-center w-full">
+                                        <label className="flex flex-col items-center justify-center w-full h-24 border-2 border-white/10 border-dashed rounded-xl cursor-pointer bg-white/5 hover:bg-white/10 transition">
+                                            <div className="flex flex-col items-center justify-center pt-5 pb-6">
+                                                <Paperclip className="w-6 h-6 mb-2 text-white/50" />
+                                                <p className="text-xs text-white/50">Click to attach file</p>
+                                            </div>
+                                            <input type="file" className="hidden" />
+                                        </label>
+                                    </div>
                                 </div>
                                 <DialogFooter>
+                                    <Button type="button" variant="outline" onClick={() => setIsReportDialogOpen(false)}>Cancel</Button>
                                     <Button type="submit">Submit Report</Button>
                                 </DialogFooter>
                             </form>
@@ -287,17 +309,49 @@ export default function Settings() {
                     </Dialog>
                 </div>
 
-                <div className="bg-red-500/10 border border-red-500/20 rounded-xl p-4 space-y-4">
-                    <h3 className="text-red-400 font-semibold mb-2 flex items-center gap-2">
-                        <AlertTriangle size={18} /> Danger Zone
-                    </h3>
+                <div className="bg-white/5 border border-white/10 rounded-xl overflow-hidden">
+                    <div className="p-4 border-b border-white/10 bg-white/[0.02]">
+                        <h3 className="text-lg font-semibold">Security & Access</h3>
+                    </div>
+
+                    {/* Logout */}
+                    <div
+                        onClick={handleLogout}
+                        className="flex items-center justify-between p-4 border-b border-white/10 last:border-0 hover:bg-white/5 cursor-pointer transition select-none group"
+                    >
+                        <div className="flex items-start gap-4">
+                            <div className="mt-0.5 p-2 bg-white/5 rounded-lg group-hover:bg-red-500/20 transition-colors">
+                                <LogOut size={20} className="text-white/70 group-hover:text-red-400 transition-colors" />
+                            </div>
+                            <div>
+                                <p className="font-medium text-[15px] group-hover:text-red-400 transition-colors">Log Out</p>
+                                <p className="text-[13px] text-white/50 transition-colors">Sign out of your account on this device</p>
+                            </div>
+                        </div>
+                        <ChevronRight size={18} className="text-white/30 group-hover:text-red-400 transition-colors" />
+                    </div>
+                </div>
+                <div className="bg-red-500/10 border border-red-500/20 rounded-xl overflow-hidden">
+                    <div className="p-4 border-b border-red-500/20 bg-red-500/5">
+                        <h3 className="text-red-400 font-semibold flex items-center gap-2">
+                            <AlertTriangle size={18} /> Danger Zone
+                        </h3>
+                    </div>
 
                     <Dialog open={isDeactivateDialogOpen} onOpenChange={setIsDeactivateDialogOpen}>
                         <DialogTrigger asChild>
-                            <Button variant="ghost" className="w-full justify-between text-white hover:bg-red-500/20 hover:text-red-300">
-                                Deactivate Account
-                                <ChevronRight size={16} />
-                            </Button>
+                            <div className="flex items-center justify-between p-4 border-b border-red-500/20 last:border-0 hover:bg-red-500/10 cursor-pointer transition select-none group">
+                                <div className="flex items-start gap-4">
+                                    <div className="mt-0.5 p-2 bg-red-500/10 rounded-lg group-hover:bg-red-500/20 transition-colors">
+                                        <UserX size={20} className="text-red-400/80 group-hover:text-red-400 transition-colors" />
+                                    </div>
+                                    <div>
+                                        <p className="font-medium text-[15px] text-white">Deactivate Account</p>
+                                        <p className="text-[13px] text-white/50">Temporarily hide your profile</p>
+                                    </div>
+                                </div>
+                                <ChevronRight size={18} className="text-red-400/50 group-hover:text-red-400 transition-colors" />
+                            </div>
                         </DialogTrigger>
                         <DialogContent>
                             <DialogHeader>
@@ -313,14 +367,20 @@ export default function Settings() {
                         </DialogContent>
                     </Dialog>
 
-                    <Separator className="bg-red-500/20" />
-
                     <Dialog open={isDeleteDialogOpen} onOpenChange={setIsDeleteDialogOpen}>
                         <DialogTrigger asChild>
-                            <Button variant="ghost" className="w-full justify-between text-red-400 hover:bg-red-500/20 hover:text-red-300">
-                                Delete Account
-                                <ChevronRight size={16} />
-                            </Button>
+                            <div className="flex items-center justify-between p-4 border-b border-red-500/20 last:border-0 hover:bg-red-500/10 cursor-pointer transition select-none group">
+                                <div className="flex items-start gap-4">
+                                    <div className="mt-0.5 p-2 bg-red-500/10 rounded-lg group-hover:bg-red-500/20 transition-colors">
+                                        <Trash2 size={20} className="text-red-400/80 group-hover:text-red-400 transition-colors" />
+                                    </div>
+                                    <div>
+                                        <p className="font-medium text-[15px] text-red-400">Delete Account</p>
+                                        <p className="text-[13px] text-red-400/60">Permanently delete your data</p>
+                                    </div>
+                                </div>
+                                <ChevronRight size={18} className="text-red-400/50 group-hover:text-red-400 transition-colors" />
+                            </div>
                         </DialogTrigger>
                         <DialogContent>
                             <DialogHeader>
@@ -345,107 +405,174 @@ export default function Settings() {
     };
 
     const PrivacySettings = () => (
-        <div className="space-y-6 animate-in fade-in slide-in-from-right-4 duration-300">
-            <div className="bg-white/5 border border-white/10 rounded-xl p-4 space-y-4">
-                <h3 className="text-lg font-semibold">Security</h3>
-                <Button variant="outline" className="w-full justify-between">
-                    Change Password <ChevronRight size={16} />
-                </Button>
-                <Button variant="outline" className="w-full justify-between">
-                    Two-Factor Authentication <ChevronRight size={16} />
-                </Button>
-                <Button variant="outline" className="w-full justify-between">
-                    Login Activity <ChevronRight size={16} />
-                </Button>
+        <div className="space-y-4 animate-in fade-in slide-in-from-right-4 duration-300">
+            <div className="bg-white/5 border border-white/10 rounded-xl overflow-hidden shadow-sm">
+                <div className="px-5 py-4 border-b border-white/10 bg-white/[0.02]">
+                    <h3 className="text-lg font-bold">Security</h3>
+                </div>
+                <div className="flex items-center justify-between px-5 py-3 border-b border-white/10 hover:bg-white/5 cursor-pointer transition select-none group">
+                    <div className="flex items-start gap-3">
+                        <div className="mt-0.5 p-1.5 bg-white/5 rounded-lg group-hover:bg-white/10 transition-colors">
+                            <Lock size={18} className="text-white/70 group-hover:text-white transition-colors" />
+                        </div>
+                        <div>
+                            <p className="font-medium text-sm">Change Password</p>
+                            <p className="text-xs text-white/50 group-hover:text-white/70 transition-colors">Update your account password</p>
+                        </div>
+                    </div>
+                    <ChevronRight size={16} className="text-white/30 group-hover:text-white/70 transition-colors" />
+                </div>
+                <div className="flex items-center justify-between px-5 py-3 border-b border-white/10 hover:bg-white/5 cursor-pointer transition select-none group">
+                    <div className="flex items-start gap-3">
+                        <div className="mt-0.5 p-1.5 bg-white/5 rounded-lg group-hover:bg-white/10 transition-colors">
+                            <Smartphone size={18} className="text-white/70 group-hover:text-white transition-colors" />
+                        </div>
+                        <div>
+                            <p className="font-medium text-sm">Two-Factor Authentication</p>
+                            <p className="text-xs text-white/50 group-hover:text-white/70 transition-colors">Add an extra layer of security</p>
+                        </div>
+                    </div>
+                    <ChevronRight size={16} className="text-white/30 group-hover:text-white/70 transition-colors" />
+                </div>
+                <div className="flex items-center justify-between px-5 py-3 border-b border-white/10 hover:bg-white/5 cursor-pointer transition select-none group">
+                    <div className="flex items-start gap-3">
+                        <div className="mt-0.5 p-1.5 bg-white/5 rounded-lg group-hover:bg-white/10 transition-colors">
+                            <History size={18} className="text-white/70 group-hover:text-white transition-colors" />
+                        </div>
+                        <div>
+                            <p className="font-medium text-sm">Login Activity</p>
+                            <p className="text-xs text-white/50 group-hover:text-white/70 transition-colors">Review devices accessing your account</p>
+                        </div>
+                    </div>
+                    <ChevronRight size={16} className="text-white/30 group-hover:text-white/70 transition-colors" />
+                </div>
             </div>
 
-            <div className="bg-white/5 border border-white/10 rounded-xl p-4 space-y-4">
-                <h3 className="text-lg font-semibold">Privacy Controls</h3>
+            <div className="bg-white/5 border border-white/10 rounded-xl overflow-hidden shadow-sm">
+                <div className="px-5 py-4 border-b border-white/10 bg-white/[0.02]">
+                    <h3 className="text-lg font-bold">Privacy Controls</h3>
+                </div>
 
-                <div className="flex items-center justify-between">
-                    <div>
-                        <p className="font-medium">Show Real Name</p>
-                        <p className="text-sm text-white/50">Display your real name on profile</p>
+                <div className="flex items-center justify-between px-5 py-3 border-b border-white/10 hover:bg-white/5 transition select-none group">
+                    <div className="flex items-start gap-3">
+                        <div className="mt-0.5 p-1.5 bg-white/5 rounded-lg group-hover:bg-white/10 transition-colors">
+                            <EyeOff size={18} className="text-white/70 group-hover:text-white transition-colors" />
+                        </div>
+                        <div>
+                            <p className="font-medium text-sm">Private Account</p>
+                            <p className="text-xs text-white/50 group-hover:text-white/70 transition-colors">Only followers can see your posts</p>
+                        </div>
+                    </div>
+                    <Switch checked={isPrivate} onCheckedChange={(v) => handleToggle(setIsPrivate, v)} />
+                </div>
+
+                <div className="flex items-center justify-between px-5 py-3 border-b border-white/10 hover:bg-white/5 transition select-none group">
+                    <div className="flex items-start gap-3">
+                        <div className="mt-0.5 p-1.5 bg-white/5 rounded-lg group-hover:bg-white/10 transition-colors">
+                            <User size={18} className="text-white/70 group-hover:text-white transition-colors" />
+                        </div>
+                        <div>
+                            <p className="font-medium text-sm">Show Real Name</p>
+                            <p className="text-xs text-white/50 group-hover:text-white/70 transition-colors">Display your real name on profile</p>
+                        </div>
                     </div>
                     <Switch checked={showRealName} onCheckedChange={(v) => handleToggle(setShowRealName, v)} />
                 </div>
 
-                <Separator className="bg-white/10" />
-
-                <div className="space-y-3">
-                    <p className="font-medium">Who Can See My Profile</p>
-                    <div className="space-y-2">
-                        <div className="flex items-center space-x-2">
-                            <input type="radio" id="public" name="visibility" checked={profileVisibility === "public"} onChange={() => setProfileVisibility("public")} className="accent-blue-500 w-4 h-4" />
-                            <label htmlFor="public">Public</label>
+                <div className="px-5 py-3 border-b border-white/10 hover:bg-white/5 transition select-none group">
+                    <div className="flex items-start gap-3 mb-2">
+                        <div className="mt-0.5 p-1.5 bg-white/5 rounded-lg group-hover:bg-white/10 transition-colors">
+                            <Eye size={18} className="text-white/70 group-hover:text-white transition-colors" />
                         </div>
-                        <div className="flex items-center space-x-2">
-                            <input type="radio" id="campus" name="visibility" checked={profileVisibility === "campus"} onChange={() => setProfileVisibility("campus")} className="accent-blue-500 w-4 h-4" />
-                            <label htmlFor="campus">Campus Only</label>
+                        <div>
+                            <p className="font-medium text-sm">Who Can See My Profile</p>
+                            <p className="text-xs text-white/50 group-hover:text-white/70 transition-colors">Manage profile visibility</p>
                         </div>
-                        <div className="flex items-center space-x-2">
-                            <input type="radio" id="followers" name="visibility" checked={profileVisibility === "followers"} onChange={() => setProfileVisibility("followers")} className="accent-blue-500 w-4 h-4" />
-                            <label htmlFor="followers">Followers Only</label>
+                    </div>
+                    <div className="pl-12 space-y-1.5">
+                        <div className="flex items-center space-x-3 cursor-pointer" onClick={() => { setProfileVisibility("public"); toast.success("Settings updated"); }}>
+                            <input type="radio" id="public" name="visibility" checked={profileVisibility === "public"} onChange={() => { setProfileVisibility("public"); toast.success("Settings updated"); }} className="accent-blue-500 w-3.5 h-3.5 cursor-pointer" />
+                            <label htmlFor="public" className="cursor-pointer text-xs">Public</label>
+                        </div>
+                        <div className="flex items-center space-x-3 cursor-pointer" onClick={() => { setProfileVisibility("campus"); toast.success("Settings updated"); }}>
+                            <input type="radio" id="campus" name="visibility" checked={profileVisibility === "campus"} onChange={() => { setProfileVisibility("campus"); toast.success("Settings updated"); }} className="accent-blue-500 w-3.5 h-3.5 cursor-pointer" />
+                            <label htmlFor="campus" className="cursor-pointer text-xs">Campus Only</label>
+                        </div>
+                        <div className="flex items-center space-x-3 cursor-pointer" onClick={() => { setProfileVisibility("followers"); toast.success("Settings updated"); }}>
+                            <input type="radio" id="followers" name="visibility" checked={profileVisibility === "followers"} onChange={() => { setProfileVisibility("followers"); toast.success("Settings updated"); }} className="accent-blue-500 w-3.5 h-3.5 cursor-pointer" />
+                            <label htmlFor="followers" className="cursor-pointer text-xs">Followers Only</label>
                         </div>
                     </div>
                 </div>
 
-                <Separator className="bg-white/10" />
-
-                <div className="flex items-center justify-between">
-                    <div>
-                        <p className="font-medium">Show Activity Status</p>
-                        <p className="text-sm text-white/50">Show when you're active</p>
+                <div className="flex items-center justify-between px-5 py-3 border-b border-white/10 hover:bg-white/5 transition select-none group">
+                    <div className="flex items-start gap-3">
+                        <div className="mt-0.5 p-1.5 bg-white/5 rounded-lg group-hover:bg-white/10 transition-colors">
+                            <Activity size={18} className="text-white/70 group-hover:text-white transition-colors" />
+                        </div>
+                        <div>
+                            <p className="font-medium text-sm">Show Activity Status</p>
+                            <p className="text-xs text-white/50 group-hover:text-white/70 transition-colors">Show when you're active</p>
+                        </div>
                     </div>
                     <Switch checked={showActivityStatus} onCheckedChange={(v) => handleToggle(setShowActivityStatus, v)} />
                 </div>
 
-                <div className="flex items-center justify-between">
-                    <div>
-                        <p className="font-medium">Search Indexing</p>
-                        <p className="text-sm text-white/50">Allow search engines to find you</p>
+                <div className="flex items-center justify-between px-5 py-3 border-b border-white/10 hover:bg-white/5 transition select-none group">
+                    <div className="flex items-start gap-3">
+                        <div className="mt-0.5 p-1.5 bg-white/5 rounded-lg group-hover:bg-white/10 transition-colors">
+                            <Globe size={18} className="text-white/70 group-hover:text-white transition-colors" />
+                        </div>
+                        <div>
+                            <p className="font-medium text-sm">Search Indexing</p>
+                            <p className="text-xs text-white/50 group-hover:text-white/70 transition-colors">Allow search engines to find you</p>
+                        </div>
                     </div>
                     <Switch checked={allowSearchIndexing} onCheckedChange={(v) => handleToggle(setAllowSearchIndexing, v)} />
                 </div>
-            </div>
 
-            <div className="bg-white/5 border border-white/10 rounded-xl p-4">
-                <Button variant="ghost" className="w-full justify-between text-white">
-                    Blocked Users <ChevronRight size={16} />
-                </Button>
+                <div className="flex items-center justify-between px-5 py-3 hover:bg-white/5 cursor-pointer transition select-none group">
+                    <div className="flex items-start gap-3">
+                        <div className="mt-0.5 p-1.5 bg-white/5 rounded-lg group-hover:bg-white/10 transition-colors">
+                            <UserX size={18} className="text-white/70 group-hover:text-white transition-colors" />
+                        </div>
+                        <div>
+                            <p className="font-medium text-sm">Blocked Users</p>
+                            <p className="text-xs text-white/50 group-hover:text-white/70 transition-colors">Manage blocked accounts</p>
+                        </div>
+                    </div>
+                    <ChevronRight size={16} className="text-white/30 group-hover:text-white/70 transition-colors" />
+                </div>
             </div>
         </div>
     );
 
     const ActivitySettings = () => (
         <div className="space-y-4 animate-in fade-in slide-in-from-right-4 duration-300">
-            <div className="flex gap-4 overflow-x-auto pb-4">
-                <div className="min-w-[150px] p-4 bg-blue-500/10 border border-blue-500/20 rounded-xl text-center">
-                    <p className="text-2xl font-bold text-blue-400">2.4h</p>
-                    <p className="text-xs text-blue-200">Daily Avg</p>
+            <div className="bg-white/5 border border-white/10 rounded-xl overflow-hidden shadow-sm">
+                <div className="px-5 py-4 border-b border-white/10 bg-white/[0.02]">
+                    <h3 className="text-lg font-bold">Activity Log</h3>
                 </div>
-                <div className="min-w-[150px] p-4 bg-purple-500/10 border border-purple-500/20 rounded-xl text-center">
-                    <p className="text-2xl font-bold text-purple-400">145</p>
-                    <p className="text-xs text-purple-200">Interactions</p>
-                </div>
-            </div>
-
-            <div className="bg-white/5 border border-white/10 rounded-xl overflow-hidden">
                 {[
-                    { icon: ThumbsUp, label: "Likes" },
-                    { icon: MessageSquare, label: "Comments" },
-                    { icon: Hash, label: "Tags & Mentions" },
-                    { icon: Bookmark, label: "Saved Posts" },
-                    { icon: Clock, label: "Time Spent" },
-                    { icon: Search, label: "Search History" },
-                    { icon: Trash2, label: "Recently Deleted" },
+                    { icon: ThumbsUp, label: "Likes", desc: "View posts you've liked" },
+                    { icon: MessageSquare, label: "Comments", desc: "Review your recent comments" },
+                    { icon: Hash, label: "Tags & Mentions", desc: "See where you were mentioned" },
+                    { icon: Bookmark, label: "Saved Posts", desc: "Manage your bookmarked content" },
+                    { icon: Clock, label: "Time Spent", desc: "Detailed breakdown of your usage" },
+                    { icon: Search, label: "Search History", desc: "Manage your recent searches" },
+                    { icon: Trash2, label: "Recently Deleted", desc: "Recover deleted content (up to 30 days)" },
                 ].map((item, i) => (
-                    <div key={i} className="flex items-center justify-between p-4 border-b border-white/10 last:border-0 hover:bg-white/5 cursor-pointer transition">
-                        <div className="flex items-center gap-3">
-                            <item.icon size={20} className="text-white/70" />
-                            <span>{item.label}</span>
+                    <div key={i} className="flex items-center justify-between px-5 py-3 border-b border-white/10 last:border-0 hover:bg-white/5 cursor-pointer transition select-none group">
+                        <div className="flex items-start gap-3">
+                            <div className="mt-0.5 p-1.5 bg-white/5 rounded-lg group-hover:bg-white/10 transition-colors">
+                                <item.icon size={18} className="text-white/70 group-hover:text-white transition-colors" />
+                            </div>
+                            <div>
+                                <p className="font-medium text-sm">{item.label}</p>
+                                <p className="text-xs text-white/50 group-hover:text-white/70 transition-colors">{item.desc}</p>
+                            </div>
                         </div>
-                        <ChevronRight size={16} className="text-white/30" />
+                        <ChevronRight size={16} className="text-white/30 group-hover:text-white/70 transition-colors" />
                     </div>
                 ))}
             </div>
@@ -454,81 +581,141 @@ export default function Settings() {
 
     const NotificationSettings = () => (
         <div className="space-y-6 animate-in fade-in slide-in-from-right-4 duration-300">
-            <div className="bg-white/5 border border-white/10 rounded-xl p-4 space-y-4">
-                <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-3">
-                        <div className="p-2 bg-blue-500/20 text-blue-400 rounded-lg">
-                            <MessageSquare size={20} />
+            <div className="bg-white/5 border border-white/10 rounded-xl overflow-hidden">
+                <div className="p-4 border-b border-white/10 bg-white/[0.02]">
+                    <h3 className="text-lg font-semibold">Push Notifications</h3>
+                </div>
+
+                <div className="flex items-center justify-between p-4 border-b border-white/10 hover:bg-white/5 transition select-none group">
+                    <div className="flex items-start gap-4">
+                        <div className="mt-0.5 p-2 bg-blue-500/10 rounded-lg group-hover:bg-blue-500/20 transition-colors">
+                            <MessageSquare size={20} className="text-blue-400" />
                         </div>
                         <div>
-                            <p className="font-medium">Messages Only</p>
-                            <p className="text-sm text-white/50">Mute all except DMs</p>
+                            <p className="font-medium text-[15px]">Messages Only</p>
+                            <p className="text-[13px] text-white/50 group-hover:text-white/70 transition-colors">Only notify me for direct messages</p>
                         </div>
                     </div>
                     <Switch checked={messagesOnly} onCheckedChange={(v) => handleToggle(setMessagesOnly, v)} />
                 </div>
 
-                <Separator className="bg-white/10" />
-
-                <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-3">
-                        <div className="p-2 bg-purple-500/20 text-purple-400 rounded-lg">
-                            <Moon size={20} />
+                <div className="flex items-center justify-between p-4 border-b border-white/10 hover:bg-white/5 transition select-none group">
+                    <div className="flex items-start gap-4">
+                        <div className="mt-0.5 p-2 bg-purple-500/10 rounded-lg group-hover:bg-purple-500/20 transition-colors">
+                            <Moon size={20} className="text-purple-400" />
                         </div>
                         <div>
-                            <p className="font-medium">Sleep Mode</p>
-                            <p className="text-sm text-white/50">Pause notifications at night</p>
+                            <p className="font-medium text-[15px]">Sleep Mode</p>
+                            <p className="text-[13px] text-white/50 group-hover:text-white/70 transition-colors">Automatically pause notifications at night</p>
                         </div>
                     </div>
                     <Switch checked={sleepMode} onCheckedChange={(v) => handleToggle(setSleepMode, v)} />
                 </div>
+
                 {sleepMode && (
-                    <div className="flex gap-4 pl-12">
-                        <div className="w-1/2">
-                            <Label className="text-xs">Start</Label>
-                            <Input type="time" className="bg-white/5 border-white/10" />
-                        </div>
-                        <div className="w-1/2">
-                            <Label className="text-xs">End</Label>
-                            <Input type="time" className="bg-white/5 border-white/10" />
+                    <div className="px-4 pb-4 border-b border-white/10 bg-white/[0.01]">
+                        <div className="flex gap-4 ml-14">
+                            <div className="w-1/2">
+                                <Label className="text-xs text-white/60 mb-1.5 block">Start Time</Label>
+                                <Input type="time" className="bg-white/5 border-white/10 h-9" />
+                            </div>
+                            <div className="w-1/2">
+                                <Label className="text-xs text-white/60 mb-1.5 block">End Time</Label>
+                                <Input type="time" className="bg-white/5 border-white/10 h-9" />
+                            </div>
                         </div>
                     </div>
                 )}
-            </div>
 
-            <div className="bg-white/5 border border-white/10 rounded-xl p-4 space-y-4">
-                <h3 className="font-medium mb-2">Email Notifications</h3>
-                <div className="space-y-3">
-                    <div className="flex items-center justify-between">
-                        <span className="text-sm">Feedback & Surveys</span>
-                        <Switch checked={emailFeedback} onCheckedChange={(v) => handleToggle(setEmailFeedback, v)} />
-                    </div>
-                    <div className="flex items-center justify-between">
-                        <span className="text-sm">Product Updates</span>
-                        <Switch checked={emailProduct} onCheckedChange={(v) => handleToggle(setEmailProduct, v)} />
-                    </div>
-                    <div className="flex items-center justify-between">
-                        <span className="text-sm">News & Tips</span>
-                        <Switch checked={emailNews} onCheckedChange={(v) => handleToggle(setEmailNews, v)} />
-                    </div>
-                </div>
-            </div>
-
-            <div className="bg-white/5 border border-white/10 rounded-xl p-4 space-y-4">
-                <div className="flex items-center justify-between">
-                    <div>
-                        <p className="font-medium">Events</p>
-                        <p className="text-sm text-white/50">Reminders & RSVP updates</p>
+                <div className="flex items-center justify-between p-4 hover:bg-white/5 transition select-none group">
+                    <div className="flex items-start gap-4">
+                        <div className="mt-0.5 p-2 bg-green-500/10 rounded-lg group-hover:bg-green-500/20 transition-colors">
+                            <Calendar size={20} className="text-green-400" />
+                        </div>
+                        <div>
+                            <p className="font-medium text-[15px]">Events</p>
+                            <p className="text-[13px] text-white/50 group-hover:text-white/70 transition-colors">Reminders & RSVP updates</p>
+                        </div>
                     </div>
                     <Switch checked={events} onCheckedChange={(v) => handleToggle(setEvents, v)} />
                 </div>
-                <div className="flex items-center justify-between">
-                    <div>
-                        <p className="font-medium">Online Status</p>
-                        <p className="text-sm text-white/50">Show when you are online</p>
-                    </div>
-                    <Switch checked={onlineStatus} onCheckedChange={(v) => handleToggle(setOnlineStatus, v)} />
+            </div>
+
+            <div className="bg-white/5 border border-white/10 rounded-xl overflow-hidden">
+                <div className="p-4 border-b border-white/10 bg-white/[0.02]">
+                    <h3 className="text-lg font-semibold">Email Notifications</h3>
                 </div>
+
+                <div className="flex items-center justify-between p-4 border-b border-white/10 hover:bg-white/5 transition select-none group">
+                    <div className="flex items-start gap-4">
+                        <div className="mt-0.5 p-2 bg-white/5 rounded-lg group-hover:bg-white/10 transition-colors">
+                            <Mail size={20} className="text-white/70 group-hover:text-white transition-colors" />
+                        </div>
+                        <div>
+                            <p className="font-medium text-[15px]">Feedback & Surveys</p>
+                            <p className="text-[13px] text-white/50 group-hover:text-white/70 transition-colors">Help us improve the platform</p>
+                        </div>
+                    </div>
+                    <Switch checked={emailFeedback} onCheckedChange={(v) => handleToggle(setEmailFeedback, v)} />
+                </div>
+
+                <div className="flex items-center justify-between p-4 border-b border-white/10 hover:bg-white/5 transition select-none group">
+                    <div className="flex items-start gap-4">
+                        <div className="mt-0.5 p-2 bg-white/5 rounded-lg group-hover:bg-white/10 transition-colors">
+                            <RefreshCw size={20} className="text-white/70 group-hover:text-white transition-colors" />
+                        </div>
+                        <div>
+                            <p className="font-medium text-[15px]">Product Updates</p>
+                            <p className="text-[13px] text-white/50 group-hover:text-white/70 transition-colors">New features and major changes</p>
+                        </div>
+                    </div>
+                    <Switch checked={emailProduct} onCheckedChange={(v) => handleToggle(setEmailProduct, v)} />
+                </div>
+
+                <div className="flex items-center justify-between p-4 hover:bg-white/5 transition select-none group">
+                    <div className="flex items-start gap-4">
+                        <div className="mt-0.5 p-2 bg-white/5 rounded-lg group-hover:bg-white/10 transition-colors">
+                            <Radio size={20} className="text-white/70 group-hover:text-white transition-colors" />
+                        </div>
+                        <div>
+                            <p className="font-medium text-[15px]">News & Tips</p>
+                            <p className="text-[13px] text-white/50 group-hover:text-white/70 transition-colors">Weekly digests and community news</p>
+                        </div>
+                    </div>
+                    <Switch checked={emailNews} onCheckedChange={(v) => handleToggle(setEmailNews, v)} />
+                </div>
+            </div>
+        </div>
+    );
+
+    const SupportSettings = () => (
+        <div className="space-y-4 animate-in fade-in slide-in-from-right-4 duration-300">
+            <div className="bg-white/5 border border-white/10 rounded-xl overflow-hidden shadow-sm">
+                {[
+                    { id: "guidelines", icon: Book, label: "Community Guidelines", desc: "Rules and best practices for our community" },
+                    { id: "faqs", icon: HelpCircle, label: "FAQs", desc: "Answers to common questions" },
+                    { id: "news", icon: Radio, label: "News", desc: "Latest platform announcements" },
+                    { id: "updates", icon: RefreshCw, label: "Updates", desc: "New features and improvements" },
+                    { id: "privacy", icon: ShieldAlert, label: "Privacy Policy", desc: "How we protect your data" },
+                    { id: "terms", icon: FileText, label: "Terms and Conditions", desc: "Agreement and usage terms" },
+                ].map((item, i) => (
+                    <div
+                        key={i}
+                        onClick={() => navigate(`/support/${item.id}`)}
+                        className="flex items-center justify-between px-5 py-3 border-b border-white/10 last:border-0 hover:bg-white/5 cursor-pointer transition select-none group"
+                    >
+                        <div className="flex items-start gap-3">
+                            <div className="mt-0.5 p-1.5 bg-white/5 rounded-lg group-hover:bg-white/10 transition-colors">
+                                <item.icon size={18} className="text-white/70 group-hover:text-white transition-colors" />
+                            </div>
+                            <div>
+                                <p className="font-medium text-sm">{item.label}</p>
+                                <p className="text-xs text-white/50 group-hover:text-white/70 transition-colors">{item.desc}</p>
+                            </div>
+                        </div>
+                        <ChevronRight size={16} className="text-white/30 group-hover:text-white/70 transition-colors" />
+                    </div>
+                ))}
             </div>
         </div>
     );
@@ -572,7 +759,8 @@ export default function Settings() {
                                         : activeSection === "privacy" ? "Privacy"
                                             : activeSection === "activity" ? "Your Activity"
                                                 : activeSection === "notifications" ? "Notifications"
-                                                    : "Settings"}
+                                                    : activeSection === "support" ? "Support"
+                                                        : "Settings"}
                         </span>
                         <span className="hidden md:inline">Settings</span>
                     </h1>
@@ -596,100 +784,69 @@ export default function Settings() {
                         </p>
 
                         <nav className="space-y-1.5">
-                            {/* Account */}
-                            <button
-                                onClick={() => handleSectionClick("account")}
-                                className={`w-full text-left p-3.5 rounded-xl border cursor-pointer transition-all duration-200 flex items-center gap-3
-                                ${activeSection === "account"
-                                        ? "bg-blue-500/15 border-blue-500/40"
-                                        : "bg-white/[0.04] border-white/[0.08] hover:bg-white/[0.08] hover:border-white/[0.15]"}
-                            `}
-                            >
-                                <div className={`p-2 rounded-lg flex-shrink-0 ${activeSection === "account" ? "bg-blue-500 text-white" : "bg-blue-500/20 text-blue-400"}`}>
-                                    <User size={17} />
-                                </div>
-                                <div className="flex-1 min-w-0">
-                                    <p className={`font-semibold text-sm ${activeSection === "account" ? "text-blue-300" : "text-white"}`}>Account</p>
-                                    <p className="text-[11px] text-white/40 truncate">Manage details & danger zone</p>
-                                </div>
-                                {activeSection === "account" && <div className="w-1.5 h-1.5 rounded-full bg-blue-400 flex-shrink-0" />}
-                            </button>
+                            {[
+                                { id: "account", label: "Account", icon: User, color: "blue" },
+                                { id: "profile", label: "Profile", icon: Users, color: "purple" },
+                                { id: "privacy", label: "Privacy", icon: Shield, color: "green" },
+                                { id: "activity", label: "Your Activity", icon: Activity, color: "orange" },
+                                { id: "notifications", label: "Notifications", icon: Bell, color: "pink" },
+                                { id: "support", label: "Support", icon: LifeBuoy, color: "teal" }
+                            ].map((navItem) => {
+                                const isActive = activeSection === navItem.id;
+                                const colorStyles = {
+                                    blue: isActive ? "bg-blue-500/15 border-blue-500/40" : "",
+                                    purple: isActive ? "bg-purple-500/15 border-purple-500/40" : "",
+                                    green: isActive ? "bg-green-500/15 border-green-500/40" : "",
+                                    orange: isActive ? "bg-orange-500/15 border-orange-500/40" : "",
+                                    pink: isActive ? "bg-pink-500/15 border-pink-500/40" : "",
+                                    teal: isActive ? "bg-teal-500/15 border-teal-500/40" : ""
+                                }[navItem.color];
 
-                            {/* Profile */}
-                            <button
-                                onClick={() => handleSectionClick("profile")}
-                                className={`w-full text-left p-3.5 rounded-xl border cursor-pointer transition-all duration-200 flex items-center gap-3
-                                ${activeSection === "profile"
-                                        ? "bg-purple-500/15 border-purple-500/40"
-                                        : "bg-white/[0.04] border-white/[0.08] hover:bg-white/[0.08] hover:border-white/[0.15]"}
-                            `}
-                            >
-                                <div className={`p-2 rounded-lg flex-shrink-0 ${activeSection === "profile" ? "bg-purple-500 text-white" : "bg-purple-500/20 text-purple-400"}`}>
-                                    <Users size={17} />
-                                </div>
-                                <div className="flex-1 min-w-0">
-                                    <p className={`font-semibold text-sm ${activeSection === "profile" ? "text-purple-300" : "text-white"}`}>Profile</p>
-                                    <p className="text-[11px] text-white/40 truncate">Edit your public info</p>
-                                </div>
-                                {activeSection === "profile" && <div className="w-1.5 h-1.5 rounded-full bg-purple-400 flex-shrink-0" />}
-                            </button>
+                                const iconBgStyles = {
+                                    blue: isActive ? "bg-blue-500 text-white" : "bg-blue-500/20 text-blue-400",
+                                    purple: isActive ? "bg-purple-500 text-white" : "bg-purple-500/20 text-purple-400",
+                                    green: isActive ? "bg-green-500 text-white" : "bg-green-500/20 text-green-400",
+                                    orange: isActive ? "bg-orange-500 text-white" : "bg-orange-500/20 text-orange-400",
+                                    pink: isActive ? "bg-pink-500 text-white" : "bg-pink-500/20 text-pink-400",
+                                    teal: isActive ? "bg-teal-500 text-white" : "bg-teal-500/20 text-teal-400"
+                                }[navItem.color];
 
-                            {/* Privacy */}
-                            <button
-                                onClick={() => handleSectionClick("privacy")}
-                                className={`w-full text-left p-3.5 rounded-xl border cursor-pointer transition-all duration-200 flex items-center gap-3
-                                ${activeSection === "privacy"
-                                        ? "bg-green-500/15 border-green-500/40"
-                                        : "bg-white/[0.04] border-white/[0.08] hover:bg-white/[0.08] hover:border-white/[0.15]"}
-                            `}
-                            >
-                                <div className={`p-2 rounded-lg flex-shrink-0 ${activeSection === "privacy" ? "bg-green-500 text-white" : "bg-green-500/20 text-green-400"}`}>
-                                    <Shield size={17} />
-                                </div>
-                                <div className="flex-1 min-w-0">
-                                    <p className={`font-semibold text-sm ${activeSection === "privacy" ? "text-green-300" : "text-white"}`}>Privacy</p>
-                                    <p className="text-[11px] text-white/40 truncate">Security & visibility</p>
-                                </div>
-                                {activeSection === "privacy" && <div className="w-1.5 h-1.5 rounded-full bg-green-400 flex-shrink-0" />}
-                            </button>
+                                const textStyles = {
+                                    blue: isActive ? "text-blue-300" : "text-white",
+                                    purple: isActive ? "text-purple-300" : "text-white",
+                                    green: isActive ? "text-green-300" : "text-white",
+                                    orange: isActive ? "text-orange-300" : "text-white",
+                                    pink: isActive ? "text-pink-300" : "text-white",
+                                    teal: isActive ? "text-teal-300" : "text-white"
+                                }[navItem.color];
 
-                            {/* Activity */}
-                            <button
-                                onClick={() => handleSectionClick("activity")}
-                                className={`w-full text-left p-3.5 rounded-xl border cursor-pointer transition-all duration-200 flex items-center gap-3
-                                ${activeSection === "activity"
-                                        ? "bg-orange-500/15 border-orange-500/40"
-                                        : "bg-white/[0.04] border-white/[0.08] hover:bg-white/[0.08] hover:border-white/[0.15]"}
-                            `}
-                            >
-                                <div className={`p-2 rounded-lg flex-shrink-0 ${activeSection === "activity" ? "bg-orange-500 text-white" : "bg-orange-500/20 text-orange-400"}`}>
-                                    <Activity size={17} />
-                                </div>
-                                <div className="flex-1 min-w-0">
-                                    <p className={`font-semibold text-sm ${activeSection === "activity" ? "text-orange-300" : "text-white"}`}>Your Activity</p>
-                                    <p className="text-[11px] text-white/40 truncate">Analytics & history</p>
-                                </div>
-                                {activeSection === "activity" && <div className="w-1.5 h-1.5 rounded-full bg-orange-400 flex-shrink-0" />}
-                            </button>
+                                const dotStyles = {
+                                    blue: "bg-blue-400",
+                                    purple: "bg-purple-400",
+                                    green: "bg-green-400",
+                                    orange: "bg-orange-400",
+                                    pink: "bg-pink-400",
+                                    teal: "bg-teal-400"
+                                }[navItem.color];
 
-                            {/* Notifications */}
-                            <button
-                                onClick={() => handleSectionClick("notifications")}
-                                className={`w-full text-left p-3.5 rounded-xl border cursor-pointer transition-all duration-200 flex items-center gap-3
-                                ${activeSection === "notifications"
-                                        ? "bg-pink-500/15 border-pink-500/40"
-                                        : "bg-white/[0.04] border-white/[0.08] hover:bg-white/[0.08] hover:border-white/[0.15]"}
-                            `}
-                            >
-                                <div className={`p-2 rounded-lg flex-shrink-0 ${activeSection === "notifications" ? "bg-pink-500 text-white" : "bg-pink-500/20 text-pink-400"}`}>
-                                    <Bell size={17} />
-                                </div>
-                                <div className="flex-1 min-w-0">
-                                    <p className={`font-semibold text-sm ${activeSection === "notifications" ? "text-pink-300" : "text-white"}`}>Notifications</p>
-                                    <p className="text-[11px] text-white/40 truncate">Alert preferences</p>
-                                </div>
-                                {activeSection === "notifications" && <div className="w-1.5 h-1.5 rounded-full bg-pink-400 flex-shrink-0" />}
-                            </button>
+                                return (
+                                    <button
+                                        key={navItem.id}
+                                        onClick={() => handleSectionClick(navItem.id as Section)}
+                                        className={`w-full text-left px-3 py-2.5 rounded-xl border cursor-pointer transition-all duration-200 flex items-center gap-3
+                                        ${isActive ? colorStyles : "bg-white/[0.04] border-white/[0.08] hover:bg-white/[0.08] hover:border-white/[0.15]"}
+                                        `}
+                                    >
+                                        <div className={`p-1.5 rounded-lg flex-shrink-0 ${iconBgStyles}`}>
+                                            <navItem.icon size={18} />
+                                        </div>
+                                        <div className="flex-1 min-w-0">
+                                            <p className={`font-semibold text-[14px] leading-none ${textStyles}`}>{navItem.label}</p>
+                                        </div>
+                                        {isActive && <div className={`w-1.5 h-1.5 rounded-full flex-shrink-0 ${dotStyles}`} />}
+                                    </button>
+                                );
+                            })}
                         </nav>
                     </aside>
 
@@ -706,12 +863,14 @@ export default function Settings() {
                             ${activeSection === "privacy" ? "bg-green-500/20 text-green-400" : ""}
                             ${activeSection === "activity" ? "bg-orange-500/20 text-orange-400" : ""}
                             ${activeSection === "notifications" ? "bg-pink-500/20 text-pink-400" : ""}
+                            ${activeSection === "support" ? "bg-teal-500/20 text-teal-400" : ""}
                         `}>
                                 {(activeSection === "account" || activeSection === "main") && <User size={20} />}
                                 {activeSection === "profile" && <Users size={20} />}
                                 {activeSection === "privacy" && <Shield size={20} />}
                                 {activeSection === "activity" && <Activity size={20} />}
                                 {activeSection === "notifications" && <Bell size={20} />}
+                                {activeSection === "support" && <LifeBuoy size={20} />}
                             </div>
                             <div>
                                 <h2 className="text-lg font-bold leading-tight">
@@ -720,6 +879,7 @@ export default function Settings() {
                                     {activeSection === "privacy" && "Privacy & Security"}
                                     {activeSection === "activity" && "Your Activity"}
                                     {activeSection === "notifications" && "Notifications"}
+                                    {activeSection === "support" && "Help & Support"}
                                 </h2>
                                 <p className="text-xs text-white/40 mt-0.5">
                                     {(activeSection === "account" || activeSection === "main") && "Manage your account details and preferences"}
@@ -727,6 +887,7 @@ export default function Settings() {
                                     {activeSection === "privacy" && "Control your security and visibility settings"}
                                     {activeSection === "activity" && "Review your usage analytics and history"}
                                     {activeSection === "notifications" && "Manage how and when you receive alerts"}
+                                    {activeSection === "support" && "Find answers, policies, and community guidelines"}
                                 </p>
                             </div>
                         </div>
@@ -736,6 +897,7 @@ export default function Settings() {
                         {activeSection === "privacy" && <PrivacySettings />}
                         {activeSection === "activity" && <ActivitySettings />}
                         {activeSection === "notifications" && <NotificationSettings />}
+                        {activeSection === "support" && <SupportSettings />}
                     </main>
                 </div>
             </div>

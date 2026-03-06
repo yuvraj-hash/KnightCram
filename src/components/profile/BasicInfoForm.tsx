@@ -131,13 +131,13 @@ const BasicInfoForm: React.FC<BasicInfoFormProps> = ({ profile, onSave, middleAc
     Object.keys(errors).length === 0;
 
   return (
-    <section className="bg-white/5 backdrop-blur-xl rounded-2xl border border-white/10 shadow-xl overflow-hidden">
-      <div className="px-6 py-6 border-b border-white/10">
-        <h3 className="font-bold text-xl">Basic Information <span className="text-red-400 text-sm ml-1">*</span></h3>
-        <p className="text-sm text-white/50 mt-1">Help people know you better</p>
+    <section className="bg-white/5 backdrop-blur-xl rounded-xl border border-white/10 shadow-sm overflow-hidden">
+      <div className="px-5 py-4 border-b border-white/10">
+        <h3 className="font-bold text-lg">Basic Information <span className="text-red-400 text-xs ml-1">*</span></h3>
+        <p className="text-xs text-white/50 mt-1">Help people know you better</p>
       </div>
 
-      <div className="p-6 space-y-6">
+      <div className="p-5 space-y-5">
         {/* Full Name & User ID */}
         <div className="flex flex-col md:flex-row gap-6">
           <div className="w-full">

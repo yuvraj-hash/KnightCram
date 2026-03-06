@@ -51,22 +51,15 @@ const CreateModal = () => {
                             animate={isDesktop ? { opacity: 1, scale: 1 } : { y: 0 }}
                             exit={isDesktop ? { opacity: 0, scale: 0.9 } : { y: "100%" }}
                             transition={{ type: "spring", stiffness: 400, damping: 33 }}
-                            className="relative bg-background border-t sm:border border-border rounded-t-3xl sm:rounded-2xl shadow-2xl overflow-hidden flex flex-col w-full sm:max-w-2xl sm:mx-auto pointer-events-auto"
-                            style={{ maxHeight: "92dvh" }}
+                            className="relative bg-background border-t sm:border border-border rounded-t-3xl sm:rounded-2xl shadow-2xl overflow-hidden flex flex-col w-full sm:max-w-[600px] sm:mx-auto pointer-events-auto"
+                            style={{ maxHeight: "92dvh", height: isDesktop ? "auto" : undefined }}
                         >
                             {/* Drag handle (mobile only) */}
-                            <div className="flex sm:hidden justify-center pt-3 pb-1 shrink-0">
+                            <div className="flex sm:hidden justify-center pt-3 pb-2 shrink-0">
                                 <div className="w-10 h-1 rounded-full bg-muted-foreground/30" />
                             </div>
 
-                            {/* Close button */}
-                            <button
-                                onClick={close}
-                                className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full bg-muted hover:bg-muted-foreground/20 transition-colors"
-                                aria-label="Close"
-                            >
-                                <X className="w-4 h-4 text-muted-foreground" />
-                            </button>
+                            {/* Close button handled inside specific views */}
 
                             <AnimatePresence mode="wait">
                                 {view === "menu" && (
@@ -78,9 +71,18 @@ const CreateModal = () => {
                                         transition={{ duration: 0.18 }}
                                         className="px-5 pb-8 pt-3"
                                     >
-                                        <div className="mb-5">
-                                            <h2 className="text-xl font-bold text-foreground">Create</h2>
-                                            <p className="text-sm text-muted-foreground mt-0.5">What would you like to share?</p>
+                                        <div className="mb-5 flex justify-between items-start">
+                                            <div>
+                                                <h2 className="text-xl font-bold text-foreground">Create</h2>
+                                                <p className="text-sm text-muted-foreground mt-0.5">What would you like to share?</p>
+                                            </div>
+                                            <button
+                                                onClick={close}
+                                                className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-muted transition-colors"
+                                                aria-label="Close"
+                                            >
+                                                <X className="w-5 h-5 text-muted-foreground" />
+                                            </button>
                                         </div>
 
                                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">

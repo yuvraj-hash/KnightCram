@@ -79,12 +79,12 @@ const VerificationUploader: React.FC<{ profile: any; onUpload: (data?: any) => v
   };
 
   return (
-    <section className="bg-white/5 backdrop-blur-xl rounded-2xl border border-white/10 shadow-xl overflow-hidden">
-      <div className="px-6 py-6 border-b border-white/10">
+    <section className="bg-white/5 backdrop-blur-xl rounded-xl border border-white/10 shadow-sm overflow-hidden">
+      <div className="px-5 py-4 border-b border-white/10">
         <div className="flex items-center justify-between">
           <div>
-            <h3 className="font-bold text-xl">Profile Verification</h3>
-            <p className="text-sm text-white/50 mt-1">Upload documents to verify your profile</p>
+            <h3 className="font-bold text-lg">Profile Verification</h3>
+            <p className="text-xs text-white/50 mt-1">Upload documents to verify your profile</p>
           </div>
           <div className="flex items-center gap-2">{getStatusIcon()}</div>
         </div>
@@ -92,7 +92,7 @@ const VerificationUploader: React.FC<{ profile: any; onUpload: (data?: any) => v
 
       {/* Conditional Status Display - Below Header Border */}
       {profile.verificationStatus === "submitted" && (
-        <div className="bg-blue-500/5 border-b border-white/5 px-6 py-3 flex items-center gap-2 animate-fade-in">
+        <div className="bg-blue-500/5 border-b border-white/5 px-5 py-2 flex items-center gap-2 animate-fade-in">
           <div className="w-2 h-2 rounded-full bg-blue-400 animate-pulse"></div>
           <span className="text-sm font-medium text-blue-200">
             Submitted - {profile.verificationDetails?.documentName || "Document for review"}
@@ -100,7 +100,7 @@ const VerificationUploader: React.FC<{ profile: any; onUpload: (data?: any) => v
         </div>
       )}
 
-      <div className="p-6 space-y-6">
+      <div className="p-5 space-y-5">
         {/* Upload Area */}
         <div
           onDragOver={handleDragOver}

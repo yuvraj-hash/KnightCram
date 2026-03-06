@@ -13,14 +13,14 @@ const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
     const location = useLocation();
 
     const menuItems = [
-        { icon: ProfileNavIcon, label: "Profile", path: "/profile/view", hideOnMobile: true },
-        { icon: Home, label: "Home", path: "/main", hideOnMobile: true },
-        { icon: Briefcase, label: "Opportunities", path: "/opportunities", hideOnDesktop: true },
-        { icon: BookOpen, label: "Resources", path: "/resources", hideOnMobile: true },
-        { icon: MessageSquare, label: "Forum", path: "/forum", hideOnMobile: true },
-        { icon: Zap, label: "Spotlight", path: "/main" },
-        { icon: CommunityNavIcon, label: "Community", path: "/community/create" },
-        { icon: Settings, label: "Settings", path: "/settings" },
+        { icon: ProfileNavIcon, label: "Profile", path: "/profile/view", hideOnMobile: true, mdOrder: "md:order-1" },
+        { icon: Home, label: "Home", path: "/main", hideOnMobile: true, mdOrder: "md:order-2" },
+        { icon: Briefcase, label: "Opportunities", path: "/opportunities", hideOnDesktop: false, mdOrder: "md:order-6" },
+        { icon: BookOpen, label: "Resources", path: "/resources", hideOnMobile: true, mdOrder: "md:order-4" },
+        { icon: MessageSquare, label: "Forum", path: "/forum", hideOnMobile: true, mdOrder: "md:order-5" },
+        { icon: Zap, label: "Spotlight", path: "/main", hideOnDesktop: true, mdOrder: "md:order-3" },
+        { icon: CommunityNavIcon, label: "Community", path: "/community/create", mdOrder: "md:order-7" },
+        { icon: Settings, label: "Settings", path: "/settings", mdOrder: "md:order-8" },
     ];
 
     return (
@@ -60,6 +60,7 @@ const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
                                 }}
                                 className={cn(
                                     item.hideOnMobile ? "hidden md:flex" : item.hideOnDesktop ? "flex md:hidden" : "flex",
+                                    item.mdOrder,
                                     "items-center gap-4 px-3 py-3 mx-2 rounded-lg transition-colors duration-200 group hover:bg-secondary/50",
                                     isOpen ? "flex-row justify-start" : "md:flex-col md:justify-center md:gap-1 md:px-0 md:mx-1 flex-row justify-start gap-4 px-3 mx-2", // Handle mobile (always expanded view) vs desktop (toggled)
                                     isActive && "bg-secondary"

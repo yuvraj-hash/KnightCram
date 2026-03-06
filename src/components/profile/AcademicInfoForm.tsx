@@ -236,22 +236,22 @@ const AcademicInfoForm: React.FC<AcademicInfoFormProps> = ({ profile, onSave }) 
   };
 
   return (
-    <section className="bg-white/5 backdrop-blur-xl rounded-2xl border border-white/10 shadow-xl overflow-hidden">
-      <div className="px-6 py-6 border-b border-white/10">
+    <section className="bg-white/5 backdrop-blur-xl rounded-xl border border-white/10 shadow-sm overflow-hidden">
+      <div className="px-5 py-4 border-b border-white/10">
         <div className="flex items-center gap-3 mb-2">
           <div className="text-blue-400">{roleIcon()}</div>
           <div>
-            <h3 className="font-bold text-xl">
+            <h3 className="font-bold text-lg">
               {["Pre University Student", "University Student", "Alumni / Opportunity Seeker"].includes(profile.roles?.[0])
                 ? "Academic Details"
                 : "Professional Details"}
             </h3>
-            <p className="text-sm text-white/50 mt-1">Complete your profile with relevant information</p>
+            <p className="text-xs text-white/50 mt-1">Complete your profile with relevant information</p>
           </div>
         </div>
       </div>
 
-      <div className="p-6">
+      <div className="p-5">
         {renderRoleSpecificFields()}
 
         <div className="mt-4">

@@ -20,7 +20,7 @@ const ResourceUploader = () => {
     const [description, setDescription] = useState("");
     const [subject, setSubject] = useState("");
     const [files, setFiles] = useState<File[]>([]);
-    const [tags, setTags] = useState<string[]>([]);
+    const [tag, setTag] = useState<string | null>(null);
     const [dragging, setDragging] = useState(false);
     const [uploading, setUploading] = useState(false);
     const [progress, setProgress] = useState(0);
@@ -41,9 +41,6 @@ const ResourceUploader = () => {
 
     const removeFile = (idx: number) => setFiles((f) => f.filter((_, i) => i !== idx));
 
-    const toggleTag = (t: string) =>
-        setTags((prev) => prev.includes(t) ? prev.filter((x) => x !== t) : [...prev, t]);
-
     const handleUpload = async () => {
         if (!title.trim() || files.length === 0) return;
         setUploading(true);
@@ -57,7 +54,7 @@ const ResourceUploader = () => {
         close();
     };
 
-    const canUpload = title.trim() && files.length > 0 && !uploading;
+    const canUpload = title.trim() && files.length > 0 && tag !== null && !uploading;
 
     return (
         <div className="flex flex-col bg-background">
@@ -65,21 +62,21 @@ const ResourceUploader = () => {
             <div className="flex items-center gap-3 px-5 py-4 border-b border-border shrink-0">
                 <button
                     onClick={openCreate}
-                    className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-muted transition-colors"
+                    className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-muted transition-colors text-muted-foreground"
                     aria-label="Back"
                 >
-                    <ChevronLeft className="w-5 h-5 text-muted-foreground" />
+                    <ChevronLeft className="w-5 h-5" />
                 </button>
                 <div className="flex-1">
                     <h2 className="font-bold text-foreground text-lg leading-tight">Upload Resource</h2>
-                    <p className="text-xs text-muted-foreground">Share academic materials with your community</p>
+                    <p className="text-xs text-muted-foreground hidden sm:block">Share academic materials with your community</p>
                 </div>
                 <button
                     onClick={close}
-                    className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-muted transition-colors"
+                    className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-muted transition-colors text-muted-foreground"
                     aria-label="Close"
                 >
-                    <X className="w-4 h-4 text-muted-foreground" />
+                    <X className="w-5 h-5" />
                 </button>
             </div>
 
@@ -95,7 +92,7 @@ const ResourceUploader = () => {
                         value={title}
                         onChange={(e) => setTitle(e.target.value)}
                         placeholder="e.g. DSA Notes – Binary Trees"
-                        className="mt-1.5 w-full px-4 py-2.5 rounded-xl bg-muted/50 border border-border focus:border-blue-400 focus:ring-1 focus:ring-blue-400/30 outline-none text-foreground placeholder:text-muted-foreground/50 text-sm transition-all duration-150"
+                        className="mt-1.5 w-full px-4 py-3 rounded-xl bg-muted/50 border border-border focus:border-blue-400 focus:ring-1 focus:ring-blue-400/30 outline-none text-foreground placeholder:text-muted-foreground/50 text-sm transition-all duration-150"
                     />
                 </div>
 
@@ -107,7 +104,7 @@ const ResourceUploader = () => {
                         onChange={(e) => setDescription(e.target.value)}
                         placeholder="Brief description of what's inside..."
                         rows={2}
-                        className="mt-1.5 w-full px-4 py-2.5 rounded-xl bg-muted/50 border border-border focus:border-blue-400 focus:ring-1 focus:ring-blue-400/30 outline-none resize-none text-foreground placeholder:text-muted-foreground/50 text-sm transition-all duration-150"
+                        className="mt-1.5 w-full px-4 py-3 rounded-xl bg-muted/50 border border-border focus:border-blue-400 focus:ring-1 focus:ring-blue-400/30 outline-none resize-none text-foreground placeholder:text-muted-foreground/50 text-sm transition-all duration-150"
                     />
                 </div>
 
@@ -122,8 +119,8 @@ const ResourceUploader = () => {
                         onDrop={handleDrop}
                         onClick={() => fileRef.current?.click()}
                         className={`mt-1.5 flex flex-col items-center justify-center gap-2.5 p-6 rounded-2xl border-2 border-dashed cursor-pointer transition-all duration-200 ${dragging
-                                ? "border-blue-400 bg-blue-400/5"
-                                : "border-border bg-muted/30 hover:border-blue-400/60 hover:bg-blue-400/5"
+                            ? "border-blue-400 bg-blue-400/5"
+                            : "border-border bg-muted/30 hover:border-blue-400/60 hover:bg-blue-400/5"
                             }`}
                     >
                         <input
@@ -186,24 +183,28 @@ const ResourceUploader = () => {
                     <select
                         value={subject}
                         onChange={(e) => setSubject(e.target.value)}
-                        className="mt-1.5 w-full px-4 py-2.5 rounded-xl bg-muted/50 border border-border focus:border-blue-400 focus:ring-1 focus:ring-blue-400/30 outline-none text-foreground text-sm appearance-none cursor-pointer transition-all duration-150"
+                        className="mt-1.5 w-full px-4 py-3 rounded-xl bg-muted/50 border border-border focus:border-blue-400 focus:ring-1 focus:ring-blue-400/30 outline-none text-foreground text-sm appearance-none cursor-pointer transition-all duration-150"
                     >
                         <option value="">Select a subject...</option>
                         {SUBJECTS.map((s) => <option key={s} value={s}>{s}</option>)}
                     </select>
                 </div>
 
-                {/* Tag pills */}
+                {/* Tag selection details */}
                 <div>
-                    <label className="text-xs font-bold text-muted-foreground uppercase tracking-wider">Tags</label>
-                    <div className="flex flex-wrap gap-2 mt-2">
+                    <div className="flex items-center justify-between mb-2">
+                        <label className="text-xs font-bold text-muted-foreground uppercase tracking-wider">
+                            Resource Tag <span className="text-red-400">*</span>
+                        </label>
+                    </div>
+                    <div className="flex flex-wrap gap-2 mt-1">
                         {TAG_OPTIONS.map((t) => (
                             <button
                                 key={t}
-                                onClick={() => toggleTag(t)}
-                                className={`px-3 py-1.5 rounded-full text-xs font-bold border transition-all duration-150 ${tags.includes(t)
-                                        ? "bg-blue-400/15 border-blue-400 text-blue-400"
-                                        : "bg-transparent border-border text-muted-foreground hover:border-blue-400/50 hover:text-foreground"
+                                onClick={() => setTag(t)}
+                                className={`px-4 py-2 rounded-full text-xs font-bold border transition-all duration-200 ${tag === t
+                                    ? "bg-blue-400/15 border-blue-400 text-blue-500 shadow-[0_0_10px_-2px_rgba(96,165,250,0.3)]"
+                                    : "bg-muted/30 border-border text-muted-foreground hover:bg-muted/60 hover:text-foreground"
                                     }`}
                             >
                                 {t}
@@ -238,8 +239,8 @@ const ResourceUploader = () => {
                     onClick={handleUpload}
                     disabled={!canUpload}
                     className={`w-full flex items-center justify-center gap-2 py-3 rounded-xl font-bold text-sm transition-all duration-200 ${canUpload
-                            ? "bg-blue-500 text-white hover:bg-blue-400 shadow-[0_4px_14px_-4px_rgba(96,165,250,0.6)]"
-                            : "bg-muted text-muted-foreground cursor-not-allowed"
+                        ? "bg-blue-500 text-white hover:bg-blue-400 shadow-[0_4px_14px_-4px_rgba(96,165,250,0.6)]"
+                        : "bg-muted text-muted-foreground cursor-not-allowed"
                         }`}
                 >
                     <AnimatePresence mode="wait">

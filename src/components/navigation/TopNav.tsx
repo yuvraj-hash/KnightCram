@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useCreate } from "@/context/CreateContext";
-import { Search, Briefcase, PlusSquare, Menu, X, Bell } from "lucide-react";
+import { Search, Briefcase, PlusSquare, Menu, X, Bell, Zap } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
@@ -106,29 +106,9 @@ const TopNav = ({ isMenuOpen, onMenuOpenChange }: TopNavProps) => {
                     variant="ghost"
                     size="icon"
                     className="hidden md:flex hover:bg-primary/10 rounded-full transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background"
-                    aria-label="Opportunities"
+                    aria-label="Spotlight"
                 >
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="32"
-                        height="32"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2.5"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        className="w-8 h-8 text-foreground"
-                    >
-                        {/* Handle */}
-                        <path d="M8 6v-1a4 4 0 0 1 8 0v1" />
-                        {/* Body */}
-                        <rect x="2" y="6" width="20" height="15" rx="4" />
-                        {/* Flap Curve */}
-                        <path d="M2 10c0 0 5 4 10 4s10-4 10-4" />
-                        {/* Clasp */}
-                        <path d="M12 12v3" strokeWidth="3.5" />
-                    </svg>
+                    <Zap className="w-8 h-8 text-foreground" strokeWidth={2.5} />
                 </Button>
 
                 <Button

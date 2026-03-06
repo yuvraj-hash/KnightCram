@@ -17,13 +17,13 @@ const RoleSelector: React.FC<{ roles: string[]; onChange: (r: string[]) => void 
   };
 
   return (
-    <section className="bg-white/5 backdrop-blur-xl rounded-2xl border border-white/10 shadow-xl overflow-hidden">
-      <div className="px-6 py-6 border-b border-white/10">
-        <h3 className="font-bold text-xl">Select Your Role</h3>
-        <p className="text-sm text-white/50 mt-1">Choose the role that describes you best</p>
+    <section className="bg-white/5 backdrop-blur-xl rounded-xl border border-white/10 shadow-sm overflow-hidden">
+      <div className="px-5 py-4 border-b border-white/10">
+        <h3 className="font-bold text-lg">Select Your Role</h3>
+        <p className="text-xs text-white/50 mt-1">Choose the role that describes you best</p>
       </div>
 
-      <div className="p-6">
+      <div className="p-5">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
           {ROLES.map((role) => {
             const isSelected = roles.includes(role.name);

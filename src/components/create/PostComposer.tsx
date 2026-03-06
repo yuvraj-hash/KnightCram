@@ -1,6 +1,6 @@
 import { useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, Image, Hash, Shield, ChevronLeft, Send } from "lucide-react";
+import { X, Image, Shield, ChevronLeft, Send } from "lucide-react";
 import { useCreate } from "@/context/CreateContext";
 
 const CATEGORIES = [
@@ -59,18 +59,21 @@ const PostComposer = () => {
             <div className="flex items-center gap-3 px-5 py-4 border-b border-border shrink-0">
                 <button
                     onClick={openCreate}
-                    className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-muted transition-colors"
+                    className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-muted transition-colors text-muted-foreground"
                     aria-label="Back"
                 >
-                    <ChevronLeft className="w-5 h-5 text-muted-foreground" />
+                    <ChevronLeft className="w-5 h-5" />
                 </button>
-                <h2 className="font-bold text-foreground text-lg flex-1">Create Post</h2>
+                <div className="flex-1">
+                    <h2 className="font-bold text-foreground text-lg leading-tight">Create Post</h2>
+                    <p className="text-xs text-muted-foreground hidden sm:block">Share thoughts, questions, or experiences</p>
+                </div>
                 <button
                     onClick={close}
-                    className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-muted transition-colors"
+                    className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-muted transition-colors text-muted-foreground"
                     aria-label="Close"
                 >
-                    <X className="w-4 h-4 text-muted-foreground" />
+                    <X className="w-5 h-5" />
                 </button>
             </div>
 
@@ -154,9 +157,9 @@ const PostComposer = () => {
                                 key={c}
                                 data-active={category === c}
                                 onClick={() => setCategory(category === c ? null : c)}
-                                className={`px-4 py-1.5 rounded-full text-xs font-medium border transition-all duration-200 ${category === c
-                                        ? "bg-primary/10 border-primary text-foreground shadow-[0_0_10px_-2px_hsl(var(--primary)/0.2)]"
-                                        : "bg-muted/30 border-border text-muted-foreground hover:bg-muted/60 hover:text-foreground"
+                                className={`px-4 py-2 rounded-full text-xs font-medium border transition-all duration-200 ${category === c
+                                    ? "bg-primary/10 border-primary text-foreground shadow-[0_0_10px_-2px_hsl(var(--primary)/0.2)]"
+                                    : "bg-muted/30 border-border text-muted-foreground hover:bg-muted/60 hover:text-foreground"
                                     }`}
                             >
                                 {c}
@@ -208,7 +211,7 @@ const PostComposer = () => {
 
                     <button
                         onClick={() => setAnonymous((a) => !a)}
-                        className={`flex items-center gap-1.5 ml-1 px-3 py-1.5 rounded-full text-xs font-bold border transition-all duration-200 ${anonymous
+                        className={`flex items-center gap-1.5 ml-1 px-4 py-2 rounded-full text-xs font-bold border transition-all duration-200 ${anonymous
                             ? "bg-primary/10 border-primary/40 text-primary"
                             : "bg-transparent border-border text-muted-foreground hover:border-primary/30 hover:text-foreground"
                             }`}
@@ -222,8 +225,8 @@ const PostComposer = () => {
                     whileTap={{ scale: 0.96 }}
                     onClick={handlePost}
                     disabled={!text.trim() || !category || posting}
-                    className={`flex items-center gap-2 px-5 py-2 rounded-full font-bold text-sm transition-all duration-200 ${text.trim() && category && !posting
-                        ? "bg-primary text-primary-foreground hover:brightness-110"
+                    className={`flex items-center gap-2 px-6 py-2.5 rounded-xl font-bold text-sm transition-all duration-200 ${text.trim() && category && !posting
+                        ? "bg-primary text-primary-foreground hover:brightness-110 shadow-[0_4px_14px_-4px_hsl(var(--primary)/0.5)]"
                         : "bg-muted text-muted-foreground cursor-not-allowed"
                         }`}
                 >
