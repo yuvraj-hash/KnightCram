@@ -17,6 +17,8 @@ import Settings from "./pages/Settings";
 import CommunityPage from "./pages/CommunityPage";
 import SupportPage from "./pages/SupportPage";
 import Forum from "./pages/Forum";
+import LiveRoom from "./pages/LiveRoom";
+import HomeFeed from "./pages/HomeFeed";
 
 const queryClient = new QueryClient();
 
@@ -34,8 +36,10 @@ const App = () => (
             <Route path="/" element={<Index />} />
             <Route path="/signin" element={<SignInPage />} />
             <Route path="/login" element={<SignInPage />} />
+            <Route path="/live-room/:roomId" element={<LiveRoom />} />
 
             <Route element={<MainLayout />}>
+              <Route path="/home" element={<HomeFeed />} />
               <Route path="/main" element={<MainPage />} />
               <Route path="/profile" element={<ProfileRouter />} />
               <Route path="/opportunities" element={<OpportunitiesPage />} />

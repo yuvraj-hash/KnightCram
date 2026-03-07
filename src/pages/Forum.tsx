@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import {
     Search, MessageSquare, Plus, ChevronRight, Hash,
     ArrowLeft, Eye, MessageCircle, ArrowUp, ArrowDown,
-    Clock, Filter, MoreHorizontal, User, Bookmark
+    Clock, Filter, MoreHorizontal, User, Bookmark,
+    Video, Users, Calendar
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -10,6 +11,8 @@ import {
     Select, SelectContent, SelectItem, SelectTrigger, SelectValue
 } from "@/components/ui/select";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
+import { useNavigate } from "react-router-dom";
 
 // --- Mock Data ---
 
@@ -20,6 +23,17 @@ const CATEGORIES = [
     { id: "career", name: "Career Advice", description: "Resume reviews, interview tips, and general career growth.", icon: "💼" },
     { id: "research", name: "Research Discussions", description: "Academic research, paper discussions, and scientific exploration.", icon: "🔬" },
     { id: "project-help", name: "Project Help", description: "Stuck on a project? Ask the community for help and guidance.", icon: "🛠️" },
+];
+
+const MOCK_LIVE_ROOMS = [
+    { id: "room-1", title: "AI Study Group", categoryId: "ai-ml", host: "VIT CSE 3rd Year", participants: 14 },
+    { id: "room-2", title: "Placement Interview Practice", categoryId: "career", host: "John Doe", participants: 9 },
+    { id: "room-3", title: "Web Dev Debug Session", categoryId: "web-dev", host: "Sarah Smith", participants: 6 },
+];
+
+const MOCK_SCHEDULED_ROOMS = [
+    { id: "scheduled-1", title: "DSA Practice Session", categoryId: "project-help", host: "AlgoPro", time: "Today at 8:00 PM" },
+    { id: "scheduled-2", title: "React State Management", categoryId: "web-dev", host: "Frontend Master", time: "Tomorrow at 10:00 AM" },
 ];
 
 const MOCK_DISCUSSIONS = [
@@ -62,11 +76,24 @@ const MOCK_REPLIES: Record<number, any[]> = {
 // --- Components ---
 
 export default function Forum() {
+    const navigate = useNavigate();
     const [activeCategoryId, setActiveCategoryId] = useState<string | null>(null);
     const [activeDiscussionId, setActiveDiscussionId] = useState<number | null>(null);
 
     const [searchQuery, setSearchQuery] = useState("");
     const [sortBy, setSortBy] = useState("latest");
+
+    const [isCreateRoomOpen, setIsCreateRoomOpen] = useState(false);
+
+    const handleJoinRoom = (roomId: string) => {
+        navigate(`/live-room/${roomId}`);
+    };
+
+    const handleCreateRoomSubmit = (e: React.FormEvent) => {
+        e.preventDefault();
+        const roomId = Math.random().toString(36).substring(7);
+        navigate(`/live-room/${roomId}`);
+    };
 
     // Derived state
     const activeCategory = CATEGORIES.find(c => c.id === activeCategoryId);
@@ -113,6 +140,10 @@ export default function Forum() {
                         <Plus className="w-4 h-4 md:mr-2" />
                         <span className="hidden md:inline">Ask Question</span>
                     </Button>
+                    <Button onClick={() => setIsCreateRoomOpen(true)} className="rounded-full bg-green-600 hover:bg-green-700 text-white flex-shrink-0 h-10 px-4 md:px-5">
+                        <Video className="w-4 h-4 md:mr-2 animate-pulse" />
+                        <span className="hidden md:inline">Start Live Room</span>
+                    </Button>
                 </div>
             </div>
 
@@ -136,6 +167,104 @@ export default function Forum() {
                     </div>
                 ))}
             </div>
+
+            {/* Live Now Section */}
+            {!searchQuery && (
+                <div className="mt-12 animate-in fade-in duration-500">
+                    <div className="flex items-center gap-2 mb-6">
+                        <div className="w-2 h-2 rounded-full bg-red-500 animate-pulse"></div>
+                        <h2 className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-white/70">Live Now</h2>
+                        <span className="text-sm text-white/50 ml-2">Join active discussions instantly</span>
+                    </div>
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                        {MOCK_LIVE_ROOMS.map(room => {
+                            const category = CATEGORIES.find(c => c.id === room.categoryId);
+                            return (
+                                <div key={room.id} className="bg-[#1c1e26] border border-white/5 hover:border-white/20 rounded-2xl p-5 transition-all duration-300 shadow-md group relative overflow-hidden">
+                                    <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-red-500/10 to-transparent blur-2xl rounded-full translate-x-1/2 -translate-y-1/2"></div>
+                                    <div className="mb-4 flex items-start justify-between">
+                                        <div>
+                                            <h3 className="font-bold text-white text-lg mb-1">{room.title}</h3>
+                                            <div className="text-xs text-white/50 flex items-center gap-1.5">
+                                                <span className="text-white/70">Category:</span> {category?.name || "General"}
+                                            </div>
+                                        </div>
+                                        <div className="bg-red-500/20 text-red-400 text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded w-fit flex items-center gap-1.5 border border-red-500/20">
+                                            <span className="w-1.5 h-1.5 rounded-full bg-red-400 animate-pulse"></span>
+                                            Live
+                                        </div>
+                                    </div>
+                                    <div className="flex items-center justify-between mt-auto">
+                                        <div className="flex items-center gap-3">
+                                            <div className="w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center text-xs font-bold text-white shadow-md">
+                                                {room.host.charAt(0)}
+                                            </div>
+                                            <div>
+                                                <div className="text-xs text-white/40">Host</div>
+                                                <div className="text-sm font-medium text-white/90 truncate max-w-[100px]">{room.host}</div>
+                                            </div>
+                                        </div>
+                                        <div className="flex flex-col items-end gap-2">
+                                            <div className="flex items-center gap-1.5 text-xs text-white/60">
+                                                <Users className="w-3.5 h-3.5" />
+                                                <span>{room.participants}</span>
+                                            </div>
+                                            <Button
+                                                variant="secondary"
+                                                size="sm"
+                                                onClick={() => handleJoinRoom(room.id)}
+                                                className="h-8 text-xs font-medium bg-white/10 hover:bg-white/20 text-white rounded-lg px-4"
+                                            >
+                                                Join Room
+                                            </Button>
+                                        </div>
+                                    </div>
+                                </div>
+                            );
+                        })}
+                    </div>
+                </div>
+            )}
+
+            {/* Scheduled Rooms Section */}
+            {!searchQuery && (
+                <div className="mt-12 mb-8 animate-in fade-in duration-500 delay-100">
+                    <div className="flex items-center gap-2 mb-6">
+                        <Calendar className="w-5 h-5 text-blue-400" />
+                        <h2 className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-white/70">Upcoming Sessions</h2>
+                        <span className="text-sm text-white/50 ml-2">Scheduled live rooms you can join later</span>
+                    </div>
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                        {MOCK_SCHEDULED_ROOMS.map(room => {
+                            const category = CATEGORIES.find(c => c.id === room.categoryId);
+                            return (
+                                <div key={room.id} className="bg-white/5 border border-white/10 hover:border-white/20 rounded-2xl p-5 transition-all duration-300 shadow-sm flex flex-col justify-between group">
+                                    <div className="mb-4">
+                                        <div className="flex items-center gap-2 mb-2 text-blue-400 font-medium text-sm">
+                                            <Clock className="w-4 h-4" /> {room.time}
+                                        </div>
+                                        <h3 className="font-bold text-white text-lg mb-1">{room.title}</h3>
+                                        <div className="text-xs text-white/50 flex items-center gap-1.5">
+                                            <span className="text-white/70">Category:</span> {category?.name || "General"}
+                                        </div>
+                                    </div>
+                                    <div className="flex items-center justify-between mt-auto">
+                                        <div className="flex items-center gap-2">
+                                            <div className="w-6 h-6 rounded-full bg-blue-500 flex items-center justify-center text-[10px] font-bold text-white">
+                                                {room.host.charAt(0)}
+                                            </div>
+                                            <span className="text-xs text-white/70 font-medium">{room.host}</span>
+                                        </div>
+                                        <Button variant="outline" size="sm" className="h-7 text-[10px] uppercase font-bold tracking-wider rounded-lg border-white/20 text-white hover:text-white hover:bg-white/10">
+                                            Notify Me
+                                        </Button>
+                                    </div>
+                                </div>
+                            );
+                        })}
+                    </div>
+                </div>
+            )}
         </div>
     );
 
@@ -414,6 +543,72 @@ export default function Forum() {
                 {activeCategory && !activeDiscussion && renderDiscussionList()}
                 {activeCategory && activeDiscussion && renderDiscussion()}
             </div>
+
+            {/* Create Live Room Modal */}
+            <Dialog open={isCreateRoomOpen} onOpenChange={setIsCreateRoomOpen}>
+                <DialogContent className="bg-[#1c1e26] border-white/10 text-white max-w-md">
+                    <DialogHeader>
+                        <DialogTitle className="text-xl flex items-center gap-2">
+                            <Video className="w-5 h-5 text-blue-400" /> Start Live Room
+                        </DialogTitle>
+                    </DialogHeader>
+                    <form onSubmit={handleCreateRoomSubmit} className="space-y-4 mt-4">
+                        <div>
+                            <label className="text-sm font-medium text-white/70 mb-1.5 block">Room Name</label>
+                            <Input required placeholder="e.g. AI Study Session" className="bg-black/20 border-white/10 text-white focus-visible:ring-blue-500" />
+                        </div>
+                        <div>
+                            <label className="text-sm font-medium text-white/70 mb-1.5 block">Category</label>
+                            <Select required defaultValue="ai-ml">
+                                <SelectTrigger className="bg-black/20 border-white/10 text-white focus:ring-blue-500">
+                                    <SelectValue placeholder="Select Category" />
+                                </SelectTrigger>
+                                <SelectContent className="bg-[#1a1c23] border-white/10 text-white">
+                                    {CATEGORIES.map(c => <SelectItem key={c.id} value={c.id}>{c.icon} {c.name}</SelectItem>)}
+                                </SelectContent>
+                            </Select>
+                        </div>
+                        <div>
+                            <label className="text-sm font-medium text-white/70 mb-1.5 block">Description (Optional)</label>
+                            <Input placeholder="What will be discussed?" className="bg-black/20 border-white/10 text-white focus-visible:ring-blue-500" />
+                        </div>
+                        <div className="grid grid-cols-2 gap-4">
+                            <div>
+                                <label className="text-sm font-medium text-white/70 mb-1.5 block">Max Participants</label>
+                                <Input type="number" defaultValue={20} min={2} max={50} className="bg-black/20 border-white/10 text-white focus-visible:ring-blue-500" />
+                            </div>
+                            <div>
+                                <label className="text-sm font-medium text-white/70 mb-1.5 block">Room Type</label>
+                                <Select defaultValue="public">
+                                    <SelectTrigger className="bg-black/20 border-white/10 text-white focus:ring-blue-500">
+                                        <SelectValue />
+                                    </SelectTrigger>
+                                    <SelectContent className="bg-[#1a1c23] border-white/10 text-white">
+                                        <SelectItem value="public">🌐 Public</SelectItem>
+                                        <SelectItem value="private">🔒 Private</SelectItem>
+                                    </SelectContent>
+                                </Select>
+                            </div>
+                        </div>
+                        <div>
+                            <label className="text-sm font-medium text-white/70 mb-1.5 block">Schedule Session</label>
+                            <Select defaultValue="now">
+                                <SelectTrigger className="bg-black/20 border-white/10 text-white focus:ring-blue-500">
+                                    <SelectValue />
+                                </SelectTrigger>
+                                <SelectContent className="bg-[#1a1c23] border-white/10 text-white">
+                                    <SelectItem value="now">Live Now</SelectItem>
+                                    <SelectItem value="later">Schedule for Later</SelectItem>
+                                </SelectContent>
+                            </Select>
+                        </div>
+                        <DialogFooter className="mt-6 pt-2 border-t border-white/5 sm:justify-end gap-2">
+                            <Button type="button" variant="ghost" onClick={() => setIsCreateRoomOpen(false)} className="text-white/70 hover:text-white hover:bg-white/5">Cancel</Button>
+                            <Button type="submit" className="bg-blue-600 hover:bg-blue-700 text-white px-6">Create Room</Button>
+                        </DialogFooter>
+                    </form>
+                </DialogContent>
+            </Dialog>
         </div>
     );
 }

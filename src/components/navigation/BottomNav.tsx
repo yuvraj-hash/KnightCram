@@ -9,7 +9,7 @@ const BottomNav = () => {
     const { openCreate } = useCreate();
 
     const navItems = [
-        { icon: Home, label: "Home", path: "/main", active: location.pathname === "/main" || location.pathname === "/home", ariaLabel: "Home page" },
+        { icon: Home, label: "Home", path: "/home", active: location.pathname === "/main" || location.pathname === "/home", ariaLabel: "Home page" },
         { icon: Layers, label: "Resources", path: "/resources", active: location.pathname === "/resources", ariaLabel: "Study materials" },
         {
             isCreate: true,
